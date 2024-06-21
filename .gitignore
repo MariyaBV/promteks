@@ -1,4 +1,6 @@
 /.DS_Store
-/build-tools
+/build-tools/node_modules
 /plugins
-/themes
+/themes/twentytwentyfour
+/themes/twentytwentythree
+/themes/twentytwentytwo
