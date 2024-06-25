@@ -7,51 +7,51 @@ html {
 }
 
 h1 {
-  font-size: 3rem;
-  font-weight: 500;
-  line-height: 2.7rem;
+  font-size: var(--h1-font-size);
+  font-weight: var(--h1-font-weight);
+  line-height: var(--h1-line-height);
 }
 
 h2 {
-  font-size: 2rem;
-  font-weight: normal;
-  line-height: 2.4rem;
+  font-size: var(--h2-font-size);
+  font-weight: var(--h2-font-weight);
+  line-height: var(--h2-line-height);
 }
 
 h3 {
-  font-size: 1.5rem;
-  font-weight: normal;
-  line-height: 1.8rem;
+  font-size: var(--h3-font-size);
+  font-weight: var(--h3-font-weight);
+  line-height: var(--h3-line-height);
 }
 
 h4 {
-  font-size: 1.25rem;
-  font-weight: 500;
-  line-height: 1.5rem;
+  font-size: var(--h4-font-size);
+  font-weight: var(--h4-font-weight);
+  line-height: var(--h4-line-height);
 }
 
 .txt {
-  font-size: 1rem;
-  font-weight: normal;
-  line-height: 1.2rem;
+  font-size: var(--txt-font-size);
+  font-weight: var(--txt-font-weight);
+  line-height: var(--txt-line-height);
 }
 
 .txt-s {
-  font-size: 0.875rem;
-  font-weight: normal;
-  line-height: 1.05rem;
+  font-size: var(--txt-s-font-size);
+  font-weight: var(--txt-s-font-weight);
+  line-height: var(--txt-s-line-height);
 }
 
 .subtitle {
-  font-size: 0.75rem;
-  font-weight: normal;
-  line-height: 0.9rem;
+  font-size: var(--subtitle-font-size);
+  font-weight: var(--subtitle-font-weight);
+  line-height: var(--subtitle-line-height);
 }
 
 .subtitle-s {
-  font-size: 0.625rem;
-  font-weight: normal;
-  line-height: 0.75rem;
+  font-size: var(--subtitle-s-font-size);
+  font-weight: var(--subtitle-s-font-weight);
+  line-height: var(--subtitle-s-line-height);
 }
 
 main#main {
@@ -319,46 +319,8 @@ input[type="week"] {
   }
 }
 
-.custom_list {
-  list-style-type: none;
-  padding: 0;
-
-  li {
-    display: flex;
-    align-items: flex-start;
-    padding-bottom: 1.33rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    gap: 1em;
-  }
-
-  li:before {
-    content: "\ea10";
-    font-family: "formula-icon", sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--lite-red);
-    font-size: 10px;
-    flex: 0 0 30px;
-    height: 30px;
-    border-radius: 8px;
-    background-color: var(--gray);
-    margin-top: 0.4em;
-  }
-}
-
 .bg-gray .custom_list li:before {
   background-color: #fff;
-}
-
-.swiper-pagination.formula__pagination.swiper-pagination-bullets.swiper-pagination-horizontal {
-  bottom: -20px;
-}
-
-.swiper-button-next.formula__next,
-.swiper-button-prev.formula__prev {
-  border: 1px solid var(--dark-gray);
 }
 
 @media screen and (max-width: 960px) and (min-width: 391px) {

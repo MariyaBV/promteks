@@ -1,0 +1,73 @@
+#primary.site-page .wc-block-grid {
+    &__product {
+        max-width: 260px;
+    }
+
+    &__products {
+        gap: 40px;
+        margin: 0;
+        justify-content: center;
+    }
+
+    
+}
+
+#primary .product form.cart.promteks-cart {
+    font-size: var(--txt-s-font-size);
+    font-weight: var(--txt-s-font-weight);
+    line-height: var(--txt-s-line-height);
+
+    .block-quantity-button {
+        display: flex;
+        margin-bottom: 40px;
+    }
+
+    .button {
+        background-color: var(--black);
+        flex: 70%;
+        float: none;
+    }
+
+    .quantity {
+        margin: 0;
+    }
+
+    .quantity .qty {
+        padding: 8px 0;
+        background-color: var(--grey);
+        border-radius: 0;
+        color: var(--main-color);
+        float: none;
+        margin: 0;
+    }
+
+    .quantity-arrow-minus,
+    .quantity-arrow-plus {
+        background-color: var(--grey);
+        border-radius: 0;
+        color: var(--main-color);
+        border: none;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .quantity-arrow-minus {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        padding: 0 0 0 8px;
+    }
+
+    .quantity-arrow-plus {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding: 0 8px 0 0;
+    }
+
+} 
+
+.promteks-card-hr {
+    width: 100%;
+    border: 1px solid #CBCBCB;
+}

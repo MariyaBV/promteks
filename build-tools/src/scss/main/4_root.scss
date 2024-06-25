@@ -3,8 +3,41 @@
   --red: #C34747;
   --green: #00A148;
   --dark-green: #025527;
-  --gray: #DCDCDC;
+  --gray: #f7f7f7;
   --dark-gray: #ACACAC;
   --black: #000000;
   --white: #ffffff;
+
+  // Fonts
+  --h1-font-size: 3rem;
+  --h1-font-weight: 500;
+  --h1-line-height: 2.7rem;
+
+  --h2-font-size: 2rem;
+  --h2-font-weight: normal;
+  --h2-line-height: 2.4rem;
+
+  --h3-font-size: 1.5rem;
+  --h3-font-weight: normal;
+  --h3-line-height: 1.8rem;
+
+  --h4-font-size: 1.25rem;
+  --h4-font-weight: 500;
+  --h4-line-height: 1.5rem;
+
+  --txt-font-size: 1rem;
+  --txt-font-weight: normal;
+  --txt-line-height: 1.2rem;
+
+  --txt-s-font-size: 0.875rem;
+  --txt-s-font-weight: normal;
+  --txt-s-line-height: 1.05rem;
+
+  --subtitle-font-size: 0.75rem;
+  --subtitle-font-weight: normal;
+  --subtitle-line-height: 0.9rem;
+
+  --subtitle-s-font-size: 0.625rem;
+  --subtitle-s-font-weight: normal;
+  --subtitle-s-line-height: 0.75rem;
 }
