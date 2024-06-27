@@ -60,14 +60,9 @@ $options = get_fields('options');
 						<button class="header-search__button" type="submit" value="<?php echo esc_attr_x( 'Search', 'submit button', 'woocommerce' ); ?>"></button>
 						<input type="hidden" name="post_type" value="product" />
 					</form>
-					<?php if ( function_exists( 'YITH_WCWL' ) ) : ?>
-						<div class="header-wishlist">
-							<a href="<?php echo YITH_WCWL()->get_wishlist_url(); ?>">
-								<i class="fa fa-heart-o"></i>
-								<span class="wishlist-count"><?php echo YITH_WCWL()->count_products(); ?></span>
-							</a>
-						</div>
-					<?php endif; ?>
+					<?php if ( function_exists( 'custom_woocommerce_header_wishlist' ) ) {
+						custom_woocommerce_header_wishlist();
+					} ?>
 					<?php if ( function_exists( 'custom_woocommerce_header_cart' ) ) {
 						custom_woocommerce_header_cart();
 					} ?>

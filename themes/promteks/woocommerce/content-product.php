@@ -41,6 +41,20 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	 * @hooked woocommerce_template_loop_product_thumbnail - 10
 	 */
 	do_action( 'woocommerce_before_shop_loop_item_title' );
+	?>
+	<div class="product-price-wishlist"><?php
+		//вывод цены
+		global $product;
+		?>
+		<p class="<?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>"><?php echo $product->get_price_html(); ?></p>
+		<?php
+
+		// вывод кнопки добавления в понравившееся
+		echo do_shortcode('[yith_wcwl_add_to_wishlist]');
+		?>
+	</div>
+
+	<?php
 
 	/**
 	 * Hook: woocommerce_shop_loop_item_title.
@@ -48,6 +62,14 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	 * @hooked woocommerce_template_loop_product_title - 10
 	 */
 	do_action( 'woocommerce_shop_loop_item_title' );
+
+	if ( is_product() ):?>
+		<div class="product-item">
+			<div class="block-quantity-button">
+				<a class="add-to-cart button add_to_cart_button ajax_add_to_cart" data-product-id="<?php echo esc_attr( $product->get_id() ); ?>">Купить</a>
+			</div>
+		</div>
+	<?php endif;
 
 	// Display product attribute
 	if ( ! $product_attributes ) {

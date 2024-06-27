@@ -5,8 +5,10 @@
   --dark-green: #025527;
   --gray: #f7f7f7;
   --dark-gray: #ACACAC;
+  --light-black: #00000014;
   --black: #000000;
   --white: #ffffff;
+  --light-grey: #9B9B9B;
 
   // Fonts
   --h1-font-size: 3rem;
@@ -40,4 +42,6 @@
   --subtitle-s-font-size: 0.625rem;
   --subtitle-s-font-weight: normal;
   --subtitle-s-line-height: 0.75rem;
+
+  --width-page: 1160px; //1440px;
 }

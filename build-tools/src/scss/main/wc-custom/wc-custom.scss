@@ -1,21 +1,10 @@
-#primary.site-page .wc-block-grid {
-    &__product {
-        max-width: 260px;
-    }
-
-    &__products {
-        gap: 40px;
-        margin: 0;
-        justify-content: center;
-    }
-
-    
-}
-
-#primary .product form.cart.promteks-cart {
+#primary .product form.cart.promteks-cart,
+#primary .product-item,
+#page .product-item {
     font-size: var(--txt-s-font-size);
     font-weight: var(--txt-s-font-weight);
     line-height: var(--txt-s-line-height);
+    width: 100%;
 
     .block-quantity-button {
         display: flex;
@@ -26,6 +15,12 @@
         background-color: var(--black);
         flex: 70%;
         float: none;
+        margin: 0;
+        color: var(--white);
+        font-size: var(--txt-s-font-size);
+        font-weight: var(--txt-s-font-weight);
+        line-height: var(--txt-s-line-height);
+        text-align: center;
     }
 
     .quantity {
@@ -65,9 +60,191 @@
         padding: 0 8px 0 0;
     }
 
-} 
+}
+
+.woocommerce ul.products li.product a img {
+    max-width: 240px;
+    max-height: 240px;
+}
 
 .promteks-card-hr {
     width: 100%;
     border: 1px solid #CBCBCB;
+}
+
+#primary.site-page {
+    .wc-block-grid {
+        &__product {
+            max-width: 260px;
+        }
+
+        &__products {
+            gap: 40px;
+            margin: 0;
+            justify-content: center;
+        }
+    }
+
+    .woocommerce ul.products li.product a img {
+        margin-bottom: 0;
+        padding: 20px 10px 0 10px;
+    }
+
+    .woocommerce ul.products {
+        font-size: var(--h4-font-size);
+        font-weight: var(--h4-font-weight);
+        line-height: var(--h4--line-height);
+        margin: 40px 0;
+    }
+}
+
+
+#page .promteks-cart button.custom-button-similar-product {
+    width: 100%;
+    text-align: center;
+    padding: 8px 0;
+    color: var(--white);
+    background-color: var(--black);
+    font-size: var(--txt-s-font-size);
+    font-weight: var(--txt-s-font-weight);
+    line-height: var(--txt-s-line-height);
+    text-align: center;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+#page .recently-viewed-products {
+    border-bottom: 1px solid #CBCBCB;
+    border-top: 1px solid #CBCBCB;
+    max-width: var(--width-page);
+    margin: 39px auto;
+    width: 100%;
+
+    h2.you-watched {
+        margin: 39px 0 16px;
+    }
+
+    div.woocommerce {
+        ul.products {
+            display: flex;
+            gap: 2.5rem;
+    
+            li {
+                flex: 1 1 calc((100% / 6) -  2.5rem);
+                margin: 0;
+                display: flex;
+                flex-wrap: wrap;
+                align-content: space-between;
+    
+                img {
+                    margin-bottom: 16px;
+                }
+    
+                .txt {
+                    padding: 0;
+                    margin: 8px 0;
+                }
+            }
+    
+            a img {
+                aspect-ratio: 1 / 1;
+                width: 100%;
+                border: 1px solid var(--dark-gray);
+                display: block;
+            }
+    
+            h2 {
+                font-size: var(--txt-s-font-size);
+                font-weight: var(--txt-s-font-weight);
+                line-height: var(--txt-s-line-height);
+            }
+        }
+    
+    }
+} 
+
+
+#page .product-price-wishlist {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0 24px;
+
+    p,
+    a,
+    div {
+        margin: 0;
+    }
+
+    p {
+        font-size: var(--h4-font-size);
+        font-weight: var(--h4-font-weight);
+        line-height: var(--h4-line-height);
+        font-family: "Inter", sans-serif;
+        color: var(--black);
+        flex: 90%;
+    }
+
+    div {
+        flex: 10%;
+    }
+
+    .fa.fa-heart-o,
+    .fa {
+        font-size: x-large;
+        margin: 0;
+    }
+}
+
+.woocommerce div.product div.images img {
+    max-width: 520px;
+    max-height: 520px;
+    width: auto;
+    margin: 0 auto;
+}
+
+#primary .pwb-single-product-brands {
+    font-size: var(--subtitle-s-font-size);
+    font-weight: var(--subtitle-s-font-weight);
+    line-height: var(--subtitle-s-line-height);
+    color: var(--light-grey);
+    margin: 8px 0 24px;
+
+    a {
+        color: var(--light-grey);
+        text-decoration: underline;
+    }
+}
+
+#primary .summary.entry-summary {
+    border: 1px solid #EEEEEE;
+    box-shadow: 0px 4px 8px 0px var(--light-black);
+    padding: 32px;
+
+    .price {
+        font-size: var(--h3-font-size);
+        font-weight: var(--h3-font-weight);
+        line-height: var(--h3-line-height);
+        color: #1d1d1d;
+        margin: 16px 0;
+    }
+
+    .yith-wcwl-add-to-wishlist {
+        position: absolute;
+        top: 32px;
+        right: 32px;
+        margin: 0;
+        max-width: 35px;
+    }
+
+    .yith-wcwl-icon.fa {
+        font-size: x-large;
+
+        &.fa-heart-o {
+            color: #9B9B9B;
+
+        }
+    }
 }
