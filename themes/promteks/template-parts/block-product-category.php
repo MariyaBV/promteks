@@ -2,7 +2,7 @@
     $r = get_fields();
     global $product;
 ?>
-<section class="product-category">
+<section class="product-category" id="<?php echo $block['id']; ?>">
     <div class="product-category__content">
         <div class="product-category__header">
             <h2 class="product-category__title">
@@ -11,7 +11,7 @@
             <a class="txt product-category__link" href="<?php echo $r['watch-all']['link']; ?>" class="product-category__link"><?php echo $r['watch-all']['title']; ?></a>
         </div>
         <div class="__slider">
-            <div class="swiper" id="product-category_slider">
+            <div class="swiper" id="id<?php echo $block['id']; ?>">
                 <div class="swiper-wrapper product-category__wrapper">
                     <?php
                     $products = wc_get_products(array(
@@ -30,7 +30,7 @@
                         echo '</p>';
                         echo do_shortcode('[yith_wcwl_add_to_wishlist]');
                         echo '</div>';
-                        echo '<h5>' . $product->get_name() . '</h5>';
+                        echo '<h5 class="txt">' . $product->get_name() . '</h5>';
                         echo '</a>';
                         if ( function_exists( 'custom_template_single_brand' ) ) {
                             echo custom_template_single_brand();
@@ -52,7 +52,7 @@
                     ?>
                 </div>
             </div>
-            <div class="swiper-button-next product-category__next"></div>
+            <div class="swiper-button-next product-category__nextid<?php echo $block['id']; ?>"></div>
         </div>
     </div>
 </section>

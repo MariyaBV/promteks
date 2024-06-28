@@ -133,6 +133,11 @@ $(document).ready(function () {
         $('.delete_item').each(function () {
             var closestLi = $(this).closest('li');
             closestLi.addClass('added_to_wishlist');
+
+            //для слайдера
+            var closestSwiper = $(this).closest('.swiper-slide');
+            closestSwiper.addClass('added_to_wishlist');
+
             $('.delete_item').contents().filter(function () {
                 return this.nodeType === 3; // Удаляем только текстовые узлы
             }).remove();
@@ -142,6 +147,10 @@ $(document).ready(function () {
         $('.add_to_wishlist').each(function () {
             var closestLi = $(this).closest('li');
             closestLi.removeClass('added_to_wishlist');
+
+            //для слайдера
+            var closestSwiper = $(this).closest('.swiper-slide');
+            closestSwiper.removeClass('added_to_wishlist');
         });
     });
 
@@ -149,6 +158,10 @@ $(document).ready(function () {
     $('body').on('click', '.delete_item', function (e) {
         var closestLi = $(this).closest('li');
         closestLi.removeClass('added_to_wishlist');
+
+        //для слайдера
+        var closestSwiper = $(this).closest('.swiper-slide');
+        closestSwiper.removeClass('added_to_wishlist');
 
         // Обновляем счетчик в шапке страницы
         var currentCount = parseInt($('.header-wishlist .wishlist-count').text(), 10);
@@ -184,7 +197,7 @@ jQuery(document).ready(function ($) {
         updateCurrencySymbol();
     });
 
-    $(document).on('contentUpdated', function() {
+    $(document).on('contentUpdated', function () {
         updateCurrencySymbol();
     });
 });

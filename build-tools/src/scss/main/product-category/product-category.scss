@@ -11,6 +11,13 @@
         }
     }
 
+    &__slide {
+        a {
+            text-decoration: none;
+            display: block;
+        }
+    }
+
     &__header {
         display: flex;
         align-items: center;
@@ -38,6 +45,19 @@
             right: -15px;
             top: 50%;
             transform: translateY(-50%) rotate(45deg);
+        }
+    }
+
+    .product-item {
+        .quantity .qty {
+            max-width: 50px;
+            text-align: center;
+        }
+
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
         }
     }
 

@@ -3,10 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     searchSections.forEach(searchSection => {
         const swiperElement = searchSection.querySelector('.swiper');
-        
+
         if (swiperElement) {
             const swiperID = swiperElement.getAttribute('id');
             if (swiperID) {
+                const nextButton = searchSection.querySelector('.product-category__next' + swiperID);
                 const swiper_certificates = new Swiper("#" + swiperID, {
                     direction: "horizontal",
                     loop: true,
@@ -15,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     autoHeight: true,
                     spaceBetween: 15,
                     navigation: {
-                        nextEl: ".product-category__next",
+                        nextEl: nextButton,
                     },
                     breakpoints: {
                         660: {
@@ -29,7 +30,30 @@ document.addEventListener("DOMContentLoaded", function () {
                             spaceBetween: 40
                         },
                     },
+                    on: {
+                        init: function () {
+                            checkNavigationVisibility(this);
+                        },
+                        resize: function () {
+                            checkNavigationVisibility(this);
+                        },
+                    },
                 });
+
+                function checkNavigationVisibility(swiper) {
+                    let slidesPerView = 2;
+                    if (window.innerWidth >= 961) {
+                        slidesPerView = 4;
+                    } else if (window.innerWidth >= 660) {
+                        slidesPerView = 3;
+                    }
+
+                    if (swiper.slides.length <= slidesPerView) {
+                        swiper.navigation.nextEl.style.display = 'none';
+                    } else {
+                        swiper.navigation.nextEl.style.display = '';
+                    }
+                }
             }
         }
     });
