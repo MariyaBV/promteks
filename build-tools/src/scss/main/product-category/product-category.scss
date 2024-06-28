@@ -1,0 +1,44 @@
+.product-category {
+    .swiper {
+        .woocommerce ul.products {
+            display: flex;
+            gap: 40px;
+
+            li {
+                margin: 0;
+                float: none;
+            }
+        }
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    &__link {
+        text-decoration: none;
+        position: relative;
+        margin-left: 24px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            border-width: 1px 1px 0 0;
+            border-style: solid;
+            width: 8px;
+            height: 8px;
+            transform: rotate(45deg);
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+        }
+    }
+
+}

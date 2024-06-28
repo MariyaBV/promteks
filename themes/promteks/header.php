@@ -9,7 +9,6 @@
  * @package promteks
  */
 $options = get_fields('options');
-//$menuTop = wp_nav_menu('menu=top-menu');
 //$menuBottom = wp_nav_menu('menu=bottom-menu');
 ?>
 

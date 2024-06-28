@@ -200,9 +200,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 }
 
 add_action('acf/init', 'promteks_blocks');
-function promteks_blocks()
-{
-
+function promteks_blocks() {
 	// check function exists
 	if (function_exists('acf_register_block')) {
 
@@ -211,6 +209,11 @@ function promteks_blocks()
 				'description' => __('Верхний блок', 'promteks'),
 				'title' => __('Верхний блок', 'promteks'),
 				'keywords' => array('верхний-блок', 'баннер')
+			],
+			'product-category' => [
+				'description' => __('Блок вывода товаров из 1 категории', 'promteks'),
+				'title' => __('Блок вывода товаров из 1 категории', 'promteks'),
+				'keywords' => array('блок-товаров-1-категории', 'баннер')
 			]
 		];
 
@@ -232,16 +235,30 @@ function promteks_blocks()
 	}
 }
 
+// function promteks_block($block) {
+
+// 	// convert name ("acf/testimonial") into path friendly slug ("testimonial")
+// 	$slug = str_replace('acf/', '', $block['name']);
+
+// 	// include a template part from within the "template-parts/block" folder
+// 	if (file_exists(get_theme_file_path("/template-parts/block-{$slug}.php"))) {
+// 		include (get_theme_file_path("/template-parts/block-{$slug}.php"));
+// 	}
+// }
+
 function promteks_block($block) {
+    // convert name ("acf/testimonial") into path friendly slug ("testimonial")
+    $slug = str_replace('acf/', '', $block['name']);
 
-	// convert name ("acf/testimonial") into path friendly slug ("testimonial")
-	$slug = str_replace('acf/', '', $block['name']);
-
-	// include a template part from within the "template-parts/block" folder
-	if (file_exists(get_theme_file_path("/template-parts/block-{$slug}.php"))) {
-		include (get_theme_file_path("/template-parts/block-{$slug}.php"));
-	}
+    // include a template part from within the "template-parts/block" folder
+    $template_path = get_theme_file_path("/template-parts/block-{$slug}.php");
+    if (file_exists($template_path)) {
+        include ($template_path);
+    } else {
+        echo "Template not found: " . $template_path;
+    }
 }
+
 
 //ф-я вывода корзины в header
 function custom_woocommerce_header_cart() {
