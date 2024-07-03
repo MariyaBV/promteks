@@ -670,43 +670,61 @@ function custom_woocommerce_dropdown_layered_nav_term_html($html, $term, $select
 }
 add_filter('woocommerce_dropdown_layered_nav_term_html', 'custom_woocommerce_dropdown_layered_nav_term_html', 10, 4);
 
+function custom_woocommerce_get_catalog_ordering_attr_args($query) {
+    if (!is_admin() && $query->is_main_query() && is_tax('product_cat')) {
+        // Получаем текущие параметры запроса
+        $query_vars = $query->query_vars;
 
-/*
-Plugin Name: Custom WooCommerce Filter Template
-Description: Overrides YITH WooCommerce Ajax Navigation filter template.
-Version: 1.0
-Author: Your Name
-*/
-
-function custom_woocommerce_filter_template($template, $template_name) {
-    if ($template_name === 'filters/filter-tax.php') {
-        $custom_template = get_stylesheet_directory() . '/yith-woocommerce-ajax-navigation/filters/filter-tax.php';
-
-        if (file_exists($custom_template)) {
-            return $custom_template;
+        // Инициализация массива tax_query, если он не существует
+        if (!isset($query_vars['tax_query'])) {
+            $query_vars['tax_query'] = array();
         }
+
+        // Итерируемся по параметрам запроса и добавляем фильтрацию по атрибутам
+        foreach ($_GET as $key => $value) {
+            if (strpos($key, 'attribute_') === 0 && !empty($value)) {
+                $attribute = str_replace('attribute_', '', $key);
+                $taxonomy = 'pa_' . $attribute;
+
+                // Добавляем фильтр в tax_query
+                $query_vars['tax_query'][] = array(
+                    'taxonomy' => $taxonomy,
+                    'field' => 'slug',
+                    'terms' => $value,
+                );
+            }
+        }
+
+        // Устанавливаем измененные параметры обратно в запрос
+        $query->set('tax_query', $query_vars['tax_query']);
     }
-
-    return $template;
 }
-add_filter('yith_wcan_filter_template', 'custom_woocommerce_filter_template', 10, 2);
+add_action('pre_get_posts', 'custom_woocommerce_get_catalog_ordering_attr_args');
 
-// function custom_woocommerce_get_catalog_ordering_args( $query ) {
-// 	if (! is_admin() && $query->is_main_query() && is_tax('product_cat') ) {
-		//массив содержащий ключи на который не нужно обращать внимание - orderby
-		//если in_array('orderby', $query->query_vars) === true _GET set query меняю черезforeach (ключ )
-// 	}
-// }
-// add_action( 'pre_get_posts', 'custom_woocommerce_get_catalog_ordering_args' );
 
 function print_filters() {
     $category = get_queried_object(); // Получаем объект текущей категории
+    if (!$category) {
+        return;
+    }
     $category_id = $category->term_id;
     $attributes = get_category_product_attributes($category_id);
+    if (!$attributes) {
+        return;
+    }
 
-    /*?><pre><?php var_dump($attributes);?></pre><?php*/
+    // Получаем текущие параметры URL
+    $current_params = $_GET;
 
     echo '<form method="get" action="#">';
+    
+    // Включаем текущие параметры URL в скрытых полях формы
+    foreach ($current_params as $key => $value) {
+        if (strpos($key, 'attribute_') !== 0) {
+            echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
+        }
+    }
+
     foreach ($attributes as $attribute) {
         $attribute_name = $attribute->attribute_name;
         $attribute_label = $attribute->attribute_label;
@@ -714,47 +732,86 @@ function print_filters() {
         // Получаем список всех терминов (опций) атрибута
         $terms = get_terms(array(
             'taxonomy' => 'pa_' . $attribute_name,
-            'hide_empty' => false,
+            'hide_empty' => true,
         ));
 
-        if (!empty($terms)) {
-            echo '<label for="attribute' . esc_attr($attribute_name) . '">' . esc_html($attribute_label) . ':</label>';
-            echo '<select name="attribute' . esc_attr($attribute_name) . '" id="attribute' . esc_attr($attribute_name) . '">';
-            echo '<option value="">Все ' . esc_html($attribute_label) . '</option>';
+        if (!empty($terms) && !is_wp_error($terms)) {
+            echo '<select name="attribute_' . esc_attr($attribute_name) . '" id="attribute_' . esc_attr($attribute_name) . '">';
+            echo '<option value="">' . esc_html($attribute_label) . '</option>';
             foreach ($terms as $term) {
-                echo '<option value="' . esc_attr($term->slug) . '">' . esc_html($term->name) . '</option>';
+                $selected = isset($current_params['attribute_' . esc_attr($attribute_name)]) && $current_params['attribute_' . esc_attr($attribute_name)] === $term->slug ? ' selected' : '';
+                echo '<option value="' . esc_attr($term->slug) . '"' . $selected . '>' . esc_html($term->name) . '</option>';
             }
             echo '</select>';
         }
     }
-    echo '<input type="submit" value="Применить фильтр">';
+    echo '<input type="submit" value="Применить фильтр по свойствам">';
     echo '</form>';
 }
+add_action('woocommerce_before_shop_loop', 'print_filters', 20);
 
 
 function get_category_product_attributes($category_id) {
-    // Получаем объект категории
-    $category = get_term($category_id, 'product_cat');
+    global $wpdb;
 
-    // Проверяем, что категория существует и является категорией товаров
-    if (is_wp_error($category) || !is_object($category) || $category->taxonomy !== 'product_cat') {
+    // Получаем ID всех продуктов в данной категории
+    $product_ids = $wpdb->get_col($wpdb->prepare("
+        SELECT object_id
+        FROM {$wpdb->term_relationships}
+        WHERE term_taxonomy_id = %d
+    ", $category_id));
+
+    if (empty($product_ids)) {
         return false;
     }
 
-    // Получаем атрибуты, связанные с товарами этой категории
-    $args = array(
-        'hide_empty' => false,
-        'meta_query' => array(
-            'relation' => 'OR',
-            array(
-                'key'     => 'product_cat',
-                'value'   => $category->id,
-                'compare' => 'LIKE'
-            )
-        )
-    );
-    $attributes = wc_get_attribute_taxonomies($args);
+    // Получаем все атрибуты товаров
+    $all_attributes = wc_get_attribute_taxonomies();
 
-    // Возвращаем массив атрибутов
+    // Отфильтровываем только те атрибуты, которые используются в данных продуктах
+    $attributes = array();
+    foreach ($all_attributes as $attribute) {
+        $taxonomy = 'pa_' . $attribute->attribute_name;
+        $term_count = $wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(DISTINCT tr.term_taxonomy_id)
+            FROM {$wpdb->term_relationships} AS tr
+            INNER JOIN {$wpdb->term_taxonomy} AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+            WHERE tt.taxonomy = %s
+            AND tr.object_id IN (" . implode(',', array_map('intval', $product_ids)) . ")
+        ", $taxonomy));
+
+        if ($term_count > 0) {
+            $attributes[] = $attribute;
+        }
+    }
+
     return $attributes;
 }
+
+
+// function get_category_product_attributes($category_id) {
+//     // Получаем объект категории
+//     $category = get_term($category_id, 'product_cat');
+
+//     // Проверяем, что категория существует и является категорией товаров
+//     if (is_wp_error($category) || !is_object($category) || $category->taxonomy !== 'product_cat') {
+//         return false;
+//     }
+
+//     // Получаем атрибуты, связанные с товарами этой категории
+//     $args = array(
+//         'hide_empty' => false,
+//         'meta_query' => array(
+//             'relation' => 'OR',
+//             array(
+//                 'key'     => 'product_cat',
+//                 'value'   => $category->id,
+//                 'compare' => 'LIKE'
+//             )
+//         )
+//     );
+//     $attributes = wc_get_attribute_taxonomies($args);
+
+//     // Возвращаем массив атрибутов
+//     return $attributes;
+// }

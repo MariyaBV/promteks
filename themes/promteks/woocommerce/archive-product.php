@@ -55,7 +55,6 @@ do_action( 'woocommerce_shop_loop_header' );
 			if (function_exists('remove_action')) {
 				remove_action('woocommerce_sidebar', 'add_product_category_sidebar');
 			}
-			add_action('woocommerce_sidebar', 'print_filters', 10);
 			do_action( 'woocommerce_sidebar' );
 			if ( woocommerce_product_loop() ) {
 
