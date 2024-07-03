@@ -1,0 +1,114 @@
+.category-slider {
+    width: 300px;
+    overflow: hidden;
+    position: relative;
+
+    .category-list {
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.5s ease;
+        padding: 0;
+
+        ul.children {
+            display: none;
+            padding-left: 20px;
+        }
+
+        li {
+            list-style: none;
+            padding: 12px 0 12px 8px;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            a {
+                text-decoration: none;
+            }
+        }
+
+        li.has-children>a::after {
+            content: '▼';
+            float: right;
+            font-size: 12px;
+        }
+
+        li.expanded>a::after {
+            content: '▲';
+        }
+
+        li.current-cat {
+            background: var(--gray);
+
+            >a {
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.filters-container form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    div.filter-tax {
+        width: calc((100% / 6) - 20px);
+
+        .yith-wcan-dropdown {
+            border: 1px solid #B6B6B6;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: var(--subtitle-font-size);
+            font-weight: var(--subtitle-font-weight);
+            line-height: var(--subtitle-line-height);
+        }
+    }
+}
+
+form.woocommerce-ordering {
+    button {
+        border: 1px solid #B6B6B6;
+        border-radius: 8px;
+        padding: 8px 12px;
+        cursor: pointer;
+        position: relative;
+        background-color: var(--white);
+        font-size: var(--subtitle-font-size);
+        font-weight: var(--subtitle-font-weight);
+        line-height: var(--subtitle-line-height);
+
+        &.active {
+            background-color: var(--black);
+            color: var(--white);
+        }
+    }
+}
+
+.row {
+    display: flex;
+    gap: 40px;
+
+    .col-md-3 {
+        flex: 25%;
+    }
+
+    .col-md-9 {
+        flex: 75%;
+
+        ul.products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+
+            li {
+                float: none;
+                margin: 0;
+                padding: 0;
+                position: relative;
+                width: 30%;
+                margin-left: 0;
+            }
+        }
+    }
+}

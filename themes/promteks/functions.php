@@ -494,3 +494,267 @@ if ( ! function_exists( 'woocommerce_template_loop_product_title' ) ) {
 		echo '<h5 class="txt ' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h5>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
+
+
+function add_product_category_sidebar() {
+    if (!is_product()) {
+        ?>
+        <aside class="product-category-sidebar">
+            <?php
+            $args = array(
+                'show_option_all'    => '',
+                'show_option_none'   => __('No categories'),
+                'orderby'            => 'name',
+                'order'              => 'ASC',
+                'style'              => 'list',
+                'show_count'         => 0,
+                'hide_empty'         => 1,
+                'use_desc_for_title' => 0,
+                'child_of'           => 0,
+                'feed'               => '',
+                'feed_type'          => '',
+                'feed_image'         => '',
+                'exclude'            => '',
+                'exclude_tree'       => '',
+                'include'            => '',
+                'hierarchical'       => true,
+                'title_li'           => '',
+                'number'             => NULL,
+                'echo'               => 0,
+                'depth'              => 0,
+                'current_category'   => 0,
+                'pad_counts'         => 0,
+                'taxonomy'           => 'product_cat',
+                'walker'             => new Walker_Category(),
+                'hide_title_if_empty' => false,
+                'separator'          => '<br />',
+            );
+            $categories = wp_list_categories($args);
+            ?>
+            <div class="category-slider">
+                <ul class="category-list">
+                    <?php echo $categories; ?>
+                </ul>
+            </div>
+        </aside>
+        <?php
+    }
+}
+add_action('woocommerce_sidebar', 'add_product_category_sidebar');
+
+function custom_orderby_option( $sortby ) {
+	//$sortby['color'] = 'По цвету';
+	// $sortby['length'] = 'По длине мм';
+	// $sortby['thickness'] = 'По толщине мм';
+	// $sortby['width'] = 'По ширине мм';
+	// $sortby['weight'] = 'По весу кг';
+	// $sortby['volume_m_2'] = 'По Объему м^2';
+	// $sortby['volume_m_3'] = 'По Объему м^3';
+	// $sortby['volume_ml'] = 'По Объему мл';
+	$sortby['discount'] = 'Только со скидкой';
+	return $sortby;
+}
+add_filter( 'woocommerce_default_catalog_orderby_options', 'custom_orderby_option' );
+add_filter( 'woocommerce_catalog_orderby', 'custom_orderby_option' );
+
+//удаляем исходную сортировку из видов сортировки
+function remove_orderby_options( $sortby ) {
+	unset( $sortby[ 'menu_order' ] ); // исходная сортировка
+	return $sortby;
+}
+add_filter( 'woocommerce_default_catalog_orderby_options', 'remove_orderby_options' );
+add_filter( 'woocommerce_catalog_orderby', 'remove_orderby_options' );
+
+function custom_woocommerce_get_catalog_ordering_args( $args ) {
+    if ( isset( $_GET['orderby'] ) && 'discount' === $_GET['orderby'] ) {
+        $args['meta_query'][] = array(
+            'key' => '_pc_discount',
+            'value' => 0,
+            'compare' => '>',
+            'type' => 'NUMERIC'
+        );
+        $args['orderby'] = array(
+            'meta_value_num' => 'ASC'
+        );
+        $args['meta_key'] = '_pc_discount';
+    }
+    return $args;
+}
+add_filter( 'woocommerce_get_catalog_ordering_args', 'custom_woocommerce_get_catalog_ordering_args' );
+
+function custom_pre_get_posts( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && isset( $_GET['orderby'] ) && 'discount' === $_GET['orderby'] ) {
+        $meta_query = $query->get('meta_query', array());
+        $meta_query[] = array(
+            'key' => '_pc_discount',
+            'value' => 0,
+            'compare' => '>',
+            'type' => 'NUMERIC'
+        );
+        $query->set('meta_query', $meta_query);
+        $query->set('orderby', 'meta_value_num');
+        $query->set('meta_key', '_pc_discount');
+        $query->set('order', 'ASC');
+    }
+}
+add_action( 'pre_get_posts', 'custom_pre_get_posts' );
+
+//начало делаем выбор в админке скидки в % и вывод на карточке товара
+add_action( 'woocommerce_product_options_pricing', 'genius_set_percentage_discount' );
+function genius_set_percentage_discount() {
+   global $product_object;
+   woocommerce_wp_select(
+      array(
+         'id' => '_pc_discount',
+         'value' => get_post_meta( $product_object->get_id(), '_pc_discount', true ),
+         'label' => 'Discount %',
+         'options' => array(
+            '0' => '0',
+			'5' => '5',
+            '10' => '10',
+			'15' => '15',
+			'20' => '20',
+            '25' => '25',
+			'30' => '30',
+            '50' => '50',
+         ),
+      )
+   );
+}
+ 
+add_action( 'save_post_product', 'genius_save_percentage_discount' );
+function genius_save_percentage_discount( $product_id ) {
+    global $typenow;
+    if ( 'product' === $typenow ) {
+        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+      if ( isset( $_POST['_pc_discount'] ) ) {
+            update_post_meta( $product_id, '_pc_discount', $_POST['_pc_discount'] );
+        }
+    }
+}
+  
+add_filter( 'woocommerce_get_price_html', 'genius_alter_price_display', 9999, 2 );
+function genius_alter_price_display( $price_html, $product ) {
+    if ( is_admin() ) return $price_html;
+    if ( '' === $product->get_price() ) return $price_html;
+    if ( get_post_meta( $product->get_id(), '_pc_discount', true ) && get_post_meta( $product->get_id(), '_pc_discount', true ) > 0 ) {
+        $orig_price = wc_get_price_to_display( $product );
+        $price_html = wc_format_sale_price( $orig_price, $orig_price * ( 100 - get_post_meta( $product->get_id(), '_pc_discount', true ) ) / 100 );
+    }
+    return $price_html;
+}
+  
+add_action( 'woocommerce_before_calculate_totals', 'genius_alter_price_cart', 9999 );
+function genius_alter_price_cart( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) ) return;
+    if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) return;
+    foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+        $product = $cart_item['data'];
+      if ( get_post_meta( $product->get_id(), '_pc_discount', true ) && get_post_meta( $product->get_id(), '_pc_discount', true ) > 0 ) {
+           $price = $product->get_price();
+           $cart_item['data']->set_price( $price * ( 100 - get_post_meta( $product->get_id(), '_pc_discount', true ) ) / 100 );
+      }
+    }
+}
+//конец делаем выбор в админке скидки в % и вывод на карточке товара
+
+// Удаляем стандартную форму сортировки перед списком товаров
+remove_action('woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30);
+
+// Фильтрация placeholder в виджете фильтра по атрибутам
+function custom_woocommerce_dropdown_layered_nav_term_html($html, $term, $selected, $count) {
+    if (strpos($html, 'option value=""') !== false) {
+        $html = str_replace('option value="" selected="selected">Выберите</option>', 'option value="" selected="selected"></option>', $html);
+    }
+    return $html;
+}
+add_filter('woocommerce_dropdown_layered_nav_term_html', 'custom_woocommerce_dropdown_layered_nav_term_html', 10, 4);
+
+
+/*
+Plugin Name: Custom WooCommerce Filter Template
+Description: Overrides YITH WooCommerce Ajax Navigation filter template.
+Version: 1.0
+Author: Your Name
+*/
+
+function custom_woocommerce_filter_template($template, $template_name) {
+    if ($template_name === 'filters/filter-tax.php') {
+        $custom_template = get_stylesheet_directory() . '/yith-woocommerce-ajax-navigation/filters/filter-tax.php';
+
+        if (file_exists($custom_template)) {
+            return $custom_template;
+        }
+    }
+
+    return $template;
+}
+add_filter('yith_wcan_filter_template', 'custom_woocommerce_filter_template', 10, 2);
+
+// function custom_woocommerce_get_catalog_ordering_args( $query ) {
+// 	if (! is_admin() && $query->is_main_query() && is_tax('product_cat') ) {
+		//массив содержащий ключи на который не нужно обращать внимание - orderby
+		//если in_array('orderby', $query->query_vars) === true _GET set query меняю черезforeach (ключ )
+// 	}
+// }
+// add_action( 'pre_get_posts', 'custom_woocommerce_get_catalog_ordering_args' );
+
+function print_filters() {
+    $category = get_queried_object(); // Получаем объект текущей категории
+    $category_id = $category->term_id;
+    $attributes = get_category_product_attributes($category_id);
+
+    /*?><pre><?php var_dump($attributes);?></pre><?php*/
+
+    echo '<form method="get" action="#">';
+    foreach ($attributes as $attribute) {
+        $attribute_name = $attribute->attribute_name;
+        $attribute_label = $attribute->attribute_label;
+
+        // Получаем список всех терминов (опций) атрибута
+        $terms = get_terms(array(
+            'taxonomy' => 'pa_' . $attribute_name,
+            'hide_empty' => false,
+        ));
+
+        if (!empty($terms)) {
+            echo '<label for="attribute' . esc_attr($attribute_name) . '">' . esc_html($attribute_label) . ':</label>';
+            echo '<select name="attribute' . esc_attr($attribute_name) . '" id="attribute' . esc_attr($attribute_name) . '">';
+            echo '<option value="">Все ' . esc_html($attribute_label) . '</option>';
+            foreach ($terms as $term) {
+                echo '<option value="' . esc_attr($term->slug) . '">' . esc_html($term->name) . '</option>';
+            }
+            echo '</select>';
+        }
+    }
+    echo '<input type="submit" value="Применить фильтр">';
+    echo '</form>';
+}
+
+
+function get_category_product_attributes($category_id) {
+    // Получаем объект категории
+    $category = get_term($category_id, 'product_cat');
+
+    // Проверяем, что категория существует и является категорией товаров
+    if (is_wp_error($category) || !is_object($category) || $category->taxonomy !== 'product_cat') {
+        return false;
+    }
+
+    // Получаем атрибуты, связанные с товарами этой категории
+    $args = array(
+        'hide_empty' => false,
+        'meta_query' => array(
+            'relation' => 'OR',
+            array(
+                'key'     => 'product_cat',
+                'value'   => $category->id,
+                'compare' => 'LIKE'
+            )
+        )
+    );
+    $attributes = wc_get_attribute_taxonomies($args);
+
+    // Возвращаем массив атрибутов
+    return $attributes;
+}
