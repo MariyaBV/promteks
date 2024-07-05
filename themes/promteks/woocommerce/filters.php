@@ -8,7 +8,7 @@
 ?>
 
 <!-- wp:woocommerce/filter-wrapper {"filterType":"active-filters"} -->
-<div class="wp-block-woocommerce-filter-wrapper  1111111"><!-- wp:heading {"level":3} -->
+<div class="wp-block-woocommerce-filter-wrapper"><!-- wp:heading {"level":3} -->
 <h3><?php esc_html_e( 'Active filters', 'woocommerce' ); ?></h3>
 <!-- /wp:heading -->
 
@@ -18,7 +18,7 @@
 <!-- /wp:woocommerce/filter-wrapper -->
 
 <!-- wp:woocommerce/filter-wrapper {"filterType":"price-filter"} -->
-<div class="wp-block-woocommerce-filter-wrapper 2222222"><!-- wp:heading {"level":3} -->
+<div class="wp-block-woocommerce-filter-wrapper"><!-- wp:heading {"level":3} -->
 <h3><?php esc_html_e( 'Filter by price', 'woocommerce' ); ?></h3>
 <!-- /wp:heading -->
 
@@ -28,7 +28,7 @@
 <!-- /wp:woocommerce/filter-wrapper -->
 
 <!-- wp:woocommerce/filter-wrapper {"filterType":"stock-filter"} -->
-<div class="wp-block-woocommerce-filter-wrapper 3333333"><!-- wp:heading {"level":3} -->
+<div class="wp-block-woocommerce-filter-wrapper"><!-- wp:heading {"level":3} -->
 <h3><?php esc_html_e( 'Filter by stock status', 'woocommerce' ); ?></h3>
 <!-- /wp:heading -->
 
@@ -38,7 +38,7 @@
 <!-- /wp:woocommerce/filter-wrapper -->
 
 <!-- wp:woocommerce/filter-wrapper {"filterType":"attribute-filter"} -->
-<div class="wp-block-woocommerce-filter-wrapper 4444444"><!-- wp:heading {"level":3} -->
+<div class="wp-block-woocommerce-filter-wrapper"><!-- wp:heading {"level":3} -->
 <h3><?php esc_html_e( 'Filter by attribute', 'woocommerce' ); ?></h3>
 <!-- /wp:heading -->
 
@@ -57,7 +57,7 @@ if ( ! empty( $attributes ) ) {
 <!-- /wp:woocommerce/filter-wrapper -->
 
 <!-- wp:woocommerce/filter-wrapper {"filterType":"rating-filter"} -->
-<div class="wp-block-woocommerce-filter-wrapper 555555"><!-- wp:heading {"level":3} -->
+<div class="wp-block-woocommerce-filter-wrapper"><!-- wp:heading {"level":3} -->
 <h3><?php esc_html_e( 'Filter by rating', 'woocommerce' ); ?></h3>
 <!-- /wp:heading -->
 
