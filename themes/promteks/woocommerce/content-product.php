@@ -71,6 +71,8 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 		</div>
 	<?php endif;
 
+	//$product_attributes = $product->get_attributes();
+
 	// Display product attribute
 	if ( ! $product_attributes ) {
 		return;

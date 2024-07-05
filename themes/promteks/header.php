@@ -45,11 +45,10 @@ $options = get_fields('options');
 		</div>
 		<div class="header-bottom">
 			<div class="wrap header-bottom__block">
-				<div class="header-block-logo">
-					<a href="<?= home_url(); ?>">
-						<img src="<?= $options['logo']; ?>"/>
-					</a>
-				</div>
+				<a class="header-block-logo" href="<?= home_url(); ?>">
+					<img src="<?= $options['logo']; ?>"/>
+					<span class="logo-text-year"><?= $options['yeas']; ?></span>
+				</a>
 				<div class="header-block-menu">
 					<?php wp_nav_menu('menu=top-menu'); ?>
 				</div>

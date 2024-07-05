@@ -54,12 +54,12 @@ if ( $product->is_in_stock() ) : ?>
 			?>
 		</div>
 		<div>
-			<hr class="promteks-card-hr">
-			<?php do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+			<?php /*<hr class="promteks-card-hr">*/?>
+			<?php /*do_action( 'woocommerce_after_add_to_cart_button' );*/ ?>
 		</div>
 	</form>
 	
-	<?php do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+	<?php /*do_action( 'woocommerce_after_add_to_cart_form' );*/ ?>
 
 <?php endif; ?>
 

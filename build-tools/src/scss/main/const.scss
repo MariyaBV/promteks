@@ -54,6 +54,23 @@ h4 {
   line-height: var(--subtitle-s-line-height);
 }
 
+.subtitle-xs {
+  font-size: var(--subtitle-xs-font-size);
+  font-weight: var(--subtitle-xs-font-weight);
+  line-height: var(--subtitle-xs-line-height);
+}
+
+.logo-text-year {
+  font-family: "Bad Script";
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: var(--white);
+}
+
 #page .added_to_wishlist {
   box-shadow: 0px 5px 16px 0px #00000014;
   padding: 10px;
@@ -70,7 +87,7 @@ main#main {
   margin: 30px 0;
 
   section[class] {
-    margin: 110px 0;
+    margin: 40px 0;
 
     &>header {
       &>* {
@@ -151,201 +168,6 @@ input[type="week"] {
     font-size: 1em;
   }
 }
-
-/*.br10 {
-  border-radius: 10px;
-}
-
-.bg-gray {
-  background-color: var(--gray);
-}
-
-.b-gray {
-  border: 1px solid var(--dark-gray);
-}
-
-.btn {
-  padding: 20px 40px;
-  //display: inline-block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  position: relative;
-  border-radius: 50px;
-  max-width: 300px;
-  width: 100%;
-  text-align: center;
-  text-decoration: none;
-
-  &.open {
-    z-index: -1;
-  }
-}
-
-input.btn,
-button.btn {
-  border: none;
-  font-size: 1rem;
-}
-
-.btn-g {
-  background: var(--gradient);
-  color: #fff;
-  cursor: pointer;
-}
-
-.btn-g:hover {
-  background: var(--gradient-r);
-  z-index: 1;
-}
-
-.btn-bg {
-  position: relative;
-  background: var(--gradient);
-  z-index: 1;
-  cursor: pointer;
-}
-
-.btn-bg::before {
-  content: "";
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  bottom: 1px;
-  left: 1px;
-  background-color: white;
-  border-radius: 49px;
-  z-index: -1;
-}
-
-.btn-bg>span {
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.btn-bg:hover {
-  color: #fff;
-}
-
-.btn-bg:hover::before {
-  content: "";
-  display: none;
-}
-
-.btn-bg:hover>span {
-  background: none;
-  -webkit-background-clip: text;
-  color: #fff;
-}
-
-.btn-b-lr {
-  border: 1px solid var(--lite-red);
-  color: var(--lite-red);
-  cursor: pointer;
-}
-
-.btn-b-lr:hover {
-  background: var(--gradient);
-  color: #fff;
-  border: 1px solid transparent;
-}
-
-.btn-lr {
-  background-color: var(--lite-red);
-  color: #fff;
-  border: 1px solid var(--lite-red);
-}
-
-.btn-lr:hover {
-  background-color: #fff;
-  color: var(--lite-red);
-  border: 1px solid var(--lite-red);
-}
-
-.trp {
-  transform: skewX(-15deg);
-  padding: 1em 0.8rem 1rem 1.2rem;
-
-  span {
-    transform: skewX(15deg);
-    display: block;
-  }
-}
-
-.trp-back {
-  transform: skewX(15deg);
-  padding: 1em 0.8rem 1rem 1.2rem;
-
-  span {
-    transform: skewX(-15deg);
-    display: block;
-  }
-}
-
-.brand-logo {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-
-  a {
-    text-decoration: none;
-  }
-
-  img {
-    height: 30px;
-    width: auto;
-  }
-
-  span {
-    font-size: 30px;
-    line-height: 1;
-    font-weight: 400;
-  }
-}
-
-.link-font {
-  display: flex;
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--main-color);
-  border-radius: 6px;
-  color: var(--main-color);
-  text-decoration: none;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-social {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  &__container {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: end;
-  }
-
-  &__title {
-    max-width: 120px;
-    font-size: 0.888rem;
-  }
-
-  &__list {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    gap: 10px;
-  }
-}
-
-.bg-gray .custom_list li:before {
-  background-color: #fff;
-}*/
 
 @media screen and (max-width: 960px) and (min-width: 391px) {
   html {

@@ -20,25 +20,57 @@ jQuery(document).ready(function ($) {
     currentCategory.parents('ul.children').show();
 });
 
-//удаляем слово выберите из фильтров в сайдбар
-// jQuery(document).ready(function ($) {
-//     function updatePlaceholders() {
-//         $('input[placeholder^="Выберите"]').each(function () {
-//             var placeholderText = $(this).attr('placeholder');
-//             $(this).attr('placeholder', placeholderText.replace(/^Выберите\s*/, ''));
-//         });
-//     }
+// стилизация селекта при выборе значения из выпад списка
+$(document).ready(function() {
+    function checkSelectValues() {
+        $('.attribute-filters__select select').each(function() {
+            const $select = $(this);
+            const $selectContainer = $select.parent();
+            const $resetButton = $selectContainer.find('.reset-button');
+            const $verticalLine = $selectContainer.find('.vertical-line');
+            const selectedOptionValue = $select.val().trim();
 
-//     // обновляем placeholder сразу после загрузки
-//     updatePlaceholders();
+            if (selectedOptionValue !== '') {
+                $selectContainer.addClass('option-selected');
+                $resetButton.css('opacity', '1');
+                $verticalLine.css('display', 'block');
+            } else {
+                $selectContainer.removeClass('option-selected');
+                $resetButton.css('opacity', '0');
+                $verticalLine.css('display', 'none');
+            }
+        });
+    }
 
-//     // Наблюдатель за изменениями в DOM
-//     var observer = new MutationObserver(updatePlaceholders);
-//     observer.observe(document.body, { childList: true, subtree: true });
+    checkSelectValues();
 
-//     // Останавливаем наблюдение через некоторое время (например, через 5 секунд)
-//     setTimeout(function () {
-//         observer.disconnect();
-//     }, 5000); // 5 секунд
-// });
+    // вызываем ф-ю при изменении значения в селекте
+    $('.attribute-filters__select select').on('change', function() {
+        checkSelectValues();
+    });
+
+    // изменения при нажатии на кнопку - крестик
+    $('.reset-button').on('click', function() {
+        const $resetButton = $(this);
+        const $selectContainer = $resetButton.parent();
+        const $select = $selectContainer.find('select');
+        $select.val('');
+        $select.trigger('change');
+    });
+
+    // отслеживаем изменении в url
+    function observeURLChanges(callback) {
+        let lastUrl = window.location.href;
+        new MutationObserver(() => {
+            const currentUrl = window.location.href;
+            if (currentUrl !== lastUrl) {
+                lastUrl = currentUrl;
+                callback();
+            }
+        }).observe(document, { subtree: true, childList: true });
+    }
+
+    // вызываем ф-ю при изменении url
+    observeURLChanges(checkSelectValues);
+});
 

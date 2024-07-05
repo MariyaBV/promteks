@@ -1,2 +1,91 @@
-.footer-nav {
+.footer-content {
+    background-color: #1D1D1D;
+    width: 100%;
+    font-size: var(--txt-font-size);
+    font-weight: var(--txt-font-weight);
+    line-height: var(--txt-line-height);
+    color: var(--white);
+
+    .custom {
+        display: flex;
+        justify-content: space-between;
+        padding: 40px;
+        margin: 0 auto;
+        gap: 20px;
+
+        .footer-left {
+            flex: 1;
+            max-width: 225px;
+
+            .logo-container {
+                display: flex;
+                align-items: center;
+                margin-bottom: 24px;
+
+                a {
+                    text-decoration: none;
+                }
+
+                .footer-logo {
+                    width: 100%;
+                    margin-right: 10px;
+                    max-width: 160px;
+                }
+            }
+        }
+
+        .footer-right {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 30px;
+            max-width: 360px;
+
+            ul {
+                list-style: none;
+                padding: 0;
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+
+                li {
+                    margin-bottom: 10px;
+                    flex: 50%;
+
+                    a {
+                        color: var(--white);
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+
+        .icon-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-bottom: 16px;
+            color: var(--white);
+            text-decoration: none;
+
+            p {
+                margin-bottom: 6px;
+            }
+        }
+
+        .icon-container svg {
+            margin-right: 8px;
+        }
+
+        .icon-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 80%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+    }
 }

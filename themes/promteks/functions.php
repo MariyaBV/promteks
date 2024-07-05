@@ -214,6 +214,11 @@ function promteks_blocks() {
 				'description' => __('Блок вывода товаров из 1 категории', 'promteks'),
 				'title' => __('Блок вывода товаров из 1 категории', 'promteks'),
 				'keywords' => array('блок-товаров-1-категории', 'баннер')
+			],
+			'three-blocks' => [
+				'description' => __('3 блока', 'promteks'),
+				'title' => __('3 блока', 'promteks'),
+				'keywords' => array('3-блока', 'баннер')
 			]
 		];
 
@@ -462,8 +467,7 @@ function custom_template_single_brand() {
     $brand_ids = wp_get_post_terms( $product->get_id(), 'pwb-brand', array( 'fields' => 'ids' ) );
 
 	// Получаем название блока
-    $taxonomy_label = $taxonomy ? $taxonomy->labels->singular_name : 'Производитель';
-
+    $taxonomy_label = 'Производитель';
 
     // Проверяем, что производитель (бренд) выбран для товара
     if ( ! empty( $brand_ids ) ) {
@@ -484,6 +488,20 @@ function custom_template_single_brand() {
     }
 }
 add_action( 'woocommerce_single_product_summary', 'custom_template_single_brand', 1 );
+
+//удаляем автоматический вывод бренда на странице продукта
+function remove_pwb_brand_action() {
+    $positions = array(4, 6, 11, 21, 31, 41, 51);
+
+    foreach ($positions as $position) {
+        remove_action('woocommerce_single_product_summary', array('WooCommerce', 'action_woocommerce_single_product_summary'), $position);
+	}
+}
+add_action('init', 'remove_pwb_brand_action');
+
+remove_action('woocommerce_single_product_summary', 'action_woocommerce_single_product_summary');
+
+
 
 if ( ! function_exists( 'woocommerce_template_loop_product_title' ) ) {
 
@@ -661,15 +679,6 @@ function genius_alter_price_cart( $cart ) {
 // Удаляем стандартную форму сортировки перед списком товаров
 remove_action('woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30);
 
-// Фильтрация placeholder в виджете фильтра по атрибутам
-function custom_woocommerce_dropdown_layered_nav_term_html($html, $term, $selected, $count) {
-    if (strpos($html, 'option value=""') !== false) {
-        $html = str_replace('option value="" selected="selected">Выберите</option>', 'option value="" selected="selected"></option>', $html);
-    }
-    return $html;
-}
-add_filter('woocommerce_dropdown_layered_nav_term_html', 'custom_woocommerce_dropdown_layered_nav_term_html', 10, 4);
-
 function custom_woocommerce_get_catalog_ordering_attr_args($query) {
     if (!is_admin() && $query->is_main_query() && is_tax('product_cat')) {
         // Получаем текущие параметры запроса
@@ -703,7 +712,7 @@ add_action('pre_get_posts', 'custom_woocommerce_get_catalog_ordering_attr_args')
 
 
 function print_filters() {
-    $category = get_queried_object(); // Получаем объект текущей категории
+    $category = get_queried_object();
     if (!$category) {
         return;
     }
@@ -713,12 +722,17 @@ function print_filters() {
         return;
     }
 
-    // Получаем текущие параметры URL
     $current_params = $_GET;
 
-    echo '<form method="get" action="#">';
-    
-    // Включаем текущие параметры URL в скрытых полях формы
+    $non_attribute_params = array_filter($current_params, function($key) {
+        return strpos($key, 'attribute_') !== 0;
+    }, ARRAY_FILTER_USE_KEY);
+
+    $clear_filters_url = add_query_arg($non_attribute_params, get_term_link($category));
+
+    echo '<h2>Фильтры</h2>';
+    echo '<div class="attribute-filters"><form method="get" action="#">';
+
     foreach ($current_params as $key => $value) {
         if (strpos($key, 'attribute_') !== 0) {
             echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
@@ -729,27 +743,27 @@ function print_filters() {
         $attribute_name = $attribute->attribute_name;
         $attribute_label = $attribute->attribute_label;
 
-        // Получаем список всех терминов (опций) атрибута
         $terms = get_terms(array(
             'taxonomy' => 'pa_' . $attribute_name,
             'hide_empty' => true,
         ));
 
         if (!empty($terms) && !is_wp_error($terms)) {
-            echo '<select name="attribute_' . esc_attr($attribute_name) . '" id="attribute_' . esc_attr($attribute_name) . '">';
+            echo '<span class="attribute-filters__select"><select name="attribute_' . esc_attr($attribute_name) . '" id="attribute_' . esc_attr($attribute_name) . '">';
             echo '<option value="">' . esc_html($attribute_label) . '</option>';
             foreach ($terms as $term) {
                 $selected = isset($current_params['attribute_' . esc_attr($attribute_name)]) && $current_params['attribute_' . esc_attr($attribute_name)] === $term->slug ? ' selected' : '';
                 echo '<option value="' . esc_attr($term->slug) . '"' . $selected . '>' . esc_html($term->name) . '</option>';
             }
-            echo '</select>';
+            echo '</select><span class="vertical-line"></span><span class="reset-button">×</span></span>';
         }
     }
-    echo '<input type="submit" value="Применить фильтр по свойствам">';
+    echo '<input type="submit" value="Применить фильтры">';
     echo '</form>';
+    echo '<a href="' . esc_url($clear_filters_url) . '" class="clear-filters">Очистить фильтры</a>';
+    echo '</div>';
 }
 add_action('woocommerce_before_shop_loop', 'print_filters', 20);
-
 
 function get_category_product_attributes($category_id) {
     global $wpdb;
@@ -765,7 +779,6 @@ function get_category_product_attributes($category_id) {
         return false;
     }
 
-    // Получаем все атрибуты товаров
     $all_attributes = wc_get_attribute_taxonomies();
 
     // Отфильтровываем только те атрибуты, которые используются в данных продуктах
@@ -788,30 +801,3 @@ function get_category_product_attributes($category_id) {
     return $attributes;
 }
 
-
-// function get_category_product_attributes($category_id) {
-//     // Получаем объект категории
-//     $category = get_term($category_id, 'product_cat');
-
-//     // Проверяем, что категория существует и является категорией товаров
-//     if (is_wp_error($category) || !is_object($category) || $category->taxonomy !== 'product_cat') {
-//         return false;
-//     }
-
-//     // Получаем атрибуты, связанные с товарами этой категории
-//     $args = array(
-//         'hide_empty' => false,
-//         'meta_query' => array(
-//             'relation' => 'OR',
-//             array(
-//                 'key'     => 'product_cat',
-//                 'value'   => $category->id,
-//                 'compare' => 'LIKE'
-//             )
-//         )
-//     );
-//     $attributes = wc_get_attribute_taxonomies($args);
-
-//     // Возвращаем массив атрибутов
-//     return $attributes;
-// }

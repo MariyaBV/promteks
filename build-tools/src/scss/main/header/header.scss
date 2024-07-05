@@ -49,8 +49,6 @@ header#main-header {
             padding: 4px 12px;
             width: 100%;
             border-radius: 10px;
-
-            &:hover {}
         }
 
         &__button {
@@ -181,5 +179,10 @@ header#main-header {
         flex: 20%;
         display: flex;
         justify-content: flex-start;
+
+        img {
+            max-width: 160px;
+            margin-right: 8px;
+        }
     }
 }
