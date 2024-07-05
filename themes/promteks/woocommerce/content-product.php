@@ -42,11 +42,8 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	 */
 	do_action( 'woocommerce_before_shop_loop_item_title' );
 	?>
-	<div class="product-price-wishlist"><?php
-		//вывод цены
-		global $product;
-		?>
-		<p class="<?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>"><?php echo $product->get_price_html(); ?></p>
+	<div class="product-price-wishlist 11111">
+		<p class="2222 <?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>"><?php echo $product->get_price_html(); ?></p>
 		<?php
 
 		// вывод кнопки добавления в понравившееся

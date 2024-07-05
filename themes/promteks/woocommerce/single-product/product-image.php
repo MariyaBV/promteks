@@ -54,14 +54,12 @@ $wrapper_classes   = apply_filters(
             </div>
             <div class="swiper-button-next product-gallery__swiper-button-next"></div>
         </div>
-		<div class="main-image">
-            <?php
-            if ( $post_thumbnail_id ) {
-                echo wp_get_attachment_image( $post_thumbnail_id, 'large' );
-            } else {
-                echo sprintf( '<img src="%s" alt="%s" class="wp-post-image" style="width: 520px; height: 520px;" />', esc_url( wc_placeholder_img_src( 'woocommerce_single' ) ), esc_html__( 'Awaiting product image', 'woocommerce' ) );
-            }
-            ?>
-        </div>
+		<?php
+		if ( $post_thumbnail_id ) {
+			echo wp_get_attachment_image( $post_thumbnail_id, 'large' );
+		} else {
+			echo sprintf( '<img src="%s" alt="%s" class="wp-post-image" style="width: 520px; height: 520px;" />', esc_url( wc_placeholder_img_src( 'woocommerce_single' ) ), esc_html__( 'Awaiting product image', 'woocommerce' ) );
+		}
+		?>
     </div>
 </div>

@@ -240,22 +240,8 @@ function promteks_blocks() {
 	}
 }
 
-// function promteks_block($block) {
-
-// 	// convert name ("acf/testimonial") into path friendly slug ("testimonial")
-// 	$slug = str_replace('acf/', '', $block['name']);
-
-// 	// include a template part from within the "template-parts/block" folder
-// 	if (file_exists(get_theme_file_path("/template-parts/block-{$slug}.php"))) {
-// 		include (get_theme_file_path("/template-parts/block-{$slug}.php"));
-// 	}
-// }
-
 function promteks_block($block) {
-    // convert name ("acf/testimonial") into path friendly slug ("testimonial")
     $slug = str_replace('acf/', '', $block['name']);
-
-    // include a template part from within the "template-parts/block" folder
     $template_path = get_theme_file_path("/template-parts/block-{$slug}.php");
     if (file_exists($template_path)) {
         include ($template_path);
@@ -303,8 +289,8 @@ function custom_add_woocomerce_support() {
 }
 add_action( 'after_setup_theme', 'custom_add_woocomerce_support' );
  
+
 function custom_recently_viewed_product_cookie() {
-	// проверка на стр продукта или нет
 	if ( ! is_product() ) {
 		return;
 	}
@@ -330,6 +316,7 @@ function custom_recently_viewed_product_cookie() {
 }
 add_action( 'template_redirect', 'custom_recently_viewed_product_cookie', 20 );
 
+
 // Функция для отображения последних просмотренных товаров
 function custom_recently_viewed_products() {
  
@@ -342,8 +329,6 @@ function custom_recently_viewed_products() {
 	if ( empty( $viewed_products ) ) {
 		return;
 	}
-
-	remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open' );
  
 	// отображаем последние просмотренные
 	$viewed_products = array_reverse( array_map( 'absint', $viewed_products ) );
@@ -561,14 +546,6 @@ function add_product_category_sidebar() {
 add_action('woocommerce_sidebar', 'add_product_category_sidebar');
 
 function custom_orderby_option( $sortby ) {
-	//$sortby['color'] = 'По цвету';
-	// $sortby['length'] = 'По длине мм';
-	// $sortby['thickness'] = 'По толщине мм';
-	// $sortby['width'] = 'По ширине мм';
-	// $sortby['weight'] = 'По весу кг';
-	// $sortby['volume_m_2'] = 'По Объему м^2';
-	// $sortby['volume_m_3'] = 'По Объему м^3';
-	// $sortby['volume_ml'] = 'По Объему мл';
 	$sortby['discount'] = 'Только со скидкой';
 	return $sortby;
 }

@@ -83,7 +83,6 @@
         max-width: 100px;
         width: 100%;
         height: 450px;
-        //height: window.innerHeight;
         position: relative;
 
         .swiper-slide {
@@ -114,6 +113,8 @@
 .woocommerce ul.products li.product a img {
     max-width: 240px;
     max-height: 240px;
+    width: auto;
+    margin: 0 auto;
 }
 
 .promteks-card-hr {
@@ -204,8 +205,8 @@
             a img {
                 aspect-ratio: 1 / 1;
                 width: 100%;
-                border: 1px solid var(--dark-gray);
                 display: block;
+                margin: 0 auto;
             }
 
             h2 {
