@@ -367,12 +367,6 @@ function woocommerce_add_to_cart_button_text_archives() {
 }
 add_filter( 'woocommerce_product_add_to_cart_text', 'woocommerce_add_to_cart_button_text_archives' ); 
 
-// Функция для замены текста "Бренд" на "Производитель" Perfect Brands for WooCommerce
-function replace_brand_with_producer( $text ) {
-    return str_replace( 'Бренды', 'Производитель', $text );
-}
-add_filter( 'gettext', 'replace_brand_with_producer', 20 );
-add_filter( 'ngettext', 'replace_brand_with_producer', 20 );
 
 // Изменяем стандартную функцию показа заголовка категории на стр каталог
 remove_action( 'woocommerce_shop_loop_subcategory_title', 'woocommerce_template_loop_category_title' );
@@ -467,7 +461,7 @@ function custom_template_single_brand() {
         if ( ! is_wp_error( $brand ) && $brand ) {
             // Выводим информацию о бренде
             ?>
-            <div class="pwb-single-product-brands pwb-clearfix">
+            <div class="custom-block-brands">
                 <span class="pwb-text-before-brands-links"><?php echo esc_html($taxonomy_label); ?>:</span>
                 <a href="<?php echo esc_url( get_term_link( $brand ) ); ?>" title="<?php echo esc_attr( $brand->name ); ?>">
                     <?php echo esc_html( $brand->name ); ?>
@@ -479,17 +473,29 @@ function custom_template_single_brand() {
 }
 add_action( 'woocommerce_single_product_summary', 'custom_template_single_brand', 1 );
 
-//удаляем автоматический вывод бренда на странице продукта
-function remove_pwb_brand_action() {
-    $positions = array(4, 6, 11, 21, 31, 41, 51);
 
-    foreach ($positions as $position) {
-        remove_action('woocommerce_single_product_summary', array('WooCommerce', 'action_woocommerce_single_product_summary'), $position);
-	}
+// Функция для замены текста "Бренд" на "Производитель" Perfect Brands for WooCommerce в админке
+function replace_brand_with_producer( $text ) {
+    return str_replace( 'Бренды', 'Производитель', $text );
 }
-add_action('init', 'remove_pwb_brand_action');
+add_filter( 'gettext', 'replace_brand_with_producer', 20 );
+add_filter( 'ngettext', 'replace_brand_with_producer', 20 );
 
-remove_action('woocommerce_single_product_summary', 'action_woocommerce_single_product_summary');
+//удаляем автоматический вывод бренда на странице продукта
+// function remove_pwb_brand_action() {
+//     $positions = array(4, 6, 11, 21, 31, 41, 51);
+
+//     foreach ($positions as $position) {
+//         remove_action('woocommerce_single_product_summary', array('WooCommerce', 'action_woocommerce_single_product_summary'), $position);
+// 	}
+//     remove_action('woocommerce_single_product_summary', array('Perfect_WooCommerce_Brands_Class', 'action_woocommerce_single_product_summary'), 41);
+
+//     remove_action('woocommerce_single_product_summary', 'pwb_print_brand_in_single_product', 6);
+// }
+// add_action('init', 'remove_pwb_brand_action');
+
+// remove_action('woocommerce_single_product_summary', 'action_woocommerce_single_product_summary');
+
 
 
 

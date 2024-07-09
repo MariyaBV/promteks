@@ -268,7 +268,7 @@
     margin: 0 auto;
 }
 
-#primary .pwb-single-product-brands {
+#primary .custom-block-brands {
     font-size: var(--subtitle-s-font-size);
     font-weight: var(--subtitle-s-font-weight);
     line-height: var(--subtitle-s-line-height);
@@ -279,6 +279,10 @@
         color: var(--light-grey);
         text-decoration: underline;
     }
+}
+
+#primary .summary.entry-summary .pwb-single-product-brands.pwb-clearfix {
+    display: none;
 }
 
 #primary .summary.entry-summary {
