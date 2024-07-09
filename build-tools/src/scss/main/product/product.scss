@@ -326,7 +326,10 @@
 
     .stock-status {
         margin: 16px 0;
-        color: green;
+        
+        .available-on-backorder {
+            color: green;
+        }
 
         .in-stock {
             position: relative;
