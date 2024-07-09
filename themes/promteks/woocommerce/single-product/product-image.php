@@ -39,27 +39,30 @@ $wrapper_classes   = apply_filters(
 ?>
 
 <div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>" style="opacity: 1; transition: opacity .25s ease-in-out;">
-    <div class="woocommerce-product-gallery__wrapper">
-        <div class="swiper-container product-gallery-swiper">
+    <div class="woocommerce-product-gallery__wrapper swiper">
+        <div class="swiper-container  product-gallery-swiper">
             <div class="swiper-wrapper swiper-wrapper-vertical woocommerce-product-gallery__wrapper">
                 <?php
-                if ( $attachment_ids ) {
-                    foreach ( $attachment_ids as $attachment_id ) {
+                if ($attachment_ids) {
+                    foreach ($attachment_ids as $attachment_id) {
+                        $full_size_image = wp_get_attachment_image_src($attachment_id, 'full');
+                        $thumbnail_image = wp_get_attachment_image($attachment_id, 'thumbnail');
                         echo '<div class="swiper-slide">';
-                        echo wp_get_attachment_image( $attachment_id, 'thumbnail' );
+                        echo '<a href="' . esc_url($full_size_image[0]) . '" data-fancybox="gallery">' . $thumbnail_image . '</a>';
                         echo '</div>';
                     }
-                }
+				}
                 ?>
             </div>
             <div class="swiper-button-next product-gallery__swiper-button-next"></div>
         </div>
 		<?php
-		if ( $post_thumbnail_id ) {
-			echo wp_get_attachment_image( $post_thumbnail_id, 'large' );
-		} else {
-			echo sprintf( '<img src="%s" alt="%s" class="wp-post-image" style="width: 520px; height: 520px;" />', esc_url( wc_placeholder_img_src( 'woocommerce_single' ) ), esc_html__( 'Awaiting product image', 'woocommerce' ) );
-		}
+		if ($post_thumbnail_id) {
+            $full_size_image = wp_get_attachment_image_src($post_thumbnail_id, 'full');
+            echo '<a href="' . esc_url($full_size_image[0]) . '" data-fancybox="gallery">' . wp_get_attachment_image($post_thumbnail_id, 'large') . '</a>';
+        } else {
+            echo sprintf('<img src="%s" alt="%s" class="wp-post-image" style="width: 520px; height: 520px;" />', esc_url(wc_placeholder_img_src('woocommerce_single')), esc_html__('Awaiting product image', 'woocommerce'));
+        }
 		?>
     </div>
 </div>

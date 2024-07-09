@@ -4,14 +4,7 @@ $(document).ready(function() {
         spaceBetween: 10,
         loop: true,
         slidesPerGroup: 4,
-        //autoHeight: true,
-        //freeMode: true,
         slidesPerView: 4,
-        //paginationClickable: true,
-        // autoplay: {
-        //     delay: 3000,
-        //     disableOnInteraction: false,
-        // },
         navigation: {
             nextEl: '.product-gallery__swiper-button-next',
         },
