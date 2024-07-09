@@ -782,4 +782,20 @@ function get_category_product_attributes($category_id) {
 
     return $attributes;
 }
+ 
+//меняем разделить в хлебных крошках
+function true_woo_breadcrumbs_delimiter( $defaults ) {
+ 
+	$defaults[ 'delimiter' ] = '&nbsp;&gt;&nbsp;'; 
 
+	return $defaults;
+ 
+}
+add_filter( 'woocommerce_breadcrumb_defaults', 'true_woo_breadcrumbs_delimiter' );
+
+//удаляем блок нет в наличии
+function custom_availability_text( $availability, $product ) {
+    // Возвращаем пустую строку, чтобы убрать текст доступности
+    return '';
+}
+add_filter( 'woocommerce_get_availability_text', 'custom_availability_text', 10, 2 );

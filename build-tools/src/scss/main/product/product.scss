@@ -8,7 +8,6 @@
 
     .block-quantity-button {
         display: flex;
-        //margin-bottom: 40px;
     }
 
     .button {
@@ -77,6 +76,15 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
+
+        a {
+            margin: 0 auto;
+        }
+
+        &.swiper {
+            flex-wrap: nowrap;
+            gap: 40px;
+        }
     }
 
     .product-gallery-swiper {
@@ -256,7 +264,7 @@
 .woocommerce div.product div.images img {
     max-width: 520px;
     max-height: 520px;
-    width: auto;
+    //width: auto;
     margin: 0 auto;
 }
 
@@ -318,6 +326,7 @@
 
     .stock-status {
         margin: 16px 0;
+        color: green;
 
         .in-stock {
             position: relative;

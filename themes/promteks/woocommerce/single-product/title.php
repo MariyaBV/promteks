@@ -33,11 +33,14 @@ the_title( '<h4 class="product_title entry-title">', '</h4>' );
 // Получение данных о запасах
 $stock_status = get_post_meta( $product->get_id(), '_stock_status', true );
 $stock_status_options = wc_get_product_stock_status_options();
+
 ?>
 <div class="stock-status">
     <p><?php 
 	if ( $stock_status === 'outofstock' ) {
 		echo '<span class="out-of-stock">Нет на складе</span>';
+	} elseif ( $stock_status === 'onbackorder' ) {
+		echo '<span class="available-on-backorder">Доступно для предзаказа</span>';
 	} else {
 		echo '<span class="in-stock">Есть на складе</span>';
 	}
