@@ -1,3 +1,16 @@
 .woocommerce .woocommerce-breadcrumb {
     color: var(--black);
+    margin: 0;
+    padding: 16px 0;
+
+    a {
+        color: var(--gray);
+        text-decoration: none;
+        position: relative;
+
+        &::after {
+            content: ">";
+            margin: 0 8px;
+        }
+    }
 }

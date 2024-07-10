@@ -1,0 +1,96 @@
+.cart-title {
+    margin: 40px 0;
+}
+
+.woocommerce .cart-collaterals .custom-cart-totals {
+    width: 100%;
+    float: none;
+
+    .shop_table {
+        border: none;
+
+        .order-total {
+            td, th {
+                padding: 24px 0;
+            }
+
+            td {
+                text-align: right;
+            }
+        }
+
+        .woocommerce-shipping-totals {
+            background-color: var(--light-grey);
+
+            th, td {
+                border-bottom: 1px solid var(--main-color);
+                padding: 24px 0;
+                font-size: var(--txt-font-size);
+                font-weight: var(--txt-font-weight);
+                line-height: var(--txt-line-height);
+            }
+
+            
+        }
+    }
+}
+
+.woocommerce-cart .custom-button-checkout {
+    margin: 0;
+    padding: 0;
+
+    a.checkout-button.button {
+        max-width: 240px;
+        width: 100%;
+        background-color: var(--dark-green);
+        border-radius: var(--button-border-radius);
+        font-size: var(--txt-s-font-size);
+        font-weight: var(--txt-s-font-weight);
+        line-height: var(--txt-s-line-height);
+        padding: 8px 0;
+        float: right;
+    }
+}
+
+.custom-cart-form {
+    table.shop_table {
+        border: none;
+        margin: 0;
+
+        .cart-header {
+            background-color: var(--light-grey);
+
+            th {
+                font-weight: var(--txt-font-weight);
+            }
+        }
+
+        .cart-body {
+            img {
+                height: auto;
+                width: 100%;
+                max-width: 100px;
+            }
+
+            a {
+                text-decoration: none;
+            }
+
+            td {
+                font-weight: var(--txt-font-weight);
+                font-size: var(--txt-font-size);
+                line-height: var(--txt-line-height);
+                border: none;
+                border-bottom: 1px solid var(--grey);
+                padding: 16px 0;
+
+                .quantity .qty {
+                    text-align: center;
+                    width: 100%;
+                    max-width: 85px;
+                    padding: 0;
+                }
+            }
+        }
+    }
+}

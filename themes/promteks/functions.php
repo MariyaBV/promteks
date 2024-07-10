@@ -788,16 +788,6 @@ function get_category_product_attributes($category_id) {
 
     return $attributes;
 }
- 
-//меняем разделить в хлебных крошках
-function true_woo_breadcrumbs_delimiter( $defaults ) {
- 
-	$defaults[ 'delimiter' ] = '&nbsp;&gt;&nbsp;'; 
-
-	return $defaults;
- 
-}
-add_filter( 'woocommerce_breadcrumb_defaults', 'true_woo_breadcrumbs_delimiter' );
 
 //удаляем блок нет в наличии
 function custom_availability_text( $availability, $product ) {
@@ -805,3 +795,16 @@ function custom_availability_text( $availability, $product ) {
     return '';
 }
 add_filter( 'woocommerce_get_availability_text', 'custom_availability_text', 10, 2 );
+
+//добавляем хлебные крошки
+// Корзина
+add_action( 'woocommerce_before_cart', 'woocommerce_breadcrumb', 10, 0 );
+// Оформление заказа
+add_action( 'woocommerce_before_checkout_form', 'woocommerce_breadcrumb', 0, 0 );
+//удаляем разделить в хлебных крошках
+function true_woo_breadcrumbs_delimiter( $defaults ) {
+	$defaults[ 'delimiter' ] = ''; 
+
+	return $defaults;
+}
+add_filter( 'woocommerce_breadcrumb_defaults', 'true_woo_breadcrumbs_delimiter' );
