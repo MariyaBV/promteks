@@ -210,10 +210,10 @@ function promteks_blocks() {
 	if (function_exists('acf_register_block')) {
 
 		$blocks = [
-			'banner-top' => [
-				'description' => __('Верхний блок', 'promteks'),
-				'title' => __('Верхний блок', 'promteks'),
-				'keywords' => array('верхний-блок', 'баннер')
+			'slider' => [
+				'description' => __('Блок со слайдером', 'promteks'),
+				'title' => __('Блок со слайдером', 'promteks'),
+				'keywords' => array('Блок-со-слайдером', 'баннер')
 			],
 			'product-category' => [
 				'description' => __('Блок вывода товаров из 1 категории', 'promteks'),

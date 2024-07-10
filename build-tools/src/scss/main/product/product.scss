@@ -8,10 +8,12 @@
 
     .block-quantity-button {
         display: flex;
+        background-color: var(--light-grey);
     }
 
     .button {
-        background-color: var(--black);
+        background-color: var(--dark-green);
+        border-radius: var(--button-border-radius);
         flex: 70%;
         float: none;
         margin: 0;
@@ -27,8 +29,7 @@
     }
 
     .quantity .qty {
-        padding: 8px 0;
-        background-color: var(--grey);
+        padding: 9px 0;
         border-radius: 0;
         color: var(--main-color);
         float: none;
@@ -37,7 +38,7 @@
 
     .quantity-arrow-minus,
     .quantity-arrow-plus {
-        background-color: var(--grey);
+        background-color: var(--light-grey);
         border-radius: 0;
         color: var(--main-color);
         border: none;
@@ -162,11 +163,12 @@
     text-align: center;
     padding: 8px 0;
     color: var(--white);
-    background-color: var(--black);
+    background-color: var(--dark-green);
     font-size: var(--txt-s-font-size);
     font-weight: var(--txt-s-font-weight);
     line-height: var(--txt-s-line-height);
     text-align: center;
+    border-radius: var(--button-border-radius);
 
     &:hover {
         cursor: pointer;
@@ -258,6 +260,7 @@
     .fa {
         font-size: x-large;
         margin: 0;
+        color: #9B9B9B;
     }
 }
 
@@ -272,11 +275,11 @@
     font-size: var(--subtitle-s-font-size);
     font-weight: var(--subtitle-s-font-weight);
     line-height: var(--subtitle-s-line-height);
-    color: var(--light-grey);
+    color: var(--gray);
     margin: 8px 0 24px;
 
     a {
-        color: var(--light-grey);
+        color: var(--gray);
         text-decoration: underline;
     }
 }
@@ -308,11 +311,7 @@
 
     .yith-wcwl-icon.fa {
         font-size: x-large;
-
-        &.fa-heart-o {
-            color: #9B9B9B;
-
-        }
+        color: #9B9B9B;
     }
 }
 

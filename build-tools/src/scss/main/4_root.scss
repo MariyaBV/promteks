@@ -1,14 +1,17 @@
 :root {
-  --main-color: #1D1D1D;
+  --main-color: #202020;
   --red: #C34747;
   --green: #00A148;
-  --dark-green: #025527;
-  --gray: #f7f7f7;
-  --dark-gray: #ACACAC;
+  --dark-green: #00653B;
+  --grey: #DFDFDF;
+  --gray: #9B9B9B;
+  --dark-grey: #ACACAC;
   --light-black: #00000014;
   --black: #000000;
   --white: #ffffff;
-  --light-grey: #9B9B9B;
+  --light-grey: #F7F7F7;
+
+  --button-border-radius: 4px;
 
   // Fonts
   --h1-font-size: 3rem;
