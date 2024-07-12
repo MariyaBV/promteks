@@ -1,5 +1,5 @@
 .footer-content {
-    background-color: #1D1D1D;
+    background-color: var(--dark-green);
     width: 100%;
     font-size: var(--txt-font-size);
     font-weight: var(--txt-font-weight);
@@ -21,6 +21,7 @@
                 display: flex;
                 align-items: center;
                 margin-bottom: 24px;
+                text-decoration: none;
 
                 a {
                     text-decoration: none;
@@ -70,6 +71,10 @@
 
             p {
                 margin-bottom: 6px;
+
+                &.subtitle-xs {
+                    color: var(--pale-green);
+                }
             }
         }
 

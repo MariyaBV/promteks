@@ -1,15 +1,21 @@
 :root {
+  --black: #000000;
   --main-color: #202020;
+
   --red: #C34747;
+
   --green: #00A148;
   --dark-green: #00653B;
+  --accent-green: #BDFF00;
+  --pale-green: #6FBC7B;
+
   --grey: #DFDFDF;
   --gray: #9B9B9B;
   --dark-grey: #ACACAC;
-  --light-black: #00000014;
-  --black: #000000;
-  --white: #ffffff;
   --light-grey: #F7F7F7;
+  --white: #FFFFFF;
+
+  --gradient: linear-gradient(79.45deg, #C34747 0.7%, #FF0000 96.22%);
 
   --button-border-radius: 4px;
 

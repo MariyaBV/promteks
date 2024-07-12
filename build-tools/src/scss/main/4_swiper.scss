@@ -94,11 +94,11 @@
 }
 
 .swiper-lazy-preloader-white {
-  --swiper-preloader-color: #fff;
+  --swiper-preloader-color: var(--white);
 }
 
 .swiper-lazy-preloader-black {
-  --swiper-preloader-color: #000;
+  --swiper-preloader-color: var(--black);
 }
 
 @keyframes swiper-preloader-spin {
@@ -127,17 +127,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--so-dark);
-  border-radius: 50%;
-  box-shadow: 0px 0px 10px 0px var(--black);
-  background-color: var(--white);
+  color: var(--white);
+  //border-radius: 50%;
+  //box-shadow: 0px 0px 10px 0px var(--black);
+  //background-color: var(--white);
 
   &::before {
     content: "";
     display: block;
     border-bottom: 2px solid;
-    width: 25%;
-    height: 25%;
+    width: 45%;
+    height: 45%;
     border-left: 2px solid;
     transform: rotate(45deg);
     transform-origin: 75% 75%;

@@ -8,9 +8,13 @@
             <div class="swiper-wrapper slider__wrapper">
                 <?php foreach ($r['sliders'] as $item): ?>
                     <div class="swiper-slide slider__slide">
-                        <h3 class="slide_text"><?= $item['text']; ?></h3>
                         <img class="img" src="<?= $item['image']; ?>" alt="slide image"/>
-                        <a href="<?= $item['link']; ?>"></a>
+                        <div class="slider-content">
+                            <h2 class="slide-text"><?= $item['text']; ?></h2>
+                            <a class="slide-button" href="<?= $item['button']['link']; ?>">
+                                <h4><?= $item['button']['link-text']; ?></h4>
+                            </a>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>
