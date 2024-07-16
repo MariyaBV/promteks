@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="swiper-pagination block-slider__pagination" id="pagination_<?php echo esc_attr($block['id']); ?>"></div>
-        <div class="swiper-button-prev block-slider__prev" id="prev_<?php echo esc_attr($block['id']); ?>"></div>
-        <div class="swiper-button-next block-slider__next" id="next_<?php echo esc_attr($block['id']); ?>"></div>
+        <div class="swiper-button-prev block-slider__prev icon-Vector-13" id="prev_<?php echo esc_attr($block['id']); ?>"></div>
+        <div class="swiper-button-next block-slider__next icon-Vector-14" id="next_<?php echo esc_attr($block['id']); ?>"></div>
     </div>
 </section>

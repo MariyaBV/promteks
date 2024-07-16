@@ -2,6 +2,15 @@
     position: relative;
     margin-bottom: 40px;
 
+    &__next,
+    &__prev {
+        font-size: xx-large;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
     .swiper-button-next,
     .swiper-button-prev {
         top: 50%;
@@ -11,18 +20,18 @@
     .swiper-button-next {
         right: -27px;
 
-        &::before {
-            transform-origin: 40% 55%;
-            transform: rotate(-135deg);
-        }
+        // &::before {
+        //     transform-origin: 40% 55%;
+        //     transform: rotate(-135deg);
+        // }
     }
 
     .swiper-button-prev {
         left: 29px;
 
-        &::before {
-            transform-origin: 50% 75%;
-        }
+        // &::before {
+        //     transform-origin: 50% 75%;
+        // }
     }
 
     .swiper-pagination-bullet {

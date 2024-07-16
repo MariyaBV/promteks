@@ -1,5 +1,5 @@
 .footer-content {
-    background-color: var(--dark-green);
+    background-color: #1d1d1d;
     width: 100%;
     font-size: var(--txt-font-size);
     font-weight: var(--txt-font-weight);
@@ -69,8 +69,14 @@
             color: var(--white);
             text-decoration: none;
 
+            .icon-Vector-3,
+            .icon-Vector-5 {
+                margin-right: 9px;
+            }
+
             p {
                 margin-bottom: 6px;
+                font-family: "Inter", sans-serif;
 
                 &.subtitle-xs {
                     color: var(--pale-green);

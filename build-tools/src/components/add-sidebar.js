@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
     $('.category-list li').has('ul.children').addClass('has-children');
+    $('.category-list li.has-children > a').addClass('icon-Vector-10');
 
     $('.category-list li.has-children > a').on('click', function (e) {
         e.preventDefault();
@@ -7,10 +8,12 @@ jQuery(document).ready(function ($) {
         var children = parent.find('> ul.children');
 
         if (parent.hasClass('expanded')) {
-            parent.removeClass('expanded');
+            parent.removeClass('expanded').removeClass('icon-Vector-9');
+            $(this).addClass('icon-Vector-10');
             children.slideUp();
         } else {
-            parent.addClass('expanded');
+            parent.addClass('expanded').addClass('icon-Vector-9');
+            $(this).removeClass('icon-Vector-10');
             children.slideDown();
         }
     });

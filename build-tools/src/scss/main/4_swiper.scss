@@ -133,15 +133,15 @@
   //background-color: var(--white);
 
   &::before {
-    content: "";
-    display: block;
-    border-bottom: 2px solid;
-    width: 45%;
-    height: 45%;
-    border-left: 2px solid;
-    transform: rotate(45deg);
-    transform-origin: 75% 75%;
-    object-fit: contain;
+    // content: "";
+    // display: block;
+    // border-bottom: 2px solid;
+    // width: 45%;
+    // height: 45%;
+    // border-left: 2px solid;
+    // transform: rotate(45deg);
+    // transform-origin: 75% 75%;
+    // object-fit: contain;
   }
 
   &.swiper-button-disabled {

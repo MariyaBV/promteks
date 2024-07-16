@@ -31,7 +31,7 @@ $options = get_fields('options');
 		<div class="header-top">
 			<div class="wrap header-top__block">
 				<div class="header-block-delivery">
-					<p class="header-block-delivery__city"><?= $options['city']; ?></p>
+					<p class="header-block-delivery__city"><span class="icon-Vector-3"></span><?= $options['city']; ?></p>
 					<div class="header-block-delivery__delivery">
 						<img src="<?= $options['title-top-header']['logo']; ?>"/>
 						<h4><?= $options['title-top-header']['title']; ?></h4>

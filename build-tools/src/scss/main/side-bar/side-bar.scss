@@ -1,4 +1,4 @@
-.category-slider {
+.category-list-categories {
     width: 300px;
     overflow: hidden;
     position: relative;
@@ -11,30 +11,66 @@
 
         ul.children {
             display: none;
-            padding-left: 20px;
+            padding-left: 0;
+
+            li {
+                padding: 12px 24px;
+                border: none;
+            }
         }
 
         li {
             list-style: none;
-            padding: 12px 0 12px 8px;
+            border-bottom: 1px solid #9B9B9B66;
+            position: relative;
 
             &:hover {
                 cursor: pointer;
             }
 
-            a {
+            .cat-link {
                 text-decoration: none;
+                display: flex;
+                align-items: center;
+                flex-wrap: nowrap;
+                font-size: var(--subtitle-font-size);
+                font-weight: var(--subtitle-font-weight);
+                line-height: var(--subtitle-line-height);
+                padding: 12px 20px 12px 8px;
+                font-family: "Inter", sans-serif;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .cat-image {
+                max-width: 48px;
+                width: 100%;
+                aspect-ratio: 1/1;
+                border-radius: 8px;
+                margin-right: 8px;
+            }
+
+            .cat-name {
+                font-family: "Inter", sans-serif;
             }
         }
 
-        li.has-children>a::after {
-            content: '▼';
-            float: right;
-            font-size: 12px;
+        li.expanded>ul.children {
+            display: block;
         }
 
-        li.expanded>a::after {
-            content: '▲';
+        li.icon-Vector-9::before,
+        li a.icon-Vector-10::before {
+            position: absolute;
+            right: 0;
+            top: 25px;
+            font-size: large;
+        }
+
+        li.expanded>a {
+            border-bottom: 1px solid var(--main-color);
         }
 
         li.current-cat {
@@ -97,7 +133,7 @@ main#main #secondary section {
             &:hover {
                 cursor: pointer;
             }
-            
+
         }
 
         .vertical-line {

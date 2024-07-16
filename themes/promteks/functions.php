@@ -377,9 +377,9 @@ function custom_woocommerce_template_loop_category_title( $category ) {
         <?php
         echo esc_html( $category->name );
 
-        if ( $category->count > 0 ) {
-            echo apply_filters( 'woocommerce_subcategory_count_html', ' <span class="count">(' . esc_html( $category->count ) . ')</span>', $category );
-        }
+        // if ( $category->count > 0 ) {
+        //     echo apply_filters( 'woocommerce_subcategory_count_html', ' <span class="count">(' . esc_html( $category->count ) . ')</span>', $category );
+        // }
         ?>
     </h4>
     <?php
@@ -510,6 +510,50 @@ if ( ! function_exists( 'woocommerce_template_loop_product_title' ) ) {
 }
 
 
+// Кастомный класс Walker для вывода миниатюр в списке категорий
+class Walker_Category_Thumbnails extends Walker_Category {
+    function start_lvl( &$output, $depth = 0, $args = array() ) {
+        $indent = str_repeat("\t", $depth);
+        $output .= "\n$indent<ul class='children'>\n";
+    }
+
+    function end_lvl( &$output, $depth = 0, $args = array() ) {
+        $indent = str_repeat("\t", $depth);
+        $output .= "$indent</ul>\n";
+    }
+
+    function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
+        $cat_name = esc_attr( $category->name );
+        $cat_name = apply_filters( 'list_cats', $cat_name, $category );
+
+        // ID миниатюры для категории
+        $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );
+        
+        // URL изображения
+        $image_url = wp_get_attachment_url( $thumbnail_id );
+
+        // Ссылка на категорию
+        $link = get_term_link( $category );
+
+        // Формируем HTML для элемента списка
+        $output .= "\t<li class='cat-item cat-item-{$category->term_id}'>";
+        $output .= "<a class='cat-link' href='" . esc_url( $link ) . "'>";
+        if ( $depth == 0 && $image_url ) {
+            // Показываем миниатюру только для верхнего уровня
+            $output .= "<img class='cat-image' src='" . esc_url( $image_url ) . "' alt='" . esc_attr( $cat_name ) . "' />";
+        }
+        $output .= "<span class='cat-name'>" . "$cat_name" . "</span>";
+        $output .= "</a>";
+        if ( ! empty( $args['show_count'] ) ) {
+            $output .= ' (' . number_format_i18n( $category->count ) . ')';
+        }
+    }
+
+    function end_el( &$output, $category, $depth = 0, $args = array() ) {
+        $output .= "</li>\n";
+    }
+}
+
 function add_product_category_sidebar() {
     if (!is_product()) {
         ?>
@@ -539,13 +583,13 @@ function add_product_category_sidebar() {
                 'current_category'   => 0,
                 'pad_counts'         => 0,
                 'taxonomy'           => 'product_cat',
-                'walker'             => new Walker_Category(),
+                'walker'             => new Walker_Category_Thumbnails(),
                 'hide_title_if_empty' => false,
                 'separator'          => '<br />',
             );
             $categories = wp_list_categories($args);
             ?>
-            <div class="category-slider">
+            <div class="category-list-categories">
                 <ul class="category-list">
                     <?php echo $categories; ?>
                 </ul>
