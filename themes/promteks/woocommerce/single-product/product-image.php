@@ -54,13 +54,15 @@ $wrapper_classes   = apply_filters(
 				}
                 ?>
             </div>
-            <div class="swiper-button-next product-gallery__swiper-button-next"></div>
+            <div class="swiper-button-prev product-gallery__swiper-button-prev icon-Vector-9"></div>
+            <div class="swiper-button-next product-gallery__swiper-button-next icon-Vector-11"></div>
         </div>
 		<?php
 		if ($post_thumbnail_id) {
             $full_size_image = wp_get_attachment_image_src($post_thumbnail_id, 'full');
-            echo '<a href="' . esc_url($full_size_image[0]) . '" data-fancybox="gallery">' . wp_get_attachment_image($post_thumbnail_id, 'large') . '</a>';
+            echo '<a href="' . esc_url($full_size_image[0]) . '" data-fancybox="gallery">' . wp_get_attachment_image($post_thumbnail_id, 'large') . genius_display_discount_badge_return() . '</a>';
         } else {
+            genius_display_discount_badge();
             echo sprintf('<img src="%s" alt="%s" class="wp-post-image" style="width: 520px; height: 520px;" />', esc_url(wc_placeholder_img_src('woocommerce_single')), esc_html__('Awaiting product image', 'woocommerce'));
         }
 		?>

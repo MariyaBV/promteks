@@ -31,12 +31,26 @@ get_header( 'shop' ); ?>
 		do_action( 'woocommerce_before_main_content' );
 	?>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <?php
+            add_product_category_sidebar();
+
+            ?>
+        </div>
+        <div class="col-md-9">
+
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
 
 			<?php wc_get_template_part( 'content', 'single-product' ); ?>
 
 		<?php endwhile; // end of the loop. ?>
+
+		</div>
+	</div>
+</div>
 
 <?php
 		/**

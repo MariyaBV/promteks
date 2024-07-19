@@ -261,7 +261,7 @@ function custom_woocommerce_header_cart() {
     ?>
     <div class="header-cart">
         <a class="cart-contents" href="<?php echo wc_get_cart_url(); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'your-theme-slug' ); ?>">
-            <i class="fa fa-cart-custom"></i>
+            <span class="icon-Vector-2"></span>
             <span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
         </a>
     </div>
@@ -269,16 +269,16 @@ function custom_woocommerce_header_cart() {
 }
 
 //ф-я вывода понравившихся товаров header и карточки
-function custom_woocommerce_header_wishlist() {
+/*function custom_woocommerce_header_wishlist() {
 	if ( function_exists( 'YITH_WCWL' ) ) : ?>
 		<div class="header-wishlist">
 			<a href="<?php echo YITH_WCWL()->get_wishlist_url(); ?>">
-				<i class="fa fa-heart-o"></i>
+				<i class="fa fa-heart-o-white"></i>
 				<span class="wishlist-count"><?php echo YITH_WCWL()->count_products(); ?></span>
 			</a>
 		</div>
 	<?php endif;
-}
+}*/
 
 // Обработчик для обновления количества товаров в корзине
 function update_cart_count() {
@@ -311,7 +311,7 @@ function custom_recently_viewed_product_cookie() {
 		$viewed_products[] = get_the_ID();
 	}
  
-	if ( sizeof( $viewed_products ) > 6 ) {
+	if ( sizeof( $viewed_products ) > 4 ) {
 		array_shift( $viewed_products ); 
 	}
  
@@ -342,7 +342,7 @@ function custom_recently_viewed_products() {
  
 	$product_ids = join( ",", $viewed_products );
  
-	$output = '<section class="recently-viewed-block"><div class="recently-viewed-products">' . $title . do_shortcode( "[products ids='$product_ids']" ) . '</div></section>';
+	$output = '<section class="recently-viewed-products"><div class="wrap">' . $title . do_shortcode( "[products ids='$product_ids']" ) . '</div></section>';
  
 	return $output;
  
@@ -389,7 +389,7 @@ function custom_woocommerce_template_loop_category_title( $category ) {
 function change_existing_currency_symbol( $currency_symbol, $currency ) {
     switch( $currency ) {
         case 'RUB':
-            $currency_symbol = 'р.';
+            $currency_symbol = '₽';
             break;
     }
     return $currency_symbol;
@@ -473,7 +473,6 @@ function custom_template_single_brand() {
 }
 add_action( 'woocommerce_single_product_summary', 'custom_template_single_brand', 1 );
 
-
 // Функция для замены текста "Бренд" на "Производитель" Perfect Brands for WooCommerce в админке
 function replace_brand_with_producer( $text ) {
     return str_replace( 'Бренды', 'Производитель', $text );
@@ -526,17 +525,11 @@ class Walker_Category_Thumbnails extends Walker_Category {
         $cat_name = esc_attr( $category->name );
         $cat_name = apply_filters( 'list_cats', $cat_name, $category );
 
-        // ID миниатюры для категории
         $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );
-        
-        // URL изображения
         $image_url = wp_get_attachment_url( $thumbnail_id );
-
-        // Ссылка на категорию
         $link = get_term_link( $category );
 
-        // Формируем HTML для элемента списка
-        $output .= "\t<li class='cat-item cat-item-{$category->term_id}'>";
+        $output .= "\t<li id='cat-item-{$category->term_id}' class='cat-item cat-item-{$category->term_id}'>";
         $output .= "<a class='cat-link' href='" . esc_url( $link ) . "'>";
         if ( $depth == 0 && $image_url ) {
             // Показываем миниатюру только для верхнего уровня
@@ -554,8 +547,9 @@ class Walker_Category_Thumbnails extends Walker_Category {
     }
 }
 
+
 function add_product_category_sidebar() {
-    if (!is_product()) {
+    //if (!is_product()) {
         ?>
         <aside class="product-category-sidebar">
             <?php
@@ -590,15 +584,16 @@ function add_product_category_sidebar() {
             $categories = wp_list_categories($args);
             ?>
             <div class="category-list-categories">
+                <h3>Каталог</h3>
                 <ul class="category-list">
                     <?php echo $categories; ?>
                 </ul>
             </div>
         </aside>
         <?php
-    }
+    //}
 }
-add_action('woocommerce_sidebar', 'add_product_category_sidebar');
+//add_action('woocommerce_sidebar', 'add_product_category_sidebar');
 
 function custom_orderby_option( $sortby ) {
 	$sortby['discount'] = 'Только со скидкой';
@@ -706,6 +701,28 @@ function genius_alter_price_cart( $cart ) {
       }
     }
 }
+// вывод скидки в % на картинке карточки товара
+add_action( 'woocommerce_before_shop_loop_item_title', 'genius_display_discount_badge', 10 );
+function genius_display_discount_badge() {
+    global $product;
+    
+    $discount = get_post_meta( $product->get_id(), '_pc_discount', true );
+    if ( $discount && $discount > 0 ) {
+        echo '<span class="discount-badge">-' . esc_html( $discount ) . '%</span>';
+    }
+}
+
+function genius_display_discount_badge_return() {
+    global $product;
+
+    $discount = get_post_meta($product->get_id(), '_pc_discount', true);
+    if ($discount && $discount > 0) {
+        return '<span class="discount-badge">-' . esc_html($discount) . '%</span>';
+    }
+    return '';
+}
+
+
 //конец делаем выбор в админке скидки в % и вывод на карточке товара
 
 // Удаляем стандартную форму сортировки перед списком товаров
@@ -852,3 +869,75 @@ function true_woo_breadcrumbs_delimiter( $defaults ) {
 	return $defaults;
 }
 add_filter( 'woocommerce_breadcrumb_defaults', 'true_woo_breadcrumbs_delimiter' );
+
+
+// Удаляем up-sells из вкладок продукта
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );
+// Функция для отображения up-sells товаров после main контента
+function display_upsells_after_main_content() {
+    if ( is_product() ) {
+        woocommerce_upsell_display( $posts_per_page = 4, $columns = 4 );
+    }
+}
+add_action( 'woocommerce_after_main_content', 'display_upsells_after_main_content', 20 );
+
+function custom_delivery_options_fields() {
+    function get_shipping_methods_costs() {
+        // Получаем зоны доставки
+        $shipping_zones = WC_Shipping_Zones::get_zones();
+        $shipping_costs = [];
+    
+        foreach ($shipping_zones as $zone) {
+            // Получаем методы доставки для каждой зоны
+            $shipping_methods = $zone['shipping_methods'];
+            
+            foreach ($shipping_methods as $method) {
+                $shipping_costs[] = [
+                    'zone' => $zone['zone_name'],
+                    'method_title' => $method->get_title(),
+                    'method_cost' => $method->get_instance_option('cost')
+                ];
+            }
+        }
+
+        // Получаем данные по самовывозу
+        $pickup_options = get_option('woocommerce_pickup_location_settings');
+
+        if (!empty($pickup_options)) {
+            $shipping_costs[] = [
+                'zone' => 'Самовывоз',
+                'method_title' => $pickup_options['title'],
+                'method_cost' => $pickup_options['cost']
+            ];
+        }
+    
+        return $shipping_costs;
+    }
+
+    $shipping_costs = get_shipping_methods_costs();
+    $pickup = $delivery_cost = '';
+
+    foreach ($shipping_costs as $shipping_cost) {
+        if ($shipping_cost['method_title'] == 'Самовывоз со склада') {
+            $pickup = $shipping_cost['method_cost'];
+        } elseif ($shipping_cost['method_title'] == 'Доставка в течение 1 часа') {
+            $delivery_cost = $shipping_cost['method_cost'];
+        }
+    }
+
+    echo '<div class="custom-delivery-block">';
+    if ($pickup !== '') {
+        echo '<div class="delivery-text delivery-text__pickup"><p><span class="icon-iconoir_box-iso2"></span>Самовывоз со склада:</p> <span>' . $pickup . ' р.</span></div>';
+    }
+    if ($delivery_cost !== '') {
+        echo '<div class="delivery-text"><p><span class="icon-Vector-4"></span>Доставка в течение 1 часа:</p> <span> ' . $delivery_cost . ' р.</span></div>';
+    }
+    echo '</div>';
+}
+
+// Изменяем стандартный вызов табов на странице товара
+// function move_woocommerce_product_tabs() {
+//     remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
+//     add_action('woocommerce_after_single_product', 'woocommerce_output_product_data_tabs', 10);
+// }
+// add_action('wp', 'move_woocommerce_product_tabs');

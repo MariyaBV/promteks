@@ -29,7 +29,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<input type="hidden" name="paged" value="1" />
 	<?php wc_query_string_form_fields( null, array( 'orderby', 'submit', 'paged', 'product-page' ) ); ?>
 </form>*/?>
-<h2>Сортировка</h2>
 <form class="woocommerce-ordering" method="get">
     <div class="orderby-buttons">
         <?php foreach ( $catalog_orderby_options as $id => $name ) : ?>

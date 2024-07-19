@@ -28,7 +28,7 @@
                         echo '<p class="' . esc_attr(apply_filters('woocommerce_product_price_class', 'price')) . '">';
                         echo $product->get_price_html();
                         echo '</p>';
-                        echo do_shortcode('[yith_wcwl_add_to_wishlist]');
+                        //echo do_shortcode('[yith_wcwl_add_to_wishlist]');
                         echo '</div>';
                         echo '<h5 class="txt">' . $product->get_name() . '</h5>';
                         echo '</a>';
@@ -39,7 +39,7 @@
                         echo '<div class="block-quantity-button">';
                         echo '<a class="add-to-cart button add_to_cart_button ajax_add_to_cart" data-product-id="';
                         echo esc_attr( $product->get_id() );
-                        echo '">Купить</a>';
+                        echo '"><span class="add-to-cart-text">Купить</span></a>';
                         echo '<button class="quantity-arrow-minus"> - </button>';
                         echo '<div class="quantity">';
                         echo '<input type="number" class="qty" name="quantity" value="1" min="1" />';

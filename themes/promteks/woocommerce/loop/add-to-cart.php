@@ -28,16 +28,12 @@ global $product;
 </span>
 <a></a>
 <?php 
-
 remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open' );
-
-if ( function_exists( 'custom_template_single_brand' ) ) {
-	custom_template_single_brand();
-} ?>
+?>
 
 <div class="product-item">
 	<div class="block-quantity-button">
-		<a class="add-to-cart button add_to_cart_button ajax_add_to_cart" data-product-id="<?php echo esc_attr( $product->get_id() ); ?>">Купить</a>
+		<a class="add-to-cart button add_to_cart_button ajax_add_to_cart" data-product-id="<?php echo esc_attr( $product->get_id() ); ?>"><span class="add-to-cart-text">Купить</span></a>
 		<button class="quantity-arrow-minus"> - </button>
 		<div class="quantity">
 			<input type="number" class="qty" name="quantity" value="1" min="1" />

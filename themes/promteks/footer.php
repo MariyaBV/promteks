@@ -21,13 +21,15 @@ $options = get_fields('options');
 					</a>
 					<a href="/contacts/" class="icon-container">
 						<span class="icon-Vector-3"></span>
-						<p><?= $options['full_address']; ?></p>
+						<p><?= $options['actual-address']; ?></p>
 					</a>
 					<a href="tel:<?= $options['phone']; ?>" class="icon-container">
 						<span class="icon-Vector-5"></span>
 						<div>
 							<p class="txt-s"><?= $options['phone']; ?></p>
-							<p class="subtitle-xs"><?= $options['operating_mode']; ?></p>
+							<p class="subtitle-xs">
+								<?= $options['operating_mode']['Mon-Fri']; ?> / <?= $options['operating_mode']['Sat']; ?>
+							</p>
 						</div>
 					</a>
 				</div>

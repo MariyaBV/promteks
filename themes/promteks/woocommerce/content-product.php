@@ -47,7 +47,7 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 		<?php
 
 		// вывод кнопки добавления в понравившееся
-		echo do_shortcode('[yith_wcwl_add_to_wishlist]');
+		//echo do_shortcode('[yith_wcwl_add_to_wishlist]');
 		?>
 	</div>
 
@@ -60,10 +60,20 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	 */
 	do_action( 'woocommerce_shop_loop_item_title' );
 
+	if ( function_exists( 'custom_template_single_brand' ) ) {
+		custom_template_single_brand();
+	}
+	
+
 	if ( is_product() ):?>
 		<div class="product-item">
 			<div class="block-quantity-button">
-				<a class="add-to-cart button add_to_cart_button ajax_add_to_cart" data-product-id="<?php echo esc_attr( $product->get_id() ); ?>">Купить</a>
+				<a class="add-to-cart button add_to_cart_button ajax_add_to_cart" data-product-id="<?php echo esc_attr( $product->get_id() ); ?>"><span class="add-to-cart-text">Купить</span></a>
+				<button class="quantity-arrow-minus"> - </button>
+				<div class="quantity">
+					<input type="number" class="qty" name="quantity" value="1" min="1" />
+				</div>
+				<button class="quantity-arrow-plus"> + </button>
 			</div>
 		</div>
 	<?php endif;

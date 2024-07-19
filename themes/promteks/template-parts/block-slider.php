@@ -11,9 +11,11 @@
                         <img class="img" src="<?= $item['image']; ?>" alt="slide image"/>
                         <div class="slider-content">
                             <h2 class="slide-text"><?= $item['text']; ?></h2>
-                            <a class="slide-button" href="<?= $item['button']['link']; ?>">
-                                <h4><?= $item['button']['link-text']; ?></h4>
-                            </a>
+                            <?php if (!empty($item['button']['link']) && !empty($item['button']['link-text'])): ?>
+                                <a class="slide-button" href="<?= $item['button']['link']; ?>">
+                                    <h4><?= $item['button']['link-text']; ?></h4>
+                                </a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>

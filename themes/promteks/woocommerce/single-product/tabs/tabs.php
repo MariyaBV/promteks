@@ -29,7 +29,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 $product_tabs = apply_filters( 'woocommerce_product_tabs', array() );
 
 if (!empty($product_tabs) && isset($product_tabs['description'])) : 
-    $description_tab = $product_tabs['description'];?>
+    $description_tab = $product_tabs['description'];
+	?>
 
 	<div class="woocommerce-tabs wc-tabs-wrapper">
 		<?php /*<ul class="tabs wc-tabs" role="tablist">
@@ -51,13 +52,19 @@ if (!empty($product_tabs) && isset($product_tabs['description'])) :
 			</div>
 		<?php endforeach; */?>
 
-		<div style="display:block;" class="woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab" id="tab-description" role="tabpanel" aria-labelledby="tab-title-description">
-			<?php
-			if (isset($description_tab['callback'])) {
-				call_user_func($description_tab['callback'], 'description', $description_tab);
-			}
-			?>
+
+		<div class="custom-description woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab" id="tab-description" role="tabpanel" aria-labelledby="tab-title-description">
+			<h3><?php echo $description_tab['title']; ?></h3>
+			<div class="description-content">
+				<?php
+				if (isset($description_tab['callback'])) {
+					call_user_func($description_tab['callback'], 'description', $description_tab);
+				}
+				?>
+			</div>
+			<button class="show-more-btn">Читать полностью</button>
 		</div>
+
 
 		<?php do_action( 'woocommerce_product_after_tabs' ); ?>
 	</div>
