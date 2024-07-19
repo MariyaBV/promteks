@@ -1,5 +1,6 @@
 .category-list-categories {
-    width: 300px;
+    max-width: 260px;
+    width: 100%;
     overflow: hidden;
     position: relative;
 
@@ -23,6 +24,10 @@
             list-style: none;
             border-bottom: 1px solid #9B9B9B66;
             position: relative;
+
+            &.selected {
+                background-color: var(--light-grey);
+            }
 
             &:hover {
                 cursor: pointer;
@@ -91,14 +96,14 @@
     div.filter-tax {
         width: calc((100% / 6) - 20px);
 
-        .yith-wcan-dropdown {
+        /*.yith-wcan-dropdown {
             border: 1px solid #B6B6B6;
             border-radius: 8px;
             padding: 8px 12px;
             font-size: var(--subtitle-font-size);
             font-weight: var(--subtitle-font-weight);
             line-height: var(--subtitle-line-height);
-        }
+        }*/
     }
 }
 
@@ -111,7 +116,12 @@ main#main #secondary section {
 
     .clear-filters {
         margin-top: 8px;
-        display: block;
+        font-size: var(--subtitle-font-size);
+        font-weight: var(--subtitle-font-weight);
+        line-height: var(--subtitle-line-height);
+        color: #399C49;
+        border-bottom: 1px solid #399C49;   
+        text-decoration: none;
     }
 
     &__select {
@@ -261,11 +271,11 @@ form.woocommerce-ordering {
     gap: 40px;
 
     .col-md-3 {
-        flex: 25%;
+        flex: 23%;
     }
 
     .col-md-9 {
-        flex: 75%;
+        flex: 77%;
 
         ul.products {
             display: flex;
@@ -279,6 +289,7 @@ form.woocommerce-ordering {
                 position: relative;
                 width: 30%;
                 margin-left: 0;
+                padding: 10px;
             }
         }
     }

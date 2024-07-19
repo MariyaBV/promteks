@@ -2,7 +2,7 @@
   --black: #000000;
   --main-color: #202020;
 
-  --red: #C34747;
+  --red: #D81E1E;
 
   --green: #00A148;
   --dark-green: #00653B;
@@ -55,6 +55,20 @@
   --subtitle-xs-font-size: 0.5rem;
   --subtitle-xs-font-weight: 600;
   --subtitle-xs-line-height: 0.6rem;
+
+  --price-font-size: 1rem;
+  --price-font-weight: 700;
+  --price-line-height: 1.3rem;
+  --price-letter-spacing: 0.02em;
+
+  --price-L-font-size: 1.5rem;
+  --price-L-font-weight: 700;
+  --price-L-line-height: 1.8rem;
+
+  --discount-font-size: 1rem;
+  --discount-font-weight: 600;
+  --discount-line-height: 1.3rem;
+  --discount-letter-spacing: 0.02em;
 
   --width-page: 1240px; //1440px;
 }

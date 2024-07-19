@@ -72,7 +72,7 @@ header#main-header {
     .header-wishlist {
         display: inline-block;
 
-        .fa {
+        .icon-Vector-2 {
             font-size: xx-large;
         }
 
@@ -92,15 +92,6 @@ header#main-header {
             border-radius: 50%;
             padding: 3px 5.9px;
             font-size: 10px;
-        }
-
-        .fa-cart-custom {
-            background-image: url("css/img/cart.svg");
-            background-repeat: no-repeat;
-            width: 31px;
-            height: 31px;
-            background-position: center;
-            background-size: cover;
         }
     }
 

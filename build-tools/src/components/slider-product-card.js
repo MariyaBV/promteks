@@ -3,10 +3,11 @@ $(document).ready(function() {
         direction: "vertical",
         spaceBetween: 10,
         loop: true,
-        slidesPerGroup: 4,
-        slidesPerView: 4,
+        slidesPerGroup: 3,
+        slidesPerView: 3,
         navigation: {
             nextEl: '.product-gallery__swiper-button-next',
+            prevEl: '.product-gallery__swiper-button-prev',
         },
         on: {
             init: function() {
@@ -26,12 +27,17 @@ $(document).ready(function() {
         },
     });
 
+    var lastAction = 'init'; //состояния последней навигации
+    var firstNextClick = true; //первый клик по кнопке "next"
+
     function checkNavigationVisibility(swiper) {
-        var slidesPerView = 4;
+        var slidesPerView = 3;
         if (swiper.slides.length <= slidesPerView) {
             $(swiper.navigation.nextEl).hide();
+            $(swiper.navigation.prevEl).hide();
         } else {
             $(swiper.navigation.nextEl).show();
+            $(swiper.navigation.prevEl).hide(); //начальное состояние кнопки прев
         }
     }
 
@@ -40,24 +46,50 @@ $(document).ready(function() {
         var swiperHeight = swiper.height;
         var $swiperEl = $('.product-gallery-swiper');
         var swiperOffsetTop = $swiperEl.offset().top;
-       
 
         slides.forEach(slide => {
-            console.log("slide", slide);
             var $slide = $(slide);
-            var slideTop = $slide.offset().top + swiper.translate;
+            var slideTop;
+
+            // Учитываем направление прокрутки
+            if (lastAction === 'next') {
+                slideTop = $slide.offset().top + swiper.translate;
+            } else if (lastAction === 'prev') {
+                slideTop = $slide.offset().top - swiper.getTranslate();
+            } else {
+                slideTop = $slide.offset().top;
+            }
+
             var slideBottom = slideTop + $(slide).outerHeight();
 
-            console.log("swiper.translate", swiper.translate, "slideTop", slideTop, "swiperOffsetTop", swiperOffsetTop);
-            console.log("slideBottom", slideBottom, "swiperOffsetTop + swiperHeight", swiperOffsetTop + swiperHeight);
-
-            if ((slideTop + 30) >= swiperOffsetTop && slideBottom <= swiperOffsetTop + swiperHeight) {
+            if ((slideTop) >= swiperOffsetTop && slideBottom <= swiperOffsetTop + swiperHeight) {
                 $(slide).removeClass('hidden');
             } else {
                 $(slide).addClass('hidden');
             }
+
+            console.log("translate: ", swiper.translate, "slideTop: ", slideTop, "swiperOffsetTop: ", swiperOffsetTop);
+            console.log("slideBottom: ", slideBottom, "swiperOffsetTop + swiperHeight: ", swiperOffsetTop + swiperHeight);
+
         });
     }
+
+    // Добавляем обработчики событий на кнопки "next" и "prev"
+    $(swiper.navigation.nextEl).on('click', function() {
+        lastAction = 'next';
+        updateSlideVisibility(swiper);
+
+        //делаем кнопку видимой при первом клике по некст
+        if (firstNextClick) {
+            $(swiper.navigation.prevEl).css('display', 'block');
+            firstNextClick = false;
+        }
+    });
+
+    $(swiper.navigation.prevEl).on('click', function() {
+        lastAction = 'prev';
+        updateSlideVisibility(swiper);
+    });
 });
 
 //если нет картинок в слайдере

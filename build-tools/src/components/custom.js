@@ -61,8 +61,8 @@ jQuery(document).ready(function ($) {
                     return;
                 } else {
                     // Изменяем текст кнопки на "В корзине"
-                    $thisButton.text('В корзине').addClass('in-basket');
-
+                    $thisButton.find('.add-to-cart-text').text('В корзине');
+                    $thisButton.addClass('in-basket');
                     // Обновление количества товаров в корзине
                     $.ajax({
                         url: custom_ajax_obj.ajax_url,
@@ -188,7 +188,7 @@ $(document).ready(function () {
 
 jQuery(document).ready(function ($) {
     function updateCurrencySymbol() {
-        $('.summary.entry-summary .woocommerce-Price-currencySymbol').text('р. (шт)');
+        $('.summary.entry-summary .woocommerce-Price-currencySymbol').text('₽');
     }
 
     updateCurrencySymbol();

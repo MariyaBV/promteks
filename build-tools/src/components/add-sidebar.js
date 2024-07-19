@@ -18,15 +18,49 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    var currentCategory = $('.category-list .current-cat');
-    currentCategory.parents('li').addClass('expanded');
-    currentCategory.parents('ul.children').show();
+    // Применение стиля к ранее выбранному дочернему элементу или родителю - если нет дочерних
+    var selectedCategory = localStorage.getItem('selectedCategory');
+    if (selectedCategory) {
+        var selectedElement = $('#' + selectedCategory);
+        selectedElement.addClass('selected');
+        selectedElement.parents('li').addClass('expanded').children('ul.children').show();
+        if (selectedElement.parents('li').find('ul.children').length !== 0) {
+            var parentSelectedElement = selectedElement.parent().parent();
+            parentSelectedElement.addClass('icon-Vector-9');
+            var selectedElementLink = parentSelectedElement.find('a');
+            console.log(selectedElementLink);
+            selectedElementLink.removeClass('icon-Vector-10');
+        }
+    }
+
+    // Добавление стиля при выборе элемента
+    $('.category-list li a').on('click', function (e) {
+        var liElement = $(this).parent();
+        if (liElement.find('ul.children').length === 0) {
+            // Если у элемента нет дочерних элементов, применяем стиль к нему
+            $('.category-list li').removeClass('selected');
+            liElement.addClass('selected');
+            localStorage.setItem('selectedCategory', liElement.attr('id'));
+        } else {
+            // Если у элемента есть дочерние элементы, ничего не делаем
+            e.preventDefault();
+        }
+    });
+
+    // Добавление стиля при выборе дочернего элемента
+    $('.category-list ul.children li a').on('click', function (e) {
+        var liElement = $(this).parent();
+        $('.category-list li').removeClass('selected');
+        liElement.addClass('selected');
+        localStorage.setItem('selectedCategory', liElement.attr('id'));
+    });
 });
 
-// стилизация селекта при выборе значения из выпад списка
-$(document).ready(function() {
+
+// стилизация селекта при выборе значения из выпад списка в фильтрах
+$(document).ready(function () {
     function checkSelectValues() {
-        $('.attribute-filters__select select').each(function() {
+        $('.attribute-filters__select select').each(function () {
             const $select = $(this);
             const $selectContainer = $select.parent();
             const $resetButton = $selectContainer.find('.reset-button');
@@ -48,12 +82,12 @@ $(document).ready(function() {
     checkSelectValues();
 
     // вызываем ф-ю при изменении значения в селекте
-    $('.attribute-filters__select select').on('change', function() {
+    $('.attribute-filters__select select').on('change', function () {
         checkSelectValues();
     });
 
     // изменения при нажатии на кнопку - крестик
-    $('.reset-button').on('click', function() {
+    $('.reset-button').on('click', function () {
         const $resetButton = $(this);
         const $selectContainer = $resetButton.parent();
         const $select = $selectContainer.find('select');
