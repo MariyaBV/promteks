@@ -31,7 +31,7 @@ $options = get_fields('options');
 		<div class="header-top">
 			<div class="wrap header-top__block">
 				<div class="header-block-delivery">
-					<p class="header-block-delivery__city"><span class="icon-Vector-3"></span><?= $options['city']; ?></p>
+					<p class="header-block-delivery__city"><span class="icon-place-2"></span><?= $options['city']; ?></p>
 					<div class="header-block-delivery__delivery">
 						<img src="<?= $options['title-top-header']['logo']; ?>"/>
 						<h4><?= $options['title-top-header']['title']; ?></h4>
@@ -39,7 +39,9 @@ $options = get_fields('options');
 				</div>
 				<div class="header-block-contacts">
 					<p class="header-block-contacts__phone"><?= $options['phone']; ?></p>
-					<p class="header-block-contacts__operating-mode"><?= $options['operating_mode']; ?></p>
+					<p class="header-block-contacts__operating-mode">
+						<?= $options['operating_mode']['Mon-Fri']; ?> | <?= $options['operating_mode']['Sat']; ?>
+					</p>
 				</div>
 			</div>
 		</div>

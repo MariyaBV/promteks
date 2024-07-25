@@ -20,11 +20,11 @@ $options = get_fields('options');
 						<span class="logo-text-year"><?= $options['yeas']; ?></span>
 					</a>
 					<a href="/contacts/" class="icon-container">
-						<span class="icon-Vector-3"></span>
+						<span class="icon-place-2"></span>
 						<p><?= $options['actual-address']; ?></p>
 					</a>
 					<a href="tel:<?= $options['phone']; ?>" class="icon-container">
-						<span class="icon-Vector-5"></span>
+						<span class="icon-phone-2"></span>
 						<div>
 							<p class="txt-s"><?= $options['phone']; ?></p>
 							<p class="subtitle-xs">
