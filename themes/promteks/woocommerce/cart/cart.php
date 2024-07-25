@@ -122,6 +122,11 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 						echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
 						?>
+						<span class="attribute-unit">
+						<?php
+							custom_attribute_unit($product_id);
+						?>
+						</span>
 						</td>
 
 						<td class="product-subtotal" data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>">
@@ -135,7 +140,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 								echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									'woocommerce_cart_item_remove_link',
 									sprintf(
-										'<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
+										'<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s"><span class="icon-Close-1"></span></a>',
 										esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
 										/* translators: %s is the product name */
 										esc_attr( sprintf( __( 'Remove %s from cart', 'woocommerce' ), wp_strip_all_tags( $product_name ) ) ),
@@ -154,7 +159,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 			<?php do_action( 'woocommerce_cart_contents' ); ?>
 
-			<tr>
+			<tr class="block-cart-button-subtotal">
 				<td colspan="6" class="actions">
 
 					<?php if ( wc_coupons_enabled() ) { ?>

@@ -164,6 +164,10 @@ function promteks_scripts() {
         wp_enqueue_style('fancybox-css', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css', array(), '3.5.7');
         wp_enqueue_script('fancybox-js', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js', array('jquery'), '3.5.7', true);
     }
+
+    if (is_order_received_page()) {
+        wp_enqueue_script('html2pdf-js', 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js', array(), _S_VERSION, true);
+    }
 }
 add_action( 'wp_enqueue_scripts', 'promteks_scripts' );
 
@@ -224,6 +228,11 @@ function promteks_blocks() {
 				'description' => __('3 блока', 'promteks'),
 				'title' => __('3 блока', 'promteks'),
 				'keywords' => array('3-блока', 'баннер')
+			],
+			'contacts' => [
+				'description' => __('contacts', 'promteks'),
+				'title' => __('contacts', 'promteks'),
+				'keywords' => array('contacts', 'баннер')
 			]
 		];
 
@@ -261,7 +270,7 @@ function custom_woocommerce_header_cart() {
     ?>
     <div class="header-cart">
         <a class="cart-contents" href="<?php echo wc_get_cart_url(); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'your-theme-slug' ); ?>">
-            <span class="icon-Vector-2"></span>
+            <span class="icon-typeDefault-1"></span>
             <span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
         </a>
     </div>
@@ -280,7 +289,13 @@ function custom_woocommerce_header_cart() {
 	<?php endif;
 }*/
 
-// Обработчик для обновления количества товаров в корзине
+function custom_add_woocomerce_support() {
+	add_theme_support( 'woocommerce' );
+}
+add_action( 'after_setup_theme', 'custom_add_woocomerce_support' );
+
+
+//Обработчик для обновления количества товаров в корзине
 function update_cart_count() {
     wp_send_json_success(array(
         'cart_count' => WC()->cart->get_cart_contents_count()
@@ -289,12 +304,7 @@ function update_cart_count() {
 add_action('wp_ajax_update_cart_count', 'update_cart_count');
 add_action('wp_ajax_nopriv_update_cart_count', 'update_cart_count');
 
-function custom_add_woocomerce_support() {
-	add_theme_support( 'woocommerce' );
-}
-add_action( 'after_setup_theme', 'custom_add_woocomerce_support' );
- 
-
+//Блок вы смотрели начало
 function custom_recently_viewed_product_cookie() {
 	if ( ! is_product() ) {
 		return;
@@ -311,7 +321,7 @@ function custom_recently_viewed_product_cookie() {
 		$viewed_products[] = get_the_ID();
 	}
  
-	if ( sizeof( $viewed_products ) > 4 ) {
+	if ( sizeof( $viewed_products ) > 3 ) {
 		array_shift( $viewed_products ); 
 	}
  
@@ -326,14 +336,10 @@ add_action( 'template_redirect', 'custom_recently_viewed_product_cookie', 20 );
 function custom_recently_viewed_products() {
  
 	if( empty( $_COOKIE[ 'woocommerce_recently_viewed_custom' ] ) ) {
-		$viewed_products = array();
-	} else {
-		$viewed_products = (array) explode( '|', $_COOKIE[ 'woocommerce_recently_viewed_custom' ] );
-	}
- 
-	if ( empty( $viewed_products ) ) {
-		return;
-	}
+		return; //$viewed_products = array();
+	} 
+    
+	$viewed_products = (array) explode( '|', $_COOKIE[ 'woocommerce_recently_viewed_custom' ] );
  
 	// отображаем последние просмотренные
 	$viewed_products = array_reverse( array_map( 'absint', $viewed_products ) );
@@ -342,7 +348,7 @@ function custom_recently_viewed_products() {
  
 	$product_ids = join( ",", $viewed_products );
  
-	$output = '<section class="recently-viewed-products"><div class="wrap">' . $title . do_shortcode( "[products ids='$product_ids']" ) . '</div></section>';
+	$output = '<section class="recently-viewed-products">' . $title . do_shortcode( "[products ids='$product_ids']" ) . '</section>';
  
 	return $output;
  
@@ -355,7 +361,8 @@ function my_custom_sidebar_widget() {
         echo do_shortcode('[recently_viewed_products]'); 
     }
 }
-add_action('woocommerce_sidebar', 'my_custom_sidebar_widget', 10);
+add_action('woocommerce_after_single_product_summary', 'my_custom_sidebar_widget', 15);
+//блок вы смотрели конец 
 
 // Меняем текст добавления в корзину на странице продукта
 function woocommerce_add_to_cart_button_text_single() {
@@ -386,15 +393,15 @@ function custom_woocommerce_template_loop_category_title( $category ) {
 }
 
 //меняем символ валюты
-function change_existing_currency_symbol( $currency_symbol, $currency ) {
-    switch( $currency ) {
-        case 'RUB':
-            $currency_symbol = '₽';
-            break;
-    }
-    return $currency_symbol;
-}
-add_filter('woocommerce_currency_symbol', 'change_existing_currency_symbol', 10, 2);
+// function change_existing_currency_symbol( $currency_symbol, $currency ) {
+//     switch( $currency ) {
+//         case 'RUB':
+//             $currency_symbol = '₽';
+//             break;
+//     }
+//     return $currency_symbol;
+// }
+// add_filter('woocommerce_currency_symbol', 'change_existing_currency_symbol', 10, 2);
 
 // Убираем блок "Похожие товары"
 remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
@@ -511,6 +518,8 @@ if ( ! function_exists( 'woocommerce_template_loop_product_title' ) ) {
 
 // Кастомный класс Walker для вывода миниатюр в списке категорий
 class Walker_Category_Thumbnails extends Walker_Category {
+    private $expanded_parents = array();
+
     function start_lvl( &$output, $depth = 0, $args = array() ) {
         $indent = str_repeat("\t", $depth);
         $output .= "\n$indent<ul class='children'>\n";
@@ -529,7 +538,33 @@ class Walker_Category_Thumbnails extends Walker_Category {
         $image_url = wp_get_attachment_url( $thumbnail_id );
         $link = get_term_link( $category );
 
-        $output .= "\t<li id='cat-item-{$category->term_id}' class='cat-item cat-item-{$category->term_id}'>";
+        $active = '';
+        $expanded = '';
+        $my_category = get_queried_object();
+
+        if (is_product_category() && ($my_category->term_id == $category->term_id)) {
+            $active = 'selected';
+        }
+
+        if (is_product_category() && term_is_ancestor_of($category->term_id, $my_category->term_id, 'product_cat')) {
+            $expanded = 'expanded';
+        }
+
+        if (is_product()) {
+            $product_id = get_the_ID();
+            $product_categories = wp_get_post_terms($product_id, 'product_cat', array('fields' => 'ids'));
+
+            if (in_array($category->term_id, $product_categories)) {
+                $active = 'selected';
+
+                // Если категория имеет родителя, отмечаем родителя для раскрытия
+                if ($category->parent) {
+                    $this->expanded_parents[] = $category->parent;
+                }
+            }
+        }
+
+        $output .= "\t<li id='cat-item-{$category->term_id}' class='cat-item cat-item-{$category->term_id} $active $expanded'>";
         $output .= "<a class='cat-link' href='" . esc_url( $link ) . "'>";
         if ( $depth == 0 && $image_url ) {
             // Показываем миниатюру только для верхнего уровня
@@ -542,7 +577,15 @@ class Walker_Category_Thumbnails extends Walker_Category {
         }
     }
 
+    // function end_el( &$output, $category, $depth = 0, $args = array() ) {
+    //     $output .= "</li>\n";
+    // }
+
     function end_el( &$output, $category, $depth = 0, $args = array() ) {
+        // Добавляем класс expanded родительским категориям, если необходимо
+        if (in_array($category->term_id, $this->expanded_parents)) {
+            $output = str_replace("cat-item-{$category->term_id} ", "cat-item-{$category->term_id} expanded ", $output);
+        }
         $output .= "</li>\n";
     }
 }
@@ -728,36 +771,39 @@ function genius_display_discount_badge_return() {
 // Удаляем стандартную форму сортировки перед списком товаров
 remove_action('woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30);
 
-function custom_woocommerce_get_catalog_ordering_attr_args($query) {
-    if (!is_admin() && $query->is_main_query() && is_tax('product_cat')) {
+
+function custom_woocommerce_get_catalog_ordering_attr_args( $query ) {
+    // Проверяем, что это основной запрос и не в админке
+    if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_tax('product_cat') ) ) {
         // Получаем текущие параметры запроса
         $query_vars = $query->query_vars;
 
         // Инициализация массива tax_query, если он не существует
-        if (!isset($query_vars['tax_query'])) {
+        if ( ! isset( $query_vars['tax_query'] ) ) {
             $query_vars['tax_query'] = array();
         }
 
         // Итерируемся по параметрам запроса и добавляем фильтрацию по атрибутам
-        foreach ($_GET as $key => $value) {
-            if (strpos($key, 'attribute_') === 0 && !empty($value)) {
-                $attribute = str_replace('attribute_', '', $key);
+        foreach ( $_GET as $key => $value ) {
+            if ( strpos( $key, 'attribute_' ) === 0 && ! empty( $value ) ) {
+                $attribute = str_replace( 'attribute_', '', $key );
                 $taxonomy = 'pa_' . $attribute;
 
                 // Добавляем фильтр в tax_query
                 $query_vars['tax_query'][] = array(
                     'taxonomy' => $taxonomy,
-                    'field' => 'slug',
-                    'terms' => $value,
+                    'field'    => 'slug',
+                    'terms'    => sanitize_title( $value ),
+                    'operator' => 'IN',
                 );
             }
         }
 
         // Устанавливаем измененные параметры обратно в запрос
-        $query->set('tax_query', $query_vars['tax_query']);
+        $query->set( 'tax_query', $query_vars['tax_query'] );
     }
 }
-add_action('pre_get_posts', 'custom_woocommerce_get_catalog_ordering_attr_args');
+add_action( 'pre_get_posts', 'custom_woocommerce_get_catalog_ordering_attr_args' );
 
 
 function print_filters() {
@@ -833,6 +879,13 @@ function get_category_product_attributes($category_id) {
     // Отфильтровываем только те атрибуты, которые используются в данных продуктах
     $attributes = array();
     foreach ($all_attributes as $attribute) {
+        $attribute_name = $attribute->attribute_name;
+
+        // Исключаем атрибут 'product-unit'
+        if ($attribute_name === 'product-unit') {
+            continue;
+        }
+
         $taxonomy = 'pa_' . $attribute->attribute_name;
         $term_count = $wpdb->get_var($wpdb->prepare("
             SELECT COUNT(DISTINCT tr.term_taxonomy_id)
@@ -857,11 +910,7 @@ function custom_availability_text( $availability, $product ) {
 }
 add_filter( 'woocommerce_get_availability_text', 'custom_availability_text', 10, 2 );
 
-//добавляем хлебные крошки
-// Корзина
-add_action( 'woocommerce_before_cart', 'woocommerce_breadcrumb', 10, 0 );
-// Оформление заказа
-add_action( 'woocommerce_before_checkout_form', 'woocommerce_breadcrumb', 0, 0 );
+
 //удаляем разделить в хлебных крошках
 function true_woo_breadcrumbs_delimiter( $defaults ) {
 	$defaults[ 'delimiter' ] = ''; 
@@ -869,17 +918,7 @@ function true_woo_breadcrumbs_delimiter( $defaults ) {
 	return $defaults;
 }
 add_filter( 'woocommerce_breadcrumb_defaults', 'true_woo_breadcrumbs_delimiter' );
-
-
-// Удаляем up-sells из вкладок продукта
-remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );
-// Функция для отображения up-sells товаров после main контента
-function display_upsells_after_main_content() {
-    if ( is_product() ) {
-        woocommerce_upsell_display( $posts_per_page = 4, $columns = 4 );
-    }
-}
-add_action( 'woocommerce_after_main_content', 'display_upsells_after_main_content', 20 );
+//добавляем хлебные крошки конец 
 
 function custom_delivery_options_fields() {
     function get_shipping_methods_costs() {
@@ -901,15 +940,15 @@ function custom_delivery_options_fields() {
         }
 
         // Получаем данные по самовывозу
-        $pickup_options = get_option('woocommerce_pickup_location_settings');
+        // $pickup_options = get_option('woocommerce_pickup_location_settings');
 
-        if (!empty($pickup_options)) {
-            $shipping_costs[] = [
-                'zone' => 'Самовывоз',
-                'method_title' => $pickup_options['title'],
-                'method_cost' => $pickup_options['cost']
-            ];
-        }
+        // if (!empty($pickup_options)) {
+        //     $shipping_costs[] = [
+        //         'zone' => 'Самовывоз',
+        //         'method_title' => $pickup_options['title'],
+        //         'method_cost' => $pickup_options['cost']
+        //     ];
+        // }
     
         return $shipping_costs;
     }
@@ -918,9 +957,9 @@ function custom_delivery_options_fields() {
     $pickup = $delivery_cost = '';
 
     foreach ($shipping_costs as $shipping_cost) {
-        if ($shipping_cost['method_title'] == 'Самовывоз со склада') {
-            $pickup = $shipping_cost['method_cost'];
-        } elseif ($shipping_cost['method_title'] == 'Доставка в течение 1 часа') {
+        if ($shipping_cost['method_title'] == 'Самовывоз') {
+            $pickup = '0';
+        } elseif ($shipping_cost['method_title'] == 'Доставка по Брянску') {
             $delivery_cost = $shipping_cost['method_cost'];
         }
     }
@@ -930,14 +969,394 @@ function custom_delivery_options_fields() {
         echo '<div class="delivery-text delivery-text__pickup"><p><span class="icon-iconoir_box-iso2"></span>Самовывоз со склада:</p> <span>' . $pickup . ' р.</span></div>';
     }
     if ($delivery_cost !== '') {
-        echo '<div class="delivery-text"><p><span class="icon-Vector-4"></span>Доставка в течение 1 часа:</p> <span> ' . $delivery_cost . ' р.</span></div>';
+        echo '<div class="delivery-text"><p><span class="icon-carbon_delivery-2"></span>Доставка в течение 1 часа:</p> <span> ' . $delivery_cost . ' р.</span></div>';
     }
     echo '</div>';
 }
 
-// Изменяем стандартный вызов табов на странице товара
-// function move_woocommerce_product_tabs() {
-//     remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
-//     add_action('woocommerce_after_single_product', 'woocommerce_output_product_data_tabs', 10);
+function custom_attribute_unit ($product_id) {
+    $product = wc_get_product($product_id);
+    if (!$product) {
+        return;
+    }
+
+    $attributes = $product->get_attributes();
+    if (!$attributes) {
+        return;
+    }
+
+    $attribute = $attributes['pa_product-unit'];
+
+    if (!$attribute) {
+        return;
+    }
+ 
+    $terms = wc_get_product_terms($product_id, $attribute->get_name(), array('fields' => 'names'));
+    
+    if (!empty($terms)) {
+        echo implode(' ', $terms);
+    }
+
+    return;
+}
+
+//добавление кнопки очистить корзину начало
+add_action( 'woocommerce_before_cart', 'true_empty_cart_btn' );
+function true_empty_cart_btn(){
+	echo '<a class="clear-filters clear-filters-cart" href="' . WC()->cart->get_cart_url() . '?empty-cart">Очистить корзину</a>';
+}
+ 
+add_action( 'init', 'true_empty_cart' );
+function true_empty_cart() {
+	if ( isset( $_GET[ 'empty-cart' ] ) ) {
+		WC()->cart->empty_cart();
+	}
+}
+//добавление кнопки очистить корзину конец
+
+//все фильтры на странице магазина
+function get_all_product_attributes() {
+    global $wpdb;
+
+    // Получаем все ID продуктов в магазине
+    $product_ids = $wpdb->get_col("
+        SELECT DISTINCT object_id
+        FROM {$wpdb->term_relationships}
+    ");
+
+    if (empty($product_ids)) {
+        return false;
+    }
+
+    $all_attributes = wc_get_attribute_taxonomies();
+    $attributes = array();
+
+    foreach ($all_attributes as $attribute) {
+        $attribute_name = $attribute->attribute_name;
+
+        // Исключаем атрибут 'product-unit'
+        if ($attribute_name === 'product-unit') {
+            continue;
+        }
+
+        $taxonomy = 'pa_' . $attribute->attribute_name;
+        $term_count = $wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(DISTINCT tr.term_taxonomy_id)
+            FROM {$wpdb->term_relationships} AS tr
+            INNER JOIN {$wpdb->term_taxonomy} AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+            WHERE tt.taxonomy = %s
+            AND tr.object_id IN (" . implode(',', array_map('intval', $product_ids)) . ")
+        ", $taxonomy));
+
+        if ($term_count > 0) {
+            $attributes[] = $attribute;
+        }
+    }
+
+    return $attributes;
+}
+function print_filters_shop() {
+    // Проверяем, что это страница магазина
+    if (!is_shop()) {
+        return;
+    }
+
+    $attributes = get_all_product_attributes();
+    if (!$attributes) {
+        return;
+    }
+
+    $current_params = $_GET;
+
+    // Фильтруем параметры, чтобы удалить атрибуты
+    $non_attribute_params = array_filter($current_params, function($key) {
+        return strpos($key, 'attribute_') !== 0;
+    }, ARRAY_FILTER_USE_KEY);
+
+    // Создаем ссылку для очистки фильтров
+    $clear_filters_url = add_query_arg($non_attribute_params, get_permalink(get_option('woocommerce_shop_page_id')));
+
+    echo '<h2>Фильтры</h2>';
+    echo '<div class="attribute-filters"><form method="get" action="#">';
+
+    // Скрытые поля для всех текущих параметров, не являющихся атрибутами
+    foreach ($current_params as $key => $value) {
+        if (strpos($key, 'attribute_') !== 0) {
+            echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
+        }
+    }
+
+    // Вывод фильтров по атрибутам
+    foreach ($attributes as $attribute) {
+        $attribute_name = $attribute->attribute_name;
+        $attribute_label = $attribute->attribute_label;
+
+        $terms = get_terms(array(
+            'taxonomy' => 'pa_' . $attribute_name,
+            'hide_empty' => true,
+        ));
+
+        if (!empty($terms) && !is_wp_error($terms)) {
+            echo '<span class="attribute-filters__select"><select name="attribute_' . esc_attr($attribute_name) . '" id="attribute_' . esc_attr($attribute_name) . '">';
+            echo '<option value="">' . esc_html($attribute_label) . '</option>';
+            foreach ($terms as $term) {
+                $selected = isset($current_params['attribute_' . esc_attr($attribute_name)]) && $current_params['attribute_' . esc_attr($attribute_name)] === $term->slug ? ' selected' : '';
+                echo '<option value="' . esc_attr($term->slug) . '"' . $selected . '>' . esc_html($term->name) . '</option>';
+            }
+            echo '</select><span class="vertical-line"></span><span class="reset-button">×</span></span>';
+        }
+    }
+    echo '<input type="submit" value="Применить фильтры">';
+    echo '</form>';
+    echo '<a href="' . esc_url($clear_filters_url) . '" class="clear-filters">Очистить фильтры</a>';
+    echo '</div>';
+}
+add_action('woocommerce_before_shop_loop', 'print_filters_shop', 20);
+
+// Устанавливаем стоимость доставки = 0 для всех методов дотсавки чтобы не приабвлялось к сумме заказа
+// function make_all_shipping_methods_free( $rates, $package ) {
+//     foreach ( $rates as $rate_id => $rate ) {
+//         $rates[$rate_id]->cost = 0;     }
+//     return $rates;
 // }
-// add_action('wp', 'move_woocommerce_product_tabs');
+// add_filter( 'woocommerce_package_rates', 'make_all_shipping_methods_free', 10, 2 );
+
+//фильтр для кастомизации полей в форме доставки
+function customize_billing_fields($fields) {
+    // Удаление ненужных полей
+    /*unset($fields['shipping']['shipping_company']);
+    unset($fields['shipping']['shipping_address_2']);*/
+
+    // Добавление новых полей
+    $fields['billing']['billing_state'] = array(
+        'type'        => 'text',
+        'label'       => __('Область', 'woocommerce'),
+        'required'    => false,
+        'class'       => array('form-row-wide'),
+        'priority'    => 70,
+        'placeholder' => __('Область', 'woocommerce'),
+        'default'     => 'Брянская область',
+    );
+    $fields['billing']['billing_country'] = array(
+        'type'        => 'text',
+        'label'       => __('Страна', 'woocommerce'),
+        'required'    => false,
+        'class'       => array('form-row-wide'),
+        'priority'    => 80,
+        'placeholder' => __('Страна', 'woocommerce'),
+        'default'     => 'Россия',
+    );
+    $fields['billing']['billing_postcode'] = array(
+        'type'        => 'number',
+        'label'       => __('Почтовый индекс', 'woocommerce'),
+        'required'    => false,
+        'class'       => array('form-row-wide'),
+        'priority'    => 90,
+        'placeholder' => __('Почтовый индекс', 'woocommerce'),
+        'default'     => '241000',
+    );
+    $fields['billing']['billing_first_name'] = array(
+        'type'        => 'text',
+        'label'       => __('Имя', 'woocommerce'),
+        'required'    => true,
+        'class'       => array('form-row-wide'),
+        'priority'    => 100,
+        'placeholder' => __('Иван *', 'woocommerce'),
+    );
+    $fields['billing']['billing_last_name'] = array(
+        'type'        => 'text',
+        'label'       => __('Фамилия', 'woocommerce'),
+        'required'    => true,
+        'class'       => array('form-row-wide'),
+        'priority'    => 110,
+        'placeholder' => __('Иванов *', 'woocommerce'),
+    );
+    $fields['billing']['billing_phone'] = array(
+        'type'        => 'text',
+        'label'       => __('Телефон', 'woocommerce'),
+        'required'    => true,
+        'class'       => array('form-row-wide'),
+        'priority'    => 120,
+        'placeholder' => __('+7(xxx)xxx-xx-xx *', 'woocommerce'),
+    );
+
+    $fields['billing']['billing_email'] = array(
+        'type'        => 'email',
+        'label'       => __('e-mail', 'woocommerce'),
+        'required'    => true,
+        'class'       => array('form-row-wide'),
+        'priority'    => 130,
+        'placeholder' => __('mail@mail.ru *', 'woocommerce'),
+    );
+
+    $fields['billing']['billing_city'] = array(
+        'type'        => 'text',
+        'label'       => __('Адрес доставки', 'woocommerce'),
+        'required'    => true,
+        'class'       => array('form-row-wide'),
+        'priority'    => 140,
+        'placeholder' => __('Населенный пункт *', 'woocommerce'),
+    );
+
+    $fields['billing']['billing_address_1'] = array(
+        'type'        => 'text',
+        'required'    => true,
+        'class'       => array('form-row-wide'),
+        'priority'    => 150,
+        'placeholder' => __('Улица *', 'woocommerce'),
+    );
+
+    $fields['billing']['billing_address_2'] = array(
+        'type'        => 'text',
+        'required'    => true,
+        'class'       => array('form-row-one'),
+        'priority'    => 160,
+        'placeholder' => __('Дом *', 'woocommerce'),
+    );
+
+    $fields['billing']['billing_address_3'] = array(
+        'type'        => 'text',
+        'required'    => false,
+        'class'       => array('form-row-two'),
+        'priority'    => 170,
+        'placeholder' => __('Корпус', 'woocommerce'),
+    );
+
+    $fields['billing']['billing_address_4'] = array(
+        'type'        => 'text',
+        'required'    => false,
+        'class'       => array('form-row-three'),
+        'priority'    => 180,
+        'placeholder' => __('Квартира', 'woocommerce'),
+    );
+
+    $fields['billing']['billing_apartment'] = array(
+        'type'        => 'text',
+        'required'    => false,
+        'class'       => array('form-row-first'),
+        'priority'    => 190,
+        'placeholder' => __('Подъезд', 'woocommerce'),
+    );
+
+    $fields['billing']['billing_code'] = array(
+        'type'        => 'text',
+        'required'    => false,
+        'class'       => array('form-row-last'),
+        'priority'    => 200,
+        'placeholder' => __('Код от подъезда', 'woocommerce'),
+    );
+
+    $fields['billing']['billing_comment'] = array(
+        'type'        => 'textarea',
+        'label'       => __('Комментарий', 'woocommerce'),
+        'required'    => false,
+        'class'       => array('form-row-wide'),
+        'priority'    => 210,
+        'placeholder' => __('Комментарий', 'woocommerce'),
+    );
+
+    return $fields;
+}
+add_filter('woocommerce_checkout_fields', 'customize_billing_fields');
+
+
+// // Установка заказа как оплаченный
+// add_action('woocommerce_checkout_order_processed', 'custom_woocommerce_checkout_order_processed', 20, 3);
+// function custom_woocommerce_checkout_order_processed($order_id, $posted_data, $order) {
+//     $order->payment_complete();
+// }
+
+
+//перенесем кнопку подтвердить заказ в конец формы
+function move_payment_block() {
+    remove_action( 'woocommerce_review_order_after_order_total', 'woocommerce_checkout_payment', 20 );
+    remove_action( 'woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20 );
+
+    add_action( 'woocommerce_checkout_after_order_review', 'woocommerce_checkout_payment', 20 );
+}
+add_action( 'wp_loaded', 'move_payment_block' );
+
+// сохраняем выбранный метод доставки
+function save_selected_shipping_method() {
+    if (isset($_POST['shipping_method'])) {
+        $shipping_method = sanitize_text_field($_POST['shipping_method']);
+        $shipping_label = sanitize_text_field($_POST['shipping_label']);
+        $shipping_cost = sanitize_text_field($_POST['shipping_cost']);
+
+        // Обновляем метод доставки в сессии
+        WC()->session->set('selected_shipping_method', $shipping_method);
+    }
+}
+add_action('wp_ajax_save_selected_shipping_method', 'save_selected_shipping_method');
+add_action('wp_ajax_nopriv_save_selected_shipping_method', 'save_selected_shipping_method');
+
+// изменяем поле адреса на не обязательное в случае если самовывоз
+function customize_checkout_fields($fields) {
+    //$selected_shipping_method = WC()->session->get('selected_shipping_method');
+
+
+    $fields['billing']['billing_country']['required'] = false;
+    $fields['billing']['billing_postcode']['required'] = false;
+    $fields['billing']['billing_state']['required'] = false;
+    $fields['billing']['billing_city']['required'] = false;
+    $fields['billing']['billing_address_1']['required'] = false;
+    $fields['billing']['billing_address_2']['required'] = false;
+    $fields['billing']['billing_address_3']['required'] = false;
+    $fields['billing']['billing_address_4']['required'] = false;
+    $fields['billing']['billing_apartment']['required'] = false;
+    $fields['billing']['billing_code']['required'] = false;
+
+    $fields['billing']['billing_country']['default'] = '-';
+    $fields['billing']['billing_postcode']['default'] = '-';
+    $fields['billing']['billing_state']['default'] = '-';
+    $fields['billing']['billing_city']['default'] = '-';
+    $fields['billing']['billing_address_1']['default'] = '-';
+    $fields['billing']['billing_address_2']['default'] = '-';
+    $fields['billing']['billing_address_3']['default'] = '-';
+    $fields['billing']['billing_address_4']['default'] = '-';
+    $fields['billing']['billing_apartment']['default'] = '-';
+    $fields['billing']['billing_code']['default'] = '-';
+    
+
+
+    return $fields;
+}
+//add_filter('woocommerce_checkout_fields', 'customize_checkout_fields');
+
+// выводим информацию о выбранном методе доставки
+function display_shipping_info() {
+    $shipping_label = WC()->session->get('selected_shipping_label');
+    $shipping_cost = WC()->session->get('selected_shipping_cost');
+
+    if ($shipping_label && $shipping_cost) {
+        echo '<div class="woocommerce-shipping-info" style="display: none;">';
+        echo '<p>' . __('Shipping Method: ', 'woocommerce') . $shipping_label . '</p>';
+        echo '<p>' . __('Shipping Cost: ', 'woocommerce') . $shipping_cost . '</p>';
+        echo '</div>';
+    }
+}
+add_action('woocommerce_review_order_before_payment', 'display_shipping_info');
+
+function custom_checkout_alert_script() {
+    if (is_checkout()) { 
+        ?>
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $(document).on('click', '#place_order', function(event) {
+                    event.preventDefault();
+                    
+                    // Показываем блок с сообщением
+                    $('.thankyou-alert').fadeIn();
+
+                    // Обработка клика на кнопку "OK"
+                    $('.thankyou-alert__button').on('click', function() {
+                        $('.thankyou-alert').fadeOut();
+                        $('form.checkout').submit();
+                    });
+                });
+            });
+        </script>
+    <?php
+    }
+}
+add_action('wp_footer', 'custom_checkout_alert_script');

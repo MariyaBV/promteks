@@ -15,7 +15,7 @@
 
         .footer-left {
             flex: 1;
-            max-width: 225px;
+            max-width: 230px;
 
             .logo-container {
                 display: flex;
@@ -69,17 +69,23 @@
             color: var(--white);
             text-decoration: none;
 
-            .icon-Vector-3,
-            .icon-Vector-5 {
-                margin-right: 9px;
+            .icon-place-2,
+            .icon-phone-2 {
+                font-size: xx-large;
             }
 
             p {
                 margin-bottom: 6px;
                 font-family: "Inter", sans-serif;
+                font-size: var(--txt-font-size);
+                font-weight: var(--txt-font-weight);
+                line-height: var(--txt-line-height);
 
                 &.subtitle-xs {
                     color: var(--pale-green);
+                    font-size: var(--subtitle-xs-font-size);
+                    font-weight: var(--subtitle-xs-font-weight);
+                    line-height: var(--subtitle-xs-line-height);
                 }
             }
         }

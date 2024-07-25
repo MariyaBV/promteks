@@ -38,6 +38,7 @@
         color: var(--main-color);
         float: none;
         margin: 0;
+        outline: none;
     }
 
     .quantity-arrow-minus,
@@ -189,7 +190,6 @@
 #page .up-sells.upsells {
 
     div.wrap {
-        padding-bottom: 40px;
         //border-bottom: 2px solid #CBCBCB;
 
         ul.products {
@@ -298,13 +298,13 @@
         margin: 16px 0;
     }
 
-    .yith-wcwl-add-to-wishlist {
+    /*.yith-wcwl-add-to-wishlist {
         position: absolute;
         top: 16px;
         right: 16px;
         margin: 0;
         max-width: 35px;
-    }
+    }*/
 }
 
 #page a.woocommerce-loop-product__link {
@@ -334,7 +334,7 @@
 
             span {
                 margin-right: 8px;
-                font-size: larger;
+                font-size: x-large;
             }
 
             .icon-iconoir_box-iso2 {
@@ -355,6 +355,9 @@
 #primary .product {
     margin: 0;
     float: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
     .woocommerce-tabs {
         padding-top: 39px;
@@ -393,7 +396,7 @@
 }
 
 .show-more-btn {
-    display: block;
+    display: none;
     margin: 39px auto;
     color: var(--main-color);
     border: 1px solid var(--Lacoste, var(--dark-green));

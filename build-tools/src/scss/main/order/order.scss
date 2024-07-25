@@ -1,0 +1,119 @@
+.woocommerce-order {
+    .title-order {
+        margin-top: 40px;
+    }
+
+    .subtitle-checkout {
+        margin: 0;
+    }
+
+    .block-details {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--grey);
+    }
+
+    .subtitle-details {
+        flex: 20%;
+        padding: 8px 0 8px 16px;
+    }
+
+    .text-details {
+        flex: 80%;
+        font-weight: 600;
+    }
+
+    .woocommerce-notice.woocommerce-notice--success.woocommerce-thankyou-order-received {
+        display: none;
+    }
+
+    .pdf-buttons {
+        display: flex;
+        justify-content: flex-end;
+
+        .button {
+            display: block;
+            padding: 8px;
+            margin-right: 8px;
+            max-width: 156px;
+            width: 100%;
+            color: var(--main-color);
+            border: 1px solid var(--Lacoste, var(--dark-green));
+            cursor: pointer;
+            border-radius: 4px;
+            background-color: unset;
+            font-size: var(--txt-s-font-size);
+            font-weight: var(--txt-s-font-weight);
+            line-height: var(--txt-s-line-height);
+
+            &:hover {
+                background-color: unset;
+                cursor: pointer;
+            }
+
+            span {
+                margin-right: 6px;
+            }
+        }
+    }
+}
+
+.woocommerce-customer-details {
+
+    .woocommerce-customer-details--phone::before,
+    .woocommerce-customer-details--email::before {
+        display: none;
+    }
+}
+
+.woocommerce .woocommerce-order-details {
+    .order_details {
+        border: none;
+        border-collapse: collapse;
+
+        thead {
+            border: none;
+            border-collapse: collapse;
+
+            th {
+                border: none;
+                border-collapse: collapse;
+                font-weight: normal;
+            }
+
+            tr {
+                border-bottom: none;
+                background-color: var(--light-grey);
+            }
+        }
+
+        tbody {
+            .product-thumbnail {
+                max-width: 100px;
+                max-height: 100px;
+                padding: 16px;
+            }
+
+            tr {
+                border-bottom: 1px solid var(--light-grey);
+            }
+        }
+
+        tfoot {
+            margin: 24px 0;
+
+            th,
+            td {
+                border: none;
+            }
+
+            td {
+                text-align: right;
+                font-size: var(--price-L-font-size);
+                font-weight: var(--price-L-font-weight);
+                line-height: var(--price-L-line-height);
+                padding: 24px 0;
+            }
+        }
+    }
+}

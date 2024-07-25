@@ -34,13 +34,13 @@ $low_stock_threshold = get_option('woocommerce_notify_low_stock_amount');
 <div class="stock-status">
     <?php 
     if ( $stock_status === 'outofstock' ) {
-        echo '<p class="out-of-stock"><span class="icon-Vector-20"></span>Нет на складе</p>';
+        echo '<p class="out-of-stock"><span class="icon-close-filled-1"></span>Нет на складе</p>';
     } elseif ( $stock_status === 'onbackorder' ) {
-        echo '<p class="available-on-backorder">Доступно для предзаказа</p>';
+        echo '<p class="available-on-backorder"><span class="icon-warning-1"><span class="path1"></span><span class="path2"></span></span>Доступно для предзаказа</p>';
     } elseif ( $stock_quantity <= $low_stock_threshold && $stock_quantity > 0 ) {
-        echo '<p class="low-stock"><span class="icon-Vector-21"></span>Осталось мало</p>';
+        echo '<p class="low-stock"><span class="icon-no-entry-1"></span>Осталось мало</p>';
     } else {
-        echo '<p class="in-stock"><span class="icon-Vector-12"></span>Есть на складе</p>';
+        echo '<p class="in-stock"><span class="icon-check-circle-3"></span>Есть на складе</p>';
     }
     ?>
 </div>

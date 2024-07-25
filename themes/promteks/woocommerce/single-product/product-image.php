@@ -55,7 +55,7 @@ $wrapper_classes   = apply_filters(
                 ?>
             </div>
             <div class="swiper-button-prev product-gallery__swiper-button-prev icon-Vector-9"></div>
-            <div class="swiper-button-next product-gallery__swiper-button-next icon-Vector-11"></div>
+            <div class="swiper-button-next product-gallery__swiper-button-next icon-Down-1"></div>
         </div>
 		<?php
 		if ($post_thumbnail_id) {

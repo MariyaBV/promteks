@@ -1,28 +1,55 @@
 .cart-title {
-    margin: 40px 0;
+    margin: 40px 0 24px 0;
+    float: left;
+}
+
+a.clear-filters-cart {
+    float: right;
+    margin-top: 55px;
+}
+
+.custom-button-back {
+    background-color: unset;
+    border: 1px solid var(--dark-green);
+    padding: 15px 0;
+    max-width: 255px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    border-radius: var(--button-border-radius);
+    font-size: var(--txt-font-size);
+    font-weight: var(--txt-font-weight);
+    line-height: var(--txt-line-height);
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .woocommerce .cart-collaterals .custom-cart-totals {
-    width: 100%;
-    float: none;
+    width: 52%;
+    float: right;
+
+    .order-total {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 24px 0;
+        font-size: var(--price-L-font-size);
+        font-weight: var(--price-L-font-weight);
+        line-height: var(--price-L-line-height);
+        gap: 10px;
+    }
 
     .shop_table {
         border: none;
 
-        .order-total {
-            td, th {
-                padding: 24px 0;
-            }
-
-            td {
-                text-align: right;
-            }
-        }
-
         .woocommerce-shipping-totals {
             background-color: var(--light-grey);
 
-            th, td {
+            th,
+            td {
                 border-bottom: 1px solid var(--main-color);
                 padding: 24px 0;
                 font-size: var(--txt-font-size);
@@ -30,7 +57,7 @@
                 line-height: var(--txt-line-height);
             }
 
-            
+
         }
     }
 }
@@ -38,17 +65,26 @@
 .woocommerce-cart .custom-button-checkout {
     margin: 0;
     padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
 
     a.checkout-button.button {
-        max-width: 240px;
+        max-width: 255px;
         width: 100%;
         background-color: var(--dark-green);
         border-radius: var(--button-border-radius);
-        font-size: var(--txt-s-font-size);
-        font-weight: var(--txt-s-font-weight);
-        line-height: var(--txt-s-line-height);
-        padding: 8px 0;
-        float: right;
+        font-size: var(--txt-font-size);
+        font-weight: var(--txt-font-weight);
+        line-height: var(--txt-line-height);
+        padding: 15px 0;
+        display: block;
+        margin: 0;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
 
@@ -87,10 +123,136 @@
                 .quantity .qty {
                     text-align: center;
                     width: 100%;
-                    max-width: 85px;
+                    max-width: 120px;
                     padding: 0;
+                }
+
+                .quantity,
+                .attribute-unit {
+                    float: left;
+                    margin-left: 4px;
+                }
+            }
+
+            .product-name {
+                max-width: 400px;
+            }
+            .product-quantity {
+                min-width: 160px;
+            }
+            .product-remove {
+                a.remove {
+                    &:hover {
+                        color: var(--red)!important;
+                        background: none;
+                    }
                 }
             }
         }
     }
+}
+
+form.custom-cart-form>table.shop_table>tbody.cart-body>tr.block-cart-button-subtotal,
+#primary .wrap .wp-block-group .woocommerce .woocommerce-notices-wrapper .woocommerce-message {
+    display: none;
+}
+
+#primary .wrap .wp-block-group .woocommerce {
+    .woocommerce-info {
+        padding: 0;
+    }
+
+    .return-to-shop a {
+        max-width: 255px;
+        width: 100%;
+        background-color: var(--dark-green);
+        border-radius: var(--button-border-radius);
+        font-size: var(--txt-s-font-size);
+        font-weight: var(--txt-s-font-weight);
+        line-height: var(--txt-s-line-height);
+        padding: 15px 0;
+        color: var(--white);
+        text-align: center;
+    }
+}
+
+#primary .shipping-block {
+    display: flex;
+    align-items: baseline;
+    gap: 40px;
+    margin-top: 24px;
+
+    .block-shipping-methods {
+        max-width: 415px;
+        width: 100%;
+
+        ul.custom-shipping-method {
+            border: 1px solid var(--grey);
+            position: relative;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            .icon-Down-1 {
+                position: absolute;
+                top: 23px;
+                right: 15px;
+                z-index: 0;
+            }
+
+            li {
+                margin: 0;
+                border-bottom: 1px solid var(--grey);
+                padding: 17.5px 40px 17.5px 8px;
+
+                [class^="icon-"],
+                [class*=" icon-"] {
+                    font-size: xx-large;
+                    margin-right: 8px;
+                }
+
+                &.init {
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                }
+
+                &:not(.init) {
+                    width: 100%;
+                    display: none;
+                    border-bottom: 1px solid var(--grey);
+                }
+
+                &.visible {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .amount {
+                    font-weight: normal;
+                }
+
+                .shipping-method-label {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                    z-index: -1;
+                }
+            }
+        }
+    }
+}
+
+.woocommerce-cart .wc-proceed-to-checkout::before,
+.woocommerce-cart .wc-proceed-to-checkout::after {
+    content: none;
+}
+
+.custom-privacy-policy {
+    color: var(--dark-grey);
+    text-decoration: none;
+    text-align: end;
+    display: block;
+    margin-top: 10px;
 }

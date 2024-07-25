@@ -67,7 +67,7 @@
         }
 
         li.icon-Vector-9::before,
-        li a.icon-Vector-10::before {
+        li a.icon-Down-3::before {
             position: absolute;
             right: 0;
             top: 25px;
@@ -113,16 +113,6 @@ main#main #secondary section {
 
 .attribute-filters {
     margin-bottom: 24px;
-
-    .clear-filters {
-        margin-top: 8px;
-        font-size: var(--subtitle-font-size);
-        font-weight: var(--subtitle-font-weight);
-        line-height: var(--subtitle-line-height);
-        color: #399C49;
-        border-bottom: 1px solid #399C49;   
-        text-decoration: none;
-    }
 
     &__select {
         position: relative;
