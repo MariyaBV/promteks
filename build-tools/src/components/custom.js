@@ -1,37 +1,39 @@
-document.addEventListener("DOMContentLoaded", function () {
+$(document).ready(function () {
     function quantityProducts() {
-        var quantityArrowMinus = document.querySelector(".quantity-arrow-minus");
-        var quantityArrowPlus = document.querySelector(".quantity-arrow-plus");
-        var quantityNum = document.querySelector(".input-text.qty.text");
+        var $quantityArrowMinus = $(".quantity-arrow-minus");
+        var $quantityArrowPlus = $(".quantity-arrow-plus");
+        var $quantityNum = $(".input-text.qty.text");
 
-        if (quantityArrowMinus && quantityArrowPlus && quantityNum) {
-            quantityArrowMinus.addEventListener("click", function (event) {
+        if ($quantityArrowMinus.length && $quantityArrowPlus.length && $quantityNum.length) {
+            $quantityArrowMinus.on("click", function (event) {
                 event.preventDefault();
                 quantityMinus();
             });
 
-            quantityArrowPlus.addEventListener("click", function (event) {
+            $quantityArrowPlus.on("click", function (event) {
                 event.preventDefault();
                 quantityPlus();
             });
         }
 
         function quantityMinus() {
-            if (parseInt(quantityNum.value) > 1) {
-                quantityNum.value = parseInt(quantityNum.value) - 1;
+            var currentValue = parseInt($quantityNum.val());
+            if (currentValue > 1) {
+                $quantityNum.val(currentValue - 1);
             }
         }
 
         function quantityPlus() {
-            quantityNum.value = parseInt(quantityNum.value) + 1;
+            var currentValue = parseInt($quantityNum.val());
+            $quantityNum.val(currentValue + 1);
         }
     }
 
     quantityProducts();
 });
 
-jQuery(document).ready(function ($) {
-    // Обработчик для кнопки "Купить"
+// Обработчик для кнопки "Купить"
+$(document).ready(function ($) {
     $('.ajax_add_to_cart').on('click', function (e) {
         e.preventDefault();
 
@@ -64,19 +66,7 @@ jQuery(document).ready(function ($) {
                     $thisButton.find('.add-to-cart-text').text('В корзине');
                     $thisButton.addClass('in-basket');
                     // Обновление количества товаров в корзине
-                    $.ajax({
-                        url: custom_ajax_obj.ajax_url,
-                        type: 'post',
-                        data: {
-                            action: 'update_cart_count'
-                        },
-                        success: function (response) {
-                            $('.cart-count').text(response.data.cart_count);
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            console.error('Update cart count error:', textStatus, errorThrown);
-                        }
-                    });
+                    updateCartCount();
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -122,82 +112,8 @@ jQuery(document).ready(function ($) {
     }
 
     // Добавляем событие на обновление корзины после изменения количества товаров
-    $('body').on('added_to_cart', function () {
+    $(document).on('updated_cart_totals', function () {
         updateCartCount();
-    });
-});
-
-$(document).ready(function () {
-    $(document).ajaxStop(function () {
-        //добавляем стиль для всех лайкнутых элементов
-        $('.delete_item').each(function () {
-            var closestLi = $(this).closest('li');
-            closestLi.addClass('added_to_wishlist');
-
-            //для слайдера
-            var closestSwiper = $(this).closest('.swiper-slide');
-            closestSwiper.addClass('added_to_wishlist');
-
-            $('.delete_item').contents().filter(function () {
-                return this.nodeType === 3; // Удаляем только текстовые узлы
-            }).remove();
-        });
-
-        //удаляем стиль для всех НЕ лайкнутых элементов - нужно для страницы карточки когда есть еще блоки просмотренные
-        $('.add_to_wishlist').each(function () {
-            var closestLi = $(this).closest('li');
-            closestLi.removeClass('added_to_wishlist');
-
-            //для слайдера
-            var closestSwiper = $(this).closest('.swiper-slide');
-            closestSwiper.removeClass('added_to_wishlist');
-        });
-    });
-
-    // Отслеживаем клик на кнопке удаления из "понравившихся"
-    $('body').on('click', '.delete_item', function (e) {
-        var closestLi = $(this).closest('li');
-        closestLi.removeClass('added_to_wishlist');
-
-        //для слайдера
-        var closestSwiper = $(this).closest('.swiper-slide');
-        closestSwiper.removeClass('added_to_wishlist');
-
-        // Обновляем счетчик в шапке страницы
-        var currentCount = parseInt($('.header-wishlist .wishlist-count').text(), 10);
-        $('.header-wishlist .wishlist-count').text(currentCount - 1);
-    });
-
-    // Отслеживаем клик на кнопке добавления в "понравившиеся"
-    $('body').on('click', '.add_to_wishlist', function (e) {
-        var closestLi = $(this).closest('li');
-        $('.delete_item').contents().filter(function () {
-            return this.nodeType === 3; // Удаляем только текстовые узлы
-        }).remove();
-
-        // Проверяем, есть ли уже класс added_to_wishlist
-        if (!closestLi.hasClass('added_to_wishlist')) {
-            closestLi.addClass('added_to_wishlist');
-
-            // Обновляем счетчик в шапке страницы
-            var currentCount = parseInt($('.header-wishlist .wishlist-count').text(), 10);
-            $('.header-wishlist .wishlist-count').text(currentCount + 1);
-        }
-    });
-});
-
-jQuery(document).ready(function ($) {
-    function updateCurrencySymbol() {
-        $('.summary.entry-summary .woocommerce-Price-currencySymbol').text('₽');
-    }
-
-    updateCurrencySymbol();
-
-    $(document).ajaxStop(function () {
-        updateCurrencySymbol();
-    });
-
-    $(document).on('contentUpdated', function () {
-        updateCurrencySymbol();
+        console.log("Cart totals updated.");
     });
 });
