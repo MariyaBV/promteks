@@ -1,9 +1,16 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var content = document.querySelector('.description-content');
-    var btn = document.querySelector('.custom-description .show-more-btn');
+$(document).ready(function() {
+    var $content = $('.description-content');
+    var $btn = $('.custom-description .show-more-btn');
 
-    btn.addEventListener('click', function() {
-        content.style.maxHeight = 'none';
-        btn.style.display = 'none';
+    if ($content.prop('scrollHeight') > 299) {
+        $btn.css('display', 'block');
+    } else {
+        $btn.css('display', 'none');
+    }
+
+    $btn.on('click', function() {
+        $content.css('maxHeight', 'none');
+        $btn.css('display', 'none');
     });
 });
+
