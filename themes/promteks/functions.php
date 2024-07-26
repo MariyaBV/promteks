@@ -224,15 +224,20 @@ function promteks_blocks() {
 				'title' => __('Блок вывода товаров из 1 категории', 'promteks'),
 				'keywords' => array('блок-товаров-1-категории', 'баннер')
 			],
-			'three-blocks' => [
-				'description' => __('3 блока', 'promteks'),
-				'title' => __('3 блока', 'promteks'),
-				'keywords' => array('3-блока', 'баннер')
+			'list-with-img' => [
+				'description' => __('Список с заголовком и картинками', 'promteks'),
+				'title' => __('Список с заголовком и картинками', 'promteks'),
+				'keywords' => array('Список-заголовком-картинками', 'баннер')
 			],
-			'contacts' => [
-				'description' => __('contacts', 'promteks'),
-				'title' => __('contacts', 'promteks'),
-				'keywords' => array('contacts', 'баннер')
+			'list-img' => [
+				'description' => __('Список с картинкой', 'promteks'),
+				'title' => __('Список с картинкой', 'promteks'),
+				'keywords' => array('Список-с-картинкой', 'баннер')
+			],
+			'images-text' => [
+				'description' => __('Блок текст на картинке', 'promteks'),
+				'title' => __('Блок текст на картинке', 'promteks'),
+				'keywords' => array('Блок-текст-на-картинке', 'баннер')
 			]
 		];
 
@@ -911,14 +916,36 @@ function custom_availability_text( $availability, $product ) {
 add_filter( 'woocommerce_get_availability_text', 'custom_availability_text', 10, 2 );
 
 
-//удаляем разделить в хлебных крошках
-function true_woo_breadcrumbs_delimiter( $defaults ) {
-	$defaults[ 'delimiter' ] = ''; 
+//удаляем хлебные крошки woocomerce
+remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
 
-	return $defaults;
+
+//хлебные крошки yoast seo
+function custom_breadcrumb_home_text($link_output) {
+    if (!is_front_page()) {
+        return str_replace('Главная страница', 'Главная', $link_output);
+    }
+    return $link_output;
 }
-add_filter( 'woocommerce_breadcrumb_defaults', 'true_woo_breadcrumbs_delimiter' );
-//добавляем хлебные крошки конец 
+add_filter('wpseo_breadcrumb_single_link', 'custom_breadcrumb_home_text');
+
+//удаляем разделить в хлебных крошках yoast seo
+function custom_breadcrumb_separator($output) {
+    $output = str_replace('»', '', $output);
+    return $output;
+}
+add_filter('wpseo_breadcrumb_separator', 'custom_breadcrumb_separator');
+
+//добавляем доп спан чтобы правильно применялись стили для текста
+function wrap_breadcrumbs_link_text($link_output) {
+    if (preg_match('/<a[^>]*>(.*?)<\/a>/', $link_output, $matches)) {
+        $new_link_output = str_replace($matches[1], '<span class="breadcrums-link-text">' . $matches[1] . '</span>', $link_output);
+        return $new_link_output;
+    }
+    return $link_output;
+}
+add_filter('wpseo_breadcrumb_single_link', 'wrap_breadcrumbs_link_text');
+
 
 function custom_delivery_options_fields() {
     function get_shipping_methods_costs() {
@@ -1360,3 +1387,29 @@ function custom_checkout_alert_script() {
     }
 }
 add_action('wp_footer', 'custom_checkout_alert_script');
+
+//стиль к item menu на странице которой находимся
+function get_menu_items_with_classes($menu_name) {
+    $locations = get_nav_menu_locations();
+    $menu_id = isset($locations[$menu_name]) ? $locations[$menu_name] : 0;
+    $menu_items = wp_get_nav_menu_items($menu_id);
+    
+    global $wp;
+    $current_url = home_url(add_query_arg(array(), $wp->request));
+    $current_path = trim(parse_url($current_url, PHP_URL_PATH), '/');
+
+    foreach ($menu_items as $menu_item) {
+        $menu_path = trim(parse_url($menu_item->url, PHP_URL_PATH), '/');
+
+        if ($menu_path === $current_path) {
+            $menu_item->classes[] = 'selected-item-menu';
+        }
+    }
+
+    return $menu_items;
+}
+
+
+//перенос пагинации в хук woocommerce_after_main_content
+remove_action('woocommerce_after_shop_loop', 'woocommerce_pagination', 10);
+add_action('woocommerce_after_main_content', 'woocommerce_pagination', 20);

@@ -52,7 +52,22 @@ $options = get_fields('options');
 					<span class="logo-text-year"><?= $options['yeas']; ?></span>
 				</a>
 				<div class="header-block-menu">
-					<?php wp_nav_menu('menu=top-menu'); ?>
+					<?php /*wp_nav_menu('menu=top-menu');*/?> 
+					<div class="menu-top-menu-container">
+						<?php
+						$menu_name = 'top-menu';
+						$menu_items = get_menu_items_with_classes($menu_name);
+				
+						echo '<ul id="menu-top-menu" class="menu">';
+						foreach ($menu_items as $menu_item) {
+							$classes = implode(' ', $menu_item->classes);
+							echo '<li class="' . esc_attr($classes) . '">';
+							echo '<a href="' . esc_url($menu_item->url) . '">' . esc_html($menu_item->title) . '</a>';
+							echo '</li>';
+						}
+						echo '</ul>';
+						?>
+					</div>
 				</div>
 				<div class="header-block-search">
 					<form role="search" method="get" class="woocommerce-product-search header-search" action="<?php echo esc_url( home_url( '/' ) ); ?>">
@@ -70,3 +85,11 @@ $options = get_fields('options');
 			</div>
 		</div>
 	</header>
+
+	<div class="wrap">
+		<?php if (!is_front_page() && !is_cart() && !is_checkout() && !is_account_page()) : ?>
+			<?php if (function_exists('yoast_breadcrumb')) {
+				yoast_breadcrumb('<p id="breadcrumbs">', '</p>');
+			} ?>
+		<?php endif; ?>
+	</div>

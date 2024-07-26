@@ -1,0 +1,18 @@
+.steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin: 40px 0;
+
+    .step-subtitle {
+        position: absolute;
+        background: var(--pale-green);
+        margin: 0;
+        color: var(--white);
+        padding: 10px;
+    }
+
+    .step-item {
+        width: calc(50% - 20px);
+    }
+}

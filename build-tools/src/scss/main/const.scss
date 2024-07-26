@@ -246,15 +246,44 @@ input[type="week"] {
 .wp-block-columns {
   margin-bottom: 64px;
 }
+
 .wp-block-heading {
   margin-bottom: 16px;
 }
+
 a.clear-filters {
   margin-top: 8px;
   font-size: var(--subtitle-font-size);
   font-weight: var(--subtitle-font-weight);
   line-height: var(--subtitle-line-height);
   color: #399C49;
-  border-bottom: 1px solid #399C49;   
+  border-bottom: 1px solid #399C49;
   text-decoration: none;
+}
+
+.separator {
+  margin: 32px 0 24px 0;
+}
+
+figure.wp-block-image {
+  margin-bottom: 24px;
+}
+
+.woocommerce nav.woocommerce-pagination {
+  padding: 10px 0;
+
+  a.page-numbers {
+    padding: 4px 7px;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.current {
+      background: var(--pale-green);
+      color: var(--white);
+      border-radius: 4px;
+    }
+  }
 }
