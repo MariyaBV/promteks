@@ -25,7 +25,6 @@ $(document).ready(function ($) {
         var selectedMethod = $(this).val();
         var shippingLabel = $(this).siblings('label').text().trim();
         var shippingCost = $(this).siblings('label').find('.woocommerce-Price-amount').text().trim();
-        console.log(shippingLabel, shippingCost);
 
         if (typeof wc_cart_params !== 'undefined') {
             // Сохраняем метод доставки в сессии
@@ -39,7 +38,6 @@ $(document).ready(function ($) {
                     shipping_cost: shippingCost
                 },
                 success: function () {
-                    console.log('Shipping method saved successfully', localStorage);
                     // Сохраняем выбор в локальном хранилище тк при отправке данных ajax корзины сбрасывался выбранный метод
                     localStorage.setItem('selected_shipping_method', JSON.stringify({
                         method: selectedMethod,
@@ -62,7 +60,6 @@ $(document).ready(function ($) {
         }
         if (selectedMethod) {
             var parsedMethod = JSON.parse(selectedMethod);
-            console.log(parsedMethod.label,parsedMethod.cost,parsedMethod.method);
 
             $.when(
                 $.ajax({
@@ -101,7 +98,6 @@ $(document).ready(function ($) {
                 $input.closest('li').addClass('selected');
             }
         }
-        console.log("localStorage", savedMethod);
     }
 
     restoreSelectedShippingMethod();

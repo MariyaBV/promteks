@@ -1403,6 +1403,10 @@ function get_menu_items_with_classes($menu_name) {
     foreach ($menu_items as $menu_item) {
         $menu_path = trim(parse_url($menu_item->url, PHP_URL_PATH), '/');
 
+        if ($menu_item->url === '#catalog') {
+            continue;
+        }
+
         if ($menu_path === $current_path) {
             $menu_item->classes[] = 'selected-item-menu';
         }

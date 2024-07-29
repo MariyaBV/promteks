@@ -84,7 +84,19 @@ $options = get_fields('options');
 				</div>
 			</div>
 		</div>
+
+
+		<div id="block-catalog" class="block-catalog">
+			<div class="wrap-header block-catalog__block">
+				<div class="block-categories">
+					<?php echo do_shortcode('[product_categories parent="0"]'); ?>
+				</div>
+				<div class="block-offers">
+				</div>
+			</div>
+		</div>
 	</header>
+
 
 
 	<?php if (!is_front_page() && !is_cart() && !is_checkout() && !is_account_page()) : ?>
