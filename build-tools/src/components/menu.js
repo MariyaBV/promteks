@@ -27,7 +27,18 @@ $(document).ready(function($) {
         }
     }
 
+    function closeCatalogMenu(event) {
+        event.preventDefault();
+        var catalogLink = $('a[href="#catalog"]');
+        var blockCatalog = $('#block-catalog');
+        
+        catalogLink.removeClass('selected-item-menu');
+        blockCatalog.removeClass('visible');
+        history.pushState(null, null, window.location.pathname + window.location.search);
+    }
+
     checkCatalogInUrl();
 
     $('a[href="#catalog"]').on('click', toggleCatalogClass);
+    $('#close-catalog-menu').on('click', closeCatalogMenu);
 });

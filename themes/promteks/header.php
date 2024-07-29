@@ -9,7 +9,7 @@
  * @package promteks
  */
 $options = get_fields('options');
-$fields = get_fields();
+
 //$menuBottom = wp_nav_menu('menu=bottom-menu');
 ?>
 
@@ -93,17 +93,18 @@ $fields = get_fields();
 					<?php echo do_shortcode('[product_categories parent="0"]'); ?>
 				</div>
 				<div class="block-offers">
-					<?php foreach( $fields['advertising_insert_in_catalog_in_menu'] as $item): ?>
+					<?php foreach( $options['advertising_insert_in_catalog_in_menu'] as $item): ?>
 						<div class="block-offers__item">
 							<div class="block-offers__content">
 								<p class="block-offers__subtitle"><?= $item['subtitle']; ?></p>
-								<p class="block-offers__text"><?= $item['text']; ?></p>
+								<p class="block-offers__text subtitle"><?= $item['text']; ?></p>
 							</div>
 							<img class="block-offers__img" src="<?= $item['img']; ?>" alt="offer image"/>
 							<a class="block-offers__link" href="<?= $item['link']; ?>"></a>
 						</div>
 					<?php endforeach; ?>
 				</div>
+				<a href="" id="close-catalog-menu"><span class="icon-Close-1 close-catalog-menu"></span></a>
 			</div>
 		</div>
 	</header>
