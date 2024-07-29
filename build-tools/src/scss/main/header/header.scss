@@ -196,11 +196,12 @@ header#main-header {
     width: 100%;
     opacity: 0;
     position: absolute;
-    z-index: 11;
+    z-index: -1;
     transition: all 1s ease-out;
 
     &.visible {
         opacity: 1;
+        z-index: 11;
     }
 
     &__block {
