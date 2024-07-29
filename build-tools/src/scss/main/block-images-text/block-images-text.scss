@@ -14,5 +14,10 @@
 
     .step-item {
         width: calc(50% - 20px);
+        position: relative;
+
+        @media screen and (max-width: 600px) {
+            width: 100%;
+        }
     }
 }

@@ -7,6 +7,10 @@
 
     &__info {
         flex: 1;
+
+        @media screen and (max-width: 1024px) {
+            flex: 100%;
+        }
     }
 
     &__subtitle-img {
@@ -14,6 +18,10 @@
         width: 100%;
         display: flex;
         align-items: center;
+
+        @media screen and (max-width: 600px) {
+            max-width: 165px;
+        }
     }
 
     &__item {
@@ -23,6 +31,14 @@
 
         p {
             line-height: 27px;
+        }
+    }
+
+    .map {
+        flex: 1;
+
+        @media screen and (max-width: 1024px) {
+            flex: 100%;
         }
     }
 }

@@ -1318,37 +1318,39 @@ add_action('wp_ajax_save_selected_shipping_method', 'save_selected_shipping_meth
 add_action('wp_ajax_nopriv_save_selected_shipping_method', 'save_selected_shipping_method');
 
 // изменяем поле адреса на не обязательное в случае если самовывоз
-function customize_checkout_fields($fields) {
-    //$selected_shipping_method = WC()->session->get('selected_shipping_method');
+function customize_checkout_fields_based_on_shipping($fields) {
+    $chosen_methods = WC()->session->get('chosen_shipping_methods');
+    $selected_shipping_method = isset($chosen_methods[0]) ? $chosen_methods[0] : '';
 
+    if ($selected_shipping_method === 'local_pickup:8') {
+        // Установка полей как необязательных
+        $fields['billing']['billing_country']['required'] = false;
+        $fields['billing']['billing_postcode']['required'] = false;
+        $fields['billing']['billing_state']['required'] = false;
+        $fields['billing']['billing_city']['required'] = false;
+        $fields['billing']['billing_address_1']['required'] = false;
+        $fields['billing']['billing_address_2']['required'] = false;
+        $fields['billing']['billing_address_3']['required'] = false;
+        $fields['billing']['billing_address_4']['required'] = false;
+        $fields['billing']['billing_apartment']['required'] = false;
+        $fields['billing']['billing_code']['required'] = false;
 
-    $fields['billing']['billing_country']['required'] = false;
-    $fields['billing']['billing_postcode']['required'] = false;
-    $fields['billing']['billing_state']['required'] = false;
-    $fields['billing']['billing_city']['required'] = false;
-    $fields['billing']['billing_address_1']['required'] = false;
-    $fields['billing']['billing_address_2']['required'] = false;
-    $fields['billing']['billing_address_3']['required'] = false;
-    $fields['billing']['billing_address_4']['required'] = false;
-    $fields['billing']['billing_apartment']['required'] = false;
-    $fields['billing']['billing_code']['required'] = false;
-
-    $fields['billing']['billing_country']['default'] = '-';
-    $fields['billing']['billing_postcode']['default'] = '-';
-    $fields['billing']['billing_state']['default'] = '-';
-    $fields['billing']['billing_city']['default'] = '-';
-    $fields['billing']['billing_address_1']['default'] = '-';
-    $fields['billing']['billing_address_2']['default'] = '-';
-    $fields['billing']['billing_address_3']['default'] = '-';
-    $fields['billing']['billing_address_4']['default'] = '-';
-    $fields['billing']['billing_apartment']['default'] = '-';
-    $fields['billing']['billing_code']['default'] = '-';
-    
-
+        // Установка значений по умолчанию
+        $fields['billing']['billing_country']['default'] = 'RU';
+        $fields['billing']['billing_postcode']['default'] = '241000';
+        $fields['billing']['billing_state']['default'] = 'Брянская область';
+        $fields['billing']['billing_city']['default'] = 'Брянск';
+        $fields['billing']['billing_address_1']['default'] = 'Карачевкое шоссе';
+        $fields['billing']['billing_address_2']['default'] = '4 км.';
+        $fields['billing']['billing_address_3']['default'] = '-';
+        $fields['billing']['billing_address_4']['default'] = '-';
+        $fields['billing']['billing_apartment']['default'] = '-';
+        $fields['billing']['billing_code']['default'] = '-';
+    }
 
     return $fields;
 }
-//add_filter('woocommerce_checkout_fields', 'customize_checkout_fields');
+add_filter('woocommerce_checkout_fields', 'customize_checkout_fields_based_on_shipping');
 
 // выводим информацию о выбранном методе доставки
 function display_shipping_info() {

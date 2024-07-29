@@ -29,7 +29,7 @@ $options = get_fields('options');
 
 	<header id="main-header" class="site-header">
 		<div class="header-top">
-			<div class="wrap header-top__block">
+			<div class="wrap-header header-top__block">
 				<div class="header-block-delivery">
 					<p class="header-block-delivery__city"><span class="icon-place-2"></span><?= $options['city']; ?></p>
 					<div class="header-block-delivery__delivery">
@@ -46,7 +46,7 @@ $options = get_fields('options');
 			</div>
 		</div>
 		<div class="header-bottom">
-			<div class="wrap header-bottom__block">
+			<div class="wrap-header header-bottom__block">
 				<a class="header-block-logo" href="<?= home_url(); ?>">
 					<img src="<?= $options['logo']; ?>"/>
 					<span class="logo-text-year"><?= $options['yeas']; ?></span>
@@ -86,10 +86,12 @@ $options = get_fields('options');
 		</div>
 	</header>
 
-	<div class="wrap">
-		<?php if (!is_front_page() && !is_cart() && !is_checkout() && !is_account_page()) : ?>
+
+	<?php if (!is_front_page() && !is_cart() && !is_checkout() && !is_account_page()) : ?>
+		<div class="wrap">
 			<?php if (function_exists('yoast_breadcrumb')) {
 				yoast_breadcrumb('<p id="breadcrumbs">', '</p>');
 			} ?>
-		<?php endif; ?>
-	</div>
+		</div>
+	<?php endif; ?>
+

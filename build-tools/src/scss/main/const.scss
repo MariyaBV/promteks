@@ -127,10 +127,17 @@ a {
   color: var(--main-color);
 }
 
-.wrap,
+.wrap-header,
 #main.site-main {
   max-width: var(--width-page);
   margin: 0 auto;
+  padding: 0 40px;
+  width: 100%;
+}
+
+.wrap {
+  max-width: var(--width-page);
+  margin: 0 auto 40px;
   padding: 0 40px;
   width: 100%;
 }
@@ -201,7 +208,8 @@ input[type="week"] {
     font-size: 16px;
   }
 
-  .wrap {
+  .wrap,
+  .wrap-header {
     padding: 0 15px;
   }
 }
@@ -211,7 +219,8 @@ input[type="week"] {
     font-size: 14px;
   }
 
-  .wrap {
+  .wrap,
+  .wrap-header {
     padding: 0 10px;
   }
 

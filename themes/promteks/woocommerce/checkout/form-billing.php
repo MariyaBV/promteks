@@ -41,8 +41,6 @@ $shipping_cost = WC()->session->get('selected_shipping_cost');
 			$fields = $checkout->get_checkout_fields( 'billing' );
 
 			if ( $selected_shipping_method === 'local_pickup:8') {
-				customize_checkout_fields($fields);
-				echo $selected_shipping_method;
 				?>
 				<style>
 					#billing_city_field,

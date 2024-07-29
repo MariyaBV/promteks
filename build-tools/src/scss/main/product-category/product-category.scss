@@ -1,4 +1,4 @@
-.product-category {
+#primary .product-category {
     margin-bottom: 64px;
 
     .swiper {
@@ -63,6 +63,11 @@
         }
     }
 
+
+    @media screen and (max-width: 769px) {
+        width: 40%;
+    }
+
 }
 
 #primary.site-page {
@@ -98,6 +103,7 @@
         margin: 40px 0;
     }
 }
+
 #primary .col-md-9 div.product {
     div.images {
         margin-bottom: 0;

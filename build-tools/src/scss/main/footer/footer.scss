@@ -9,7 +9,8 @@
     .custom {
         display: flex;
         justify-content: space-between;
-        padding: 40px;
+        padding-top: 40px;
+        padding-bottom: 40px;
         margin: 0 auto;
         gap: 20px;
 
@@ -31,6 +32,10 @@
                     width: 100%;
                     margin-right: 10px;
                     max-width: 160px;
+                }
+
+                @media screen and (max-width: 600px) {
+                    flex-wrap: wrap;
                 }
             }
         }
@@ -56,6 +61,10 @@
                     a {
                         color: var(--white);
                         text-decoration: none;
+                    }
+
+                    @media screen and (max-width: 655px) {
+                        flex: 100%;
                     }
                 }
             }
@@ -103,6 +112,10 @@
             background: transparent;
             border: none;
             cursor: pointer;
+        }
+
+        @media screen and (max-width: 600px) {
+            padding: 20px;
         }
     }
 }

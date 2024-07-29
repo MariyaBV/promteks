@@ -33,6 +33,14 @@ header#main-header {
                     cursor: pointer;
                 }
             }
+
+            @media screen and (max-width: 1026px) {
+                gap: 10px;
+            }
+
+            @media screen and (max-width: 978px) and (min-width: 960px) {
+                gap: 6px;
+            }
         }
     }
 
@@ -108,6 +116,7 @@ header#main-header {
         width: 100%;
         justify-content: space-between;
         flex: 60%;
+        gap: 5px;
 
         &__city {
             font-family: "Roboto";

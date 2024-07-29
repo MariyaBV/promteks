@@ -16,6 +16,14 @@
     .subtitle-details {
         flex: 20%;
         padding: 8px 0 8px 16px;
+
+        @media screen and (max-width: 1150px) {
+            flex: 40%;
+        }
+
+        @media screen and (max-width: 590px) {
+            flex: 50%;
+        }
     }
 
     .text-details {
@@ -92,10 +100,18 @@
                 max-width: 100px;
                 max-height: 100px;
                 padding: 16px;
+
+                @media screen and (max-width: 600px) {
+                    padding: 5px;
+                }
             }
 
             tr {
                 border-bottom: 1px solid var(--light-grey);
+
+                @media screen and (max-width: 600px) {
+                    font-size: 14px;
+                }
             }
         }
 
