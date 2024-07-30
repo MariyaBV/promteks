@@ -4,6 +4,7 @@ $(document).ready(function($) {
         var catalogLink = $('a[href="#catalog"]');
         var blockCatalog = $('#block-catalog');
         
+        
         if (url.includes('#catalog') && catalogLink.length) {
             catalogLink.addClass('selected-item-menu');
             blockCatalog.addClass('visible');
@@ -41,4 +42,38 @@ $(document).ready(function($) {
 
     $('a[href="#catalog"]').on('click', toggleCatalogClass);
     $('#close-catalog-menu').on('click', closeCatalogMenu);
+});
+
+
+$(document).ready(function() {
+    $('#burger-menu').click(function() {
+        $(this).toggleClass('active');
+        $('#main-header').toggleClass('header-fixed');
+        $('#site-navigation').toggleClass('visible');
+    });
+
+    $('a[href="#catalog"]').on('click', function() {
+        $('#site-navigation').removeClass('visible');
+        $('#main-header').removeClass('header-fixed');
+        $('#burger-menu').removeClass('active');
+    });
+});
+
+
+
+$(document).ready(function($) {
+    function closeCatalogSidebar(event) {
+        event.preventDefault();
+        var sidebarCatalog = $('#catalog-sidebar');
+        sidebarCatalog.removeClass('visible-mobile');
+    }
+
+    function openCatalogSidebar(event) {
+        event.preventDefault();
+        var sidebarCatalog = $('#catalog-sidebar');
+        sidebarCatalog.addClass('visible-mobile');
+    }
+
+    $('#show-catalog-sidebar').on('click', openCatalogSidebar);
+    $('#close-catalog-sidebar').on('click', closeCatalogSidebar);
 });
