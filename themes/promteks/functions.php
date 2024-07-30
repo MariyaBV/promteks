@@ -631,8 +631,9 @@ function add_product_category_sidebar() {
             );
             $categories = wp_list_categories($args);
             ?>
-            <div class="category-list-categories">
+            <div id="catalog-sidebar" class="category-list-categories mobile">
                 <h3>Каталог</h3>
+                <a class="close-catalog-sidebar" href="" id="close-catalog-sidebar"><span class="icon-Close-1 close-catalog-sidebar"></span></a>
                 <ul class="category-list">
                     <?php echo $categories; ?>
                 </ul>
@@ -824,9 +825,21 @@ function print_filters() {
 
     $current_params = $_GET;
 
+    $attribute_params = array_filter($current_params, function($key) {
+        return strpos($key, 'attribute_') === 0;
+    }, ARRAY_FILTER_USE_KEY);
+
     $non_attribute_params = array_filter($current_params, function($key) {
         return strpos($key, 'attribute_') !== 0;
     }, ARRAY_FILTER_USE_KEY);
+
+    $has_non_empty_attribute = false;
+    foreach ($attribute_params as $value) {
+        if (!empty($value)) {
+            $has_non_empty_attribute = true;
+            break;
+        }
+    }
 
     $clear_filters_url = add_query_arg($non_attribute_params, get_term_link($category));
 
@@ -860,7 +873,11 @@ function print_filters() {
     }
     echo '<input type="submit" value="Применить фильтры">';
     echo '</form>';
-    echo '<a href="' . esc_url($clear_filters_url) . '" class="clear-filters">Очистить фильтры</a>';
+    
+    if ($has_non_empty_attribute) {
+        echo '<a href="' . esc_url($clear_filters_url) . '" class="clear-filters">Очистить фильтры</a>';
+    }
+
     echo '</div>';
 }
 add_action('woocommerce_before_shop_loop', 'print_filters', 20);
@@ -996,7 +1013,7 @@ function custom_delivery_options_fields() {
         echo '<div class="delivery-text delivery-text__pickup"><p><span class="icon-iconoir_box-iso2"></span>Самовывоз со склада:</p> <span>' . $pickup . ' р.</span></div>';
     }
     if ($delivery_cost !== '') {
-        echo '<div class="delivery-text"><p><span class="icon-carbon_delivery-2"></span>Доставка в течение 1 часа:</p> <span> ' . $delivery_cost . ' р.</span></div>';
+        echo '<div class="delivery-text"><p><span class="icon-carbon_delivery-2"></span>Доставка в течение 1&nbsp;часа:</p> <span> ' . $delivery_cost . ' р.</span></div>';
     }
     echo '</div>';
 }
@@ -1095,10 +1112,23 @@ function print_filters_shop() {
 
     $current_params = $_GET;
 
+    $attribute_params = array_filter($current_params, function($key) {
+        return strpos($key, 'attribute_') === 0;
+    }, ARRAY_FILTER_USE_KEY);
+
+
     // Фильтруем параметры, чтобы удалить атрибуты
     $non_attribute_params = array_filter($current_params, function($key) {
         return strpos($key, 'attribute_') !== 0;
     }, ARRAY_FILTER_USE_KEY);
+
+    $has_non_empty_attribute = false;
+    foreach ($attribute_params as $value) {
+        if (!empty($value)) {
+            $has_non_empty_attribute = true;
+            break;
+        }
+    }
 
     // Создаем ссылку для очистки фильтров
     $clear_filters_url = add_query_arg($non_attribute_params, get_permalink(get_option('woocommerce_shop_page_id')));
@@ -1135,7 +1165,11 @@ function print_filters_shop() {
     }
     echo '<input type="submit" value="Применить фильтры">';
     echo '</form>';
-    echo '<a href="' . esc_url($clear_filters_url) . '" class="clear-filters">Очистить фильтры</a>';
+    
+    if ($has_non_empty_attribute) {
+        echo '<a href="' . esc_url($clear_filters_url) . '" class="clear-filters">Очистить фильтры</a>';
+    }
+
     echo '</div>';
 }
 add_action('woocommerce_before_shop_loop', 'print_filters_shop', 20);

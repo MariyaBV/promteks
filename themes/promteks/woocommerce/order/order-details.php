@@ -152,7 +152,7 @@ if ( $show_downloads ) {
 					<td scope="row"></td>
 					<td scope="row"></td>
 					<td scope="row"><?php echo esc_html($total['label']); ?></td>
-					<td><?php echo wp_kses_post($total['value']); ?></td>
+					<td style="text-align:right; white-space:nowrap;"><?php echo wp_kses_post($total['value']); ?></td>
 				</tr>
 				<?php
 			}?>

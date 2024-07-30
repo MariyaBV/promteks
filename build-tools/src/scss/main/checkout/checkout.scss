@@ -64,6 +64,10 @@
                 aspect-ratio: 1 / 1;
                 object-fit: scale-down;
             }
+
+            @media screen and (max-width: 1007px) {
+                padding: 6px;
+            }
         }
 
         .product-name {
@@ -121,6 +125,10 @@
 
         .custom-address-fields {
             margin-left: 168px;
+
+            @media screen and (max-width: 1160px) {
+                margin-left: 0;
+            }
         }
 
         .form-row-one,
@@ -182,6 +190,14 @@
 
                 .required {
                     display: none;
+                }
+
+                @media screen and (max-width: 475px) {
+                    min-width: 145px;
+                }
+
+                @media screen and (max-width: 430px) {
+                    min-width: 118px;
                 }
             }
         }

@@ -32,14 +32,15 @@ get_header( 'shop' ); ?>
 	?>
 
 <div class="container wrap">
+	<button id="show-catalog-sidebar" class="show-catalog-sidebar">Посмотреть каталог</button>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-0">
             <?php
             add_product_category_sidebar();
 
             ?>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9 col-sm-12">
 
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>

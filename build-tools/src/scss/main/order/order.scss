@@ -29,6 +29,7 @@
     .text-details {
         flex: 80%;
         font-weight: 600;
+        padding: 5px;
     }
 
     .woocommerce-notice.woocommerce-notice--success.woocommerce-thankyou-order-received {
@@ -129,6 +130,12 @@
                 font-weight: var(--price-L-font-weight);
                 line-height: var(--price-L-line-height);
                 padding: 24px 0;
+
+                @media screen and (max-width: 430px) {
+                    &:nth-child(1) {
+                        display: none;
+                    }
+                }
             }
         }
     }

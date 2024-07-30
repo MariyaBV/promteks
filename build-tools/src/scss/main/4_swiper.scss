@@ -57,7 +57,7 @@
 
 .swiper-autoheight,
 .swiper-autoheight .swiper-slide {
-  height: auto;
+  height: auto;//height: inherit;
 }
 
 .swiper-autoheight .swiper-wrapper {

@@ -10,7 +10,6 @@
                     <div class="swiper-slide slider__slide">
                         <img class="img" src="<?= $item['image']; ?>" alt="slide image"/>
                         <div class="slider-content">
-                            <h2 class="slide-text"><?= $item['text']; ?></h2>
                             <?php if (!empty($item['button']['link']) && !empty($item['button']['link-text'])): ?>
                                 <a class="slide-button" href="<?= $item['button']['link']; ?>">
                                     <h4><?= $item['button']['link-text']; ?></h4>

@@ -71,6 +71,7 @@ h4 {
   line-height: 0.772rem;
   letter-spacing: -1%;
   color: var(--accent-green);
+  max-width: 40px;
 }
 
 #page .added_to_wishlist {
@@ -209,7 +210,8 @@ input[type="week"] {
   }
 
   .wrap,
-  .wrap-header {
+  .wrap-header,
+  #main.site-main {
     padding: 0 15px;
   }
 }
@@ -220,7 +222,8 @@ input[type="week"] {
   }
 
   .wrap,
-  .wrap-header {
+  .wrap-header,
+  #main.site-main {
     padding: 0 10px;
   }
 
@@ -250,6 +253,10 @@ input[type="week"] {
   max-width: 67px;
   margin-top: -31px;
   z-index: 1;
+
+  @media screen and (max-width: 530px) {
+    margin-top: -26px;
+  }
 }
 
 .wp-block-columns {
@@ -294,5 +301,19 @@ figure.wp-block-image {
       color: var(--white);
       border-radius: 4px;
     }
+  }
+}
+
+iframe {
+  width: 100%;
+}
+
+.photoes-block {
+  .wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column {
+    flex-basis: 45%!important;
+  }
+
+  .wp-block-columns {
+    margin-bottom: 0;
   }
 }

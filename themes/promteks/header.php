@@ -73,7 +73,7 @@ $options = get_fields('options');
 				<div class="header-block-search">
 					<form role="search" method="get" class="woocommerce-product-search header-search" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 						<input type="search" id="woocommerce-product-search-field" class="search-field" placeholder="<?php /*echo esc_attr__( 'Search products&hellip;', 'woocommerce' ); */?>" value="<?php echo get_search_query(); ?>" name="s" />
-						<button class="header-search__button" type="submit" value="<?php echo esc_attr_x( 'Search', 'submit button', 'woocommerce' ); ?>"></button>
+						<button class="header-search__button" type="submit" value="<?php echo esc_attr_x( 'Search', 'submit button', 'woocommerce' ); ?>"><span class="icon-Search-2"></span></button>
 						<input type="hidden" name="post_type" value="product" />
 					</form>
 					<?php if ( function_exists( 'custom_woocommerce_header_wishlist' ) ) {
@@ -83,8 +83,15 @@ $options = get_fields('options');
 						custom_woocommerce_header_cart();
 					} ?>
 				</div>
+				
 			</div>
+			<button class="menu-burger" id="burger-menu"><span class="middle"></span></button>
+			<nav id="site-navigation" class="header-block-nav">
+				<?php wp_nav_menu('menu=top-menu');?>
+			</nav>
 		</div>
+
+		
 
 
 		<div id="block-catalog" class="block-catalog">

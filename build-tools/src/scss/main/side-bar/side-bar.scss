@@ -4,6 +4,48 @@
     overflow: hidden;
     position: relative;
 
+    .close-catalog-sidebar {
+        display: none;
+    }
+
+    @media screen and (max-width: 768px) {
+        &.mobile {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+            max-width: none;
+            width: 100%;
+            background-color: var(--white);
+            transition: transform 0.5s ease;
+            overflow: scroll;
+
+            h3 {
+                margin: 10px;
+            }
+        }
+    
+        &.visible-mobile {
+            opacity: 1;
+            visibility: unset;
+        }
+    
+        .close-catalog-sidebar {
+            display: block;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: xx-large;
+            color: var(--main-color);
+            cursor: pointer;
+        }
+    }
+
     .category-list {
         display: flex;
         flex-direction: column;
@@ -55,6 +97,10 @@
                 aspect-ratio: 1/1;
                 border-radius: 8px;
                 margin-right: 8px;
+
+                @media screen and (max-width: 840px) and (min-width: 769px) {
+                    margin-right: 2px;
+                }
             }
 
             .cat-name {
@@ -113,6 +159,10 @@ main#main #secondary section {
 
 .attribute-filters {
     margin-bottom: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
 
     &__select {
         position: relative;
@@ -129,6 +179,7 @@ main#main #secondary section {
             border-top-right-radius: 8px;
             border-bottom-right-radius: 8px;
             padding: 0 8px;
+            z-index: 1;
 
             &:hover {
                 cursor: pointer;
@@ -146,7 +197,7 @@ main#main #secondary section {
             width: 1px;
             height: 75%;
             background-color: var(--white);
-            z-index: 1;
+            z-index: 2;
             display: none;
         }
 
@@ -222,7 +273,7 @@ main#main #secondary section {
             border-radius: 8px;
             cursor: pointer;
             position: relative;
-            background-color: var(--black);
+            background-color: var(--dark-green);
             color: var(--white);
             padding: 8px 12px;
             font-size: var(--subtitle-font-size);
@@ -256,31 +307,87 @@ form.woocommerce-ordering {
     }
 }
 
-.row {
+#primary .row {
     display: flex;
     gap: 40px;
 
     .col-md-3 {
-        flex: 23%;
+        flex: 25%;
     }
 
     .col-md-9 {
-        flex: 77%;
+        flex: 75%;
 
         ul.products {
             display: flex;
             flex-wrap: wrap;
             gap: 40px;
 
+            @media screen and (max-width: 1240px) {
+                gap: 30px;
+            }
+
+            @media screen and (max-width: 768px) {
+                gap: 15px;
+            }
+
+            @media screen and (max-width: 530px) {
+                gap: unset;
+            }
+
             li {
                 float: none;
                 margin: 0;
                 padding: 0;
                 position: relative;
-                width: 30%;
+                width: calc((100% / 3) - 40px);
                 margin-left: 0;
                 padding: 10px;
+
+                @media screen and (max-width: 1240px) {
+                    width: calc((100% / 2) - 30px);
+                }
+
+                @media screen and (max-width: 768px) {
+                    width: calc((100% / 2) - 15px);
+                }
+
+                @media screen and (max-width: 530px) {
+                    width: 100%;
+                }
             }
         }
+    }
+
+    @media screen and (max-width: 768px) {
+        gap: unset;
+
+        .col-sm-0 {
+            flex: none;
+        }
+
+        .col-sm-12 {
+            flex: 100%;
+        }
+    }
+}
+    
+.show-catalog-sidebar {
+    display: none;
+    background-color: var(--dark-green);
+    border-radius: var(--button-border-radius);
+    color: var(--white);
+    font-size: var(--txt-font-size);
+    font-weight: var(--txt-font-weight);
+    line-height: var(--txt-line-height);
+    text-align: center;
+    padding: 9px;
+    border: none;
+    max-width: 180px;
+    width: 100%;
+    margin-bottom: 15px;
+
+    @media screen and (max-width: 768px) {
+        display: block;
     }
 }
