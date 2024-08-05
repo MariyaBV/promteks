@@ -12,18 +12,18 @@ get_header();
 
 	<main id="primary" class="site-main">
 
-		<section class="error-404 not-found">
-			<header class="page-header">
-				<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'promteks' ); ?></h1>
+		<section class="error-404 not-found  wrap">
+			<header class="page-header margin-24-0">
+				<h1 class="page-title"><?php esc_html_e( 'Oops! Такая страница не найдена', 'promteks' ); ?></h1>
 			</header><!-- .page-header -->
 
-			<div class="page-content">
-				<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'promteks' ); ?></p>
+			<div class="page-content style-404">
+				<p class="margin-24-0"><?php esc_html_e( 'Похоже, в этом месте ничего не найдено. Может быть, попробуете поиск?', 'promteks' ); ?></p>
 
 					<?php
 					get_search_form();
 
-					the_widget( 'WP_Widget_Recent_Posts' );
+					/*the_widget( 'WP_Widget_Recent_Posts' );
 					?>
 
 					<div class="widget widget_categories">
@@ -44,12 +44,12 @@ get_header();
 					</div><!-- .widget -->
 
 					<?php
-					/* translators: %1$s: smiley */
+
 					$promteks_archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'promteks' ), convert_smilies( ':)' ) ) . '</p>';
 					the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$promteks_archive_content" );
 
 					the_widget( 'WP_Widget_Tag_Cloud' );
-					?>
+					*/?>
 
 			</div><!-- .page-content -->
 		</section><!-- .error-404 -->

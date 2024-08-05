@@ -14,15 +14,15 @@ get_header();
 
 		<?php if ( have_posts() ) : ?>
 
-			<header class="page-header">
+			<header class="page-header wrap">
 				<h1 class="page-title">
 					<?php
-					/* translators: %s: search query. */
-					printf( esc_html__( 'Search Results for: %s', 'promteks' ), '<span>' . get_search_query() . '</span>' );
+					printf( esc_html__( 'Результат поиска для: %s', 'promteks' ), '<span>' . get_search_query() . '</span>' );
 					?>
 				</h1>
 			</header><!-- .page-header -->
 
+			<div class="block-search-results wrap">
 			<?php
 			/* Start the Loop */
 			while ( have_posts() ) :
@@ -45,7 +45,7 @@ get_header();
 
 		endif;
 		?>
-
+		</div>
 	</main><!-- #main -->
 
 <?php
