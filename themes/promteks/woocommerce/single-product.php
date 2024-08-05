@@ -31,7 +31,7 @@ get_header( 'shop' ); ?>
 		do_action( 'woocommerce_before_main_content' );
 	?>
 
-<div class="container wrap">
+<div class="container">
 	<button id="show-catalog-sidebar" class="show-catalog-sidebar">Посмотреть каталог</button>
     <div class="row">
         <div class="col-md-3 col-sm-0">

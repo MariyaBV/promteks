@@ -136,9 +136,15 @@ a {
   width: 100%;
 }
 
+#main.site-main,
+main.site-page {
+  margin-bottom: 64px;
+  margin-top: 16px;
+}
+
 .wrap {
   max-width: var(--width-page);
-  margin: 0 auto 40px;
+  margin: 0 auto;
   padding: 0 40px;
   width: 100%;
 }
@@ -259,10 +265,6 @@ input[type="week"] {
   }
 }
 
-.wp-block-columns {
-  margin-bottom: 64px;
-}
-
 .wp-block-heading {
   margin-bottom: 16px;
 }
@@ -363,4 +365,8 @@ iframe {
   @media screen and (max-width: 768px) {
     flex-wrap: wrap;
   }
+}
+
+.products .product .pwb-brands-in-loop {
+  display: none !important;
 }

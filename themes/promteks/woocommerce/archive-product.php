@@ -38,7 +38,7 @@ do_action( 'woocommerce_before_main_content' );
 do_action( 'woocommerce_shop_loop_header' );
 
 ?>
-<div class="container wrap">
+<div class="container">
 	<button id="show-catalog-sidebar" class="show-catalog-sidebar">Посмотреть каталог</button>
     <div class="row">
         <div class="col-md-3 col-sm-0">
@@ -81,11 +81,6 @@ do_action( 'woocommerce_shop_loop_header' );
 
 						wc_get_template_part( 'content', 'product' );
 
-						// Добавляем цену
-						//echo '<span class="price">' . $product->get_price_html() . '</span>';
-
-						// Добавляем кнопку "Купить"
-						woocommerce_template_loop_add_to_cart();
 					}
 				}
 

@@ -65,7 +65,7 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	}
 	
 
-	if ( is_product() ):?>
+	/*if ( is_product() ):?>
 		<div class="product-item">
 			<div class="block-quantity-button">
 				<a class="add-to-cart button add_to_cart_button ajax_add_to_cart" data-product-id="<?php echo esc_attr( $product->get_id() ); ?>"><span class="add-to-cart-text">Купить</span></a>
@@ -80,19 +80,19 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 
 	//$product_attributes = $product->get_attributes();
 
-	// Display product attribute
+	/* Display product attribute
 	if ( ! $product_attributes ) {
 		return;
 	}
 	?>
-		<table class="woocommerce-product-attributes shop_attributes">
+		<?php /*<table class="woocommerce-product-attributes shop_attributes">
 			<?php foreach ( $product_attributes as $product_attribute_key => $product_attribute ) : ?>
 				<tr class="woocommerce-product-attributes-item woocommerce-product-attributes-item--<?php echo esc_attr( $product_attribute_key ); ?>">
 					<th class="woocommerce-product-attributes-item__label"><?php echo wp_kses_post( $product_attribute['label'] ); ?></th>
 					<td class="woocommerce-product-attributes-item__value"><?php echo wp_kses_post( $product_attribute['value'] ); ?></td>
 				</tr>
 			<?php endforeach; ?>
-		</table>
+		</table>*/?>
 	<?php
 	/**
 	 * Hook: woocommerce_after_shop_loop_item_title.

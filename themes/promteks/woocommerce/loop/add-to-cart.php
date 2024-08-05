@@ -27,11 +27,7 @@ global $product;
 	<?php echo esc_html( $args['aria-describedby_text'] ); ?>
 </span>
 <a></a>
-<?php 
-remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open' );
-?>
-
-<div class="product-item">
+<div class="product-item duplicated">
 	<div class="block-quantity-button">
 		<a class="add-to-cart button add_to_cart_button ajax_add_to_cart" data-product-id="<?php echo esc_attr( $product->get_id() ); ?>"><span class="add-to-cart-text">Купить</span></a>
 		<button class="quantity-arrow-minus"> - </button>
@@ -42,6 +38,3 @@ remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_p
 	</div>
 </div>
 
-<?php
-add_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open' );
-?>

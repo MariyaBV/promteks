@@ -117,3 +117,4 @@ $(document).ready(function ($) {
         console.log("Cart totals updated.");
     });
 });
+

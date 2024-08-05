@@ -982,17 +982,6 @@ function custom_delivery_options_fields() {
                 ];
             }
         }
-
-        // Получаем данные по самовывозу
-        // $pickup_options = get_option('woocommerce_pickup_location_settings');
-
-        // if (!empty($pickup_options)) {
-        //     $shipping_costs[] = [
-        //         'zone' => 'Самовывоз',
-        //         'method_title' => $pickup_options['title'],
-        //         'method_cost' => $pickup_options['cost']
-        //     ];
-        // }
     
         return $shipping_costs;
     }
@@ -1018,31 +1007,36 @@ function custom_delivery_options_fields() {
     echo '</div>';
 }
 
-function custom_attribute_unit ($product_id) {
+function custom_attribute_unit($product_id) {
     $product = wc_get_product($product_id);
     if (!$product) {
         return;
     }
 
     $attributes = $product->get_attributes();
-    if (!$attributes) {
+    if (!$attributes || !isset($attributes['pa_product-unit'])) {
+        // Если атрибут отсутствует, подставляем значение "шт."
+        echo "шт.";
         return;
     }
 
     $attribute = $attributes['pa_product-unit'];
-
     if (!$attribute) {
+        echo "шт.";
         return;
     }
- 
+
     $terms = wc_get_product_terms($product_id, $attribute->get_name(), array('fields' => 'names'));
     
     if (!empty($terms)) {
         echo implode(' ', $terms);
+    } else {
+        echo "шт.";
     }
 
     return;
 }
+
 
 //добавление кнопки очистить корзину начало
 add_action( 'woocommerce_before_cart', 'true_empty_cart_btn' );
@@ -1517,3 +1511,5 @@ function get_menu_items_with_classes($menu_name) {
 remove_action('woocommerce_after_shop_loop', 'woocommerce_pagination', 10);
 add_action('woocommerce_after_main_content', 'woocommerce_pagination', 20);
 
+// Удаляем цену из списка продуктов
+remove_action('woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10);
