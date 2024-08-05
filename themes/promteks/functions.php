@@ -456,6 +456,7 @@ function custom_woocommerce_ajax_add_to_cart() {
 add_action('wp_ajax_woocommerce_ajax_add_to_cart', 'custom_woocommerce_ajax_add_to_cart');
 add_action('wp_ajax_nopriv_woocommerce_ajax_add_to_cart', 'custom_woocommerce_ajax_add_to_cart');
 
+//вывод производителя на странице товара
 function custom_template_single_brand() {
     global $product;
 
@@ -770,7 +771,6 @@ function genius_display_discount_badge_return() {
     }
     return '';
 }
-
 
 //конец делаем выбор в админке скидки в % и вывод на карточке товара
 
@@ -1351,6 +1351,14 @@ function save_selected_shipping_method() {
 add_action('wp_ajax_save_selected_shipping_method', 'save_selected_shipping_method');
 add_action('wp_ajax_nopriv_save_selected_shipping_method', 'save_selected_shipping_method');
 
+// Сохраняем метод доставки в мета-данные заказа
+function save_order_shipping_method($order_id) {
+    if ($shipping_method = WC()->session->get('selected_shipping_method')) {
+        update_post_meta($order_id, '_selected_shipping_method', sanitize_text_field($shipping_method));
+    }
+}
+add_action('woocommerce_checkout_update_order_meta', 'save_order_shipping_method');
+
 // изменяем поле адреса на не обязательное в случае если самовывоз
 function customize_checkout_fields_based_on_shipping($fields) {
     $chosen_methods = WC()->session->get('chosen_shipping_methods');
@@ -1399,6 +1407,61 @@ function display_shipping_info() {
     }
 }
 add_action('woocommerce_review_order_before_payment', 'display_shipping_info');
+
+// Выводим метод доставки в админке на странице редактирования заказа
+add_action('woocommerce_admin_order_data_after_shipping_address', 'display_shipping_method_in_admin_order_meta', 10, 1);
+function display_shipping_method_in_admin_order_meta($order) {
+    $shipping_method = get_post_meta($order->get_id(), '_selected_shipping_method', true);
+    if ($shipping_method) {
+        switch ($shipping_method) {
+            case 'local_pickup:8':
+                $shipping_method_text = 'Самовывоз';
+                break;
+            case 'flat_rate:3':
+                $shipping_method_text = 'Доставка по Брянску';
+                break;
+            case 'flat_rate:7':
+                $shipping_method_text = 'Доставка по области';
+                break;
+            default:
+                $shipping_method_text = '';
+        }
+        echo '<p><strong>' . __('Метод доставки:') . '</strong> ' . esc_html($shipping_method_text) . '</p>';
+    }
+}
+
+// Добавляем метод доставки в колонки на странице заказов
+function add_shipping_method_column_to_order_list($columns) {
+    $columns['shipping_method'] = __('Метод доставки');
+    return $columns;
+}
+add_filter('manage_edit-shop_order_columns', 'add_shipping_method_column_to_order_list');
+
+function display_shipping_method_column_data($column) {
+    global $post;
+
+    if ($column == 'shipping_method') {
+        $order = wc_get_order($post->ID);
+        $shipping_method = get_post_meta($order->get_id(), '_selected_shipping_method', true);
+        if ($shipping_method) {
+            echo esc_html($shipping_method);
+        }
+    }
+}
+add_action('manage_shop_order_posts_custom_column', 'display_shipping_method_column_data');
+
+// Скрываем блок id="order_shipping_line_items" - доставка 0,00 руб в админке WooCommerce
+function hide_order_shipping_line_items() {
+    echo '
+    <style>
+        #order_shipping_line_items {
+            display: none !important;
+        }
+    </style>
+    ';
+}
+add_action('admin_head', 'hide_order_shipping_line_items');
+
 
 function custom_checkout_alert_script() {
     if (is_checkout()) { 
@@ -1453,3 +1516,4 @@ function get_menu_items_with_classes($menu_name) {
 //перенос пагинации в хук woocommerce_after_main_content
 remove_action('woocommerce_after_shop_loop', 'woocommerce_pagination', 10);
 add_action('woocommerce_after_main_content', 'woocommerce_pagination', 20);
+
