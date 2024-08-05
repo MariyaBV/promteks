@@ -321,11 +321,7 @@ form.woocommerce-ordering {
         ul.products {
             display: flex;
             flex-wrap: wrap;
-            gap: 40px;
-
-            @media screen and (max-width: 1240px) {
-                gap: 30px;
-            }
+            gap: 25px;
 
             @media screen and (max-width: 768px) {
                 gap: 15px;
@@ -340,13 +336,9 @@ form.woocommerce-ordering {
                 margin: 0;
                 padding: 0;
                 position: relative;
-                width: calc((100% / 3) - 40px);
+                width: calc((100% / 3) - 25px);
                 margin-left: 0;
                 padding: 10px;
-
-                @media screen and (max-width: 1240px) {
-                    width: calc((100% / 2) - 30px);
-                }
 
                 @media screen and (max-width: 768px) {
                     width: calc((100% / 2) - 15px);
