@@ -217,8 +217,8 @@
                 margin: 8px 0;
             }
 
-            @media screen and (max-width: 1240px) {
-                &:last-child {
+            @media screen and (max-width: 1100px) {
+                &:nth-child(3) {
                     display: none;
                 }
             }

@@ -813,6 +813,10 @@ add_action( 'pre_get_posts', 'custom_woocommerce_get_catalog_ordering_attr_args'
 
 
 function print_filters() {
+    if (is_shop()) {
+        return;
+    }
+    
     $category = get_queried_object();
     if (!$category) {
         return;
