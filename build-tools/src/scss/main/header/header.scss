@@ -169,6 +169,10 @@ header#main-header {
             align-items: center;
             gap: 9px;
 
+            .icon-carbon_delivery-2 {
+                font-size: xx-large;
+            }
+
             img {
                 max-width: 100px;
             }
@@ -269,6 +273,10 @@ header#main-header {
         color: var(--main-color);
         cursor: pointer;
 
+        @media screen and (max-width: 1160px) {
+            right: 10px;
+        }
+
         @media screen and (max-width: 768px) {
             top: 15px;
         }
@@ -335,11 +343,11 @@ header#main-header {
 
         &__content {
             position: absolute;
-            bottom: 0;
+            bottom: 4px;
             width: 100%;
             background-color: var(--dark-grey);
-            border-bottom-right-radius: 8px;
-            border-bottom-left-radius: 8px;
+            //border-bottom-right-radius: 8px;
+            //border-bottom-left-radius: 8px;
             padding: 10px;
         }
 
