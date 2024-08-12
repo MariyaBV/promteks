@@ -77,7 +77,11 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php do_action( 'woocommerce_cart_totals_after_order_total' ); ?>
 
-
+	<div class="block-attention cart-attention">
+		<p class="subtitle-attention">Внимание!</p>
+		<p class="text-attention subtitle">Сумма заказа не включает стоимость доставки. <br> Стоимость доставки будет уточнена после звонка менеджера. </p>
+		<a href="<?php echo get_page_link( 40 ); ?>" class="link-attention txt">Условия доставки</a>
+	</div>
 
 	<div class="wc-proceed-to-checkout custom-button-checkout">
 		<a class="custom-button-back" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>" class="custom-button-forward">Продолжить покупки</a>

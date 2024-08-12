@@ -23,6 +23,7 @@ $formatted_destination    = isset( $formatted_destination ) ? $formatted_destina
 $has_calculated_shipping  = ! empty( $has_calculated_shipping );
 $show_shipping_calculator = ! empty( $show_shipping_calculator );
 $calculator_text          = '';
+$block_attention = '';
 ?>
 <div class="woocommerce-shipping-totals shipping shipping-block">
 	<div class="shipping-subtitle txt">Выбор доставки</div>
@@ -36,6 +37,7 @@ $calculator_text          = '';
 							case 'local_pickup:8':
 								$iconClass = 'icon-iconoir_box-iso2';
 								$sumShipping = '0 ₽';
+								$block_attention = 'style="display: none;"';
 								break;
 							case 'flat_rate:3':
 								$iconClass = 'icon-carbon_delivery-2';

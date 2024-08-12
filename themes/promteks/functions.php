@@ -493,21 +493,6 @@ function replace_brand_with_producer( $text ) {
 add_filter( 'gettext', 'replace_brand_with_producer', 20 );
 add_filter( 'ngettext', 'replace_brand_with_producer', 20 );
 
-//удаляем автоматический вывод бренда на странице продукта
-// function remove_pwb_brand_action() {
-//     $positions = array(4, 6, 11, 21, 31, 41, 51);
-
-//     foreach ($positions as $position) {
-//         remove_action('woocommerce_single_product_summary', array('WooCommerce', 'action_woocommerce_single_product_summary'), $position);
-// 	}
-//     remove_action('woocommerce_single_product_summary', array('Perfect_WooCommerce_Brands_Class', 'action_woocommerce_single_product_summary'), 41);
-
-//     remove_action('woocommerce_single_product_summary', 'pwb_print_brand_in_single_product', 6);
-// }
-// add_action('init', 'remove_pwb_brand_action');
-
-// remove_action('woocommerce_single_product_summary', 'action_woocommerce_single_product_summary');
-
 
 
 
@@ -546,6 +531,8 @@ class Walker_Category_Thumbnails extends Walker_Category {
 
         $active = '';
         $expanded = '';
+        $icon_Vector_9 = '';
+        $icon_Down_3 = '';
         $my_category = get_queried_object();
 
         if (is_product_category() && ($my_category->term_id == $category->term_id)) {
@@ -554,6 +541,8 @@ class Walker_Category_Thumbnails extends Walker_Category {
 
         if (is_product_category() && term_is_ancestor_of($category->term_id, $my_category->term_id, 'product_cat')) {
             $expanded = 'expanded';
+            $icon_Vector_9 = 'icon-Vector-9';
+            $icon_Down_3 = '';
         }
 
         if (is_product()) {
@@ -566,12 +555,13 @@ class Walker_Category_Thumbnails extends Walker_Category {
                 // Если категория имеет родителя, отмечаем родителя для раскрытия
                 if ($category->parent) {
                     $this->expanded_parents[] = $category->parent;
+                    $icon_Down_3 = '';              
                 }
             }
         }
 
-        $output .= "\t<li id='cat-item-{$category->term_id}' class='cat-item cat-item-{$category->term_id} $active $expanded'>";
-        $output .= "<a class='cat-link' href='" . esc_url( $link ) . "'>";
+        $output .= "\t<li id='cat-item-{$category->term_id}' class='cat-item cat-item-{$category->term_id} $active $expanded $icon_Vector_9'>";
+        $output .= "<a class='cat-link'" . $icon_Down_3 . "href='" . esc_url( $link ) . "'>";
         if ( $depth == 0 && $image_url ) {
             // Показываем миниатюру только для верхнего уровня
             $output .= "<img class='cat-image' src='" . esc_url( $image_url ) . "' alt='" . esc_attr( $cat_name ) . "' />";
@@ -582,10 +572,6 @@ class Walker_Category_Thumbnails extends Walker_Category {
             $output .= ' (' . number_format_i18n( $category->count ) . ')';
         }
     }
-
-    // function end_el( &$output, $category, $depth = 0, $args = array() ) {
-    //     $output .= "</li>\n";
-    // }
 
     function end_el( &$output, $category, $depth = 0, $args = array() ) {
         // Добавляем класс expanded родительским категориям, если необходимо
@@ -846,8 +832,6 @@ function print_filters() {
     }
 
     $clear_filters_url = add_query_arg($non_attribute_params, get_term_link($category));
-
-    echo '<h2>Фильтры</h2>';
     echo '<div class="attribute-filters"><form method="get" action="#">';
 
     foreach ($current_params as $key => $value) {

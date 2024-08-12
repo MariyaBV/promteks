@@ -62,6 +62,8 @@ if ( post_password_required() ) {
 		?>
 	</div>
 
+	<hr class="single-product-hr"/>
+
 	<?php
 	/**
 	 * Hook: woocommerce_after_single_product_summary.

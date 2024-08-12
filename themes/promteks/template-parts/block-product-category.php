@@ -37,14 +37,14 @@
                         }
                         echo '<div class="product-item">';
                         echo '<div class="block-quantity-button">';
-                        echo '<a class="add-to-cart button add_to_cart_button ajax_add_to_cart" data-product-id="';
-                        echo esc_attr( $product->get_id() );
-                        echo '"><span class="add-to-cart-text">Купить</span></a>';
                         echo '<button class="quantity-arrow-minus"> - </button>';
                         echo '<div class="quantity">';
                         echo '<input type="number" class="qty" name="quantity" value="1" min="1" />';
                         echo '</div>';
                         echo '<button class="quantity-arrow-plus"> + </button>';
+                        echo '<a class="add-to-cart button add_to_cart_button ajax_add_to_cart" data-product-id="';
+                        echo esc_attr( $product->get_id() );
+                        echo '"><span class="add-to-cart-text">Купить</span></a>';
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';

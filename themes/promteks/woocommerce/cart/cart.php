@@ -29,7 +29,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 				<th class="product-name txt"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
 				<th class="product-price txt"><?php esc_html_e( 'Price', 'woocommerce' ); ?></th>
 				<th class="product-quantity txt"><?php esc_html_e( 'Quantity', 'woocommerce' ); ?></th>
-				<th class="product-subtotal txt"><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
+				<th class="product-subtotal txt">Сумма</th>
 				<th class="product-remove"><span class="screen-reader-text"><?php esc_html_e( 'Remove item', 'woocommerce' ); ?></span></th>
 			</tr>
 		</thead>

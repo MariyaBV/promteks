@@ -27,6 +27,16 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 	return;
 }
 
+$selected_shipping_method = WC()->session->get('selected_shipping_method');
+$shipping_label = WC()->session->get('selected_shipping_label');
+$shipping_cost = WC()->session->get('selected_shipping_cost');
+
+$block_attention = '';
+
+if ($selected_shipping_method === 'local_pickup:8') {
+	$block_attention = 'style="display: none;"';
+}
+
 ?>
 <h2 class="title-checkout"><a href="<?php echo wc_get_cart_url(); ?>"><span class="icon-arrow"></span></a>Данные заказа</h2>
 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
@@ -36,17 +46,19 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
 
 		<div class="col2-set" id="customer_details">
-			<div class="col-1">
+			<div class="col-1 col-custom-1">
 				<?php do_action( 'woocommerce_checkout_billing' ); ?>
 			</div>
-			<div class="col-2">
+			<div class="col-2 col-custom-2">
 				<div id="order_review" class="woocommerce-checkout-review-order">
 					<?php do_action( 'woocommerce_checkout_order_review' ); ?>
-					<div class="block-attention">
+
+					<div class="block-attention" <?php echo $block_attention; ?>>
 						<p class="subtitle-attention">Внимание!</p>
 						<p class="text-attention subtitle">Сумма заказа не включает стоимость доставки. Стоимость доставки будет уточнена после звонка менеджера. </p>
 						<a href="<?php echo get_page_link( 40 ); ?>" class="link-attention txt">Условия доставки</a>
 					</div>
+
 				</div>
 			</div>
 		</div>
