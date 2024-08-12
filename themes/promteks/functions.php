@@ -147,6 +147,10 @@ function promteks_scripts() {
 
     wp_register_script('promteks-main', get_template_directory_uri() . '/js/main.min.js', array('jquery'), _S_VERSION, true);
 
+    wp_deregister_script('jquery');
+    wp_register_script('jquery', 'https://code.jquery.com/jquery-3.7.0.min.js', array(), null, true);
+    wp_enqueue_script('jquery');
+
     // Локализация скрипта для передачи AJAX URL и других данных
     wp_localize_script('promteks-main', 'custom_ajax_obj', array(
         'ajax_url' => admin_url('admin-ajax.php')

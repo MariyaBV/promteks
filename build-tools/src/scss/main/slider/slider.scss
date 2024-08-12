@@ -76,6 +76,16 @@
             &:hover {
                 cursor: pointer;
             }
+
+            @media screen and (max-width: 768px) {
+                background-color: unset;
+            }
+
+            a {
+                @media screen and (max-width: 768px) {
+                    text-shadow: 1px 1px 2px #000000;
+                }
+            }
         }
 
         .slider-content {
@@ -86,6 +96,13 @@
             text-align: left;
             display: block;
             width: 100%;
+
+            @media screen and (max-width: 768px) {
+                top: 50%;
+                transform: translateY(-50%);
+                left: 0;
+                bottom: auto;
+            }
         }
 
         .slide-text {
