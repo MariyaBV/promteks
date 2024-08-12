@@ -1,5 +1,9 @@
 #primary .product-category {
-    margin-bottom: 64px;
+    margin-bottom: 35px;
+
+    @media screen and (max-width: 768px) {
+        margin-bottom: 0;
+    }
 
     .swiper {
         .woocommerce ul.products {
@@ -101,6 +105,12 @@
         margin: 0;
         padding: 0;
         margin: 40px 0;
+
+        @media screen and (max-width: 769px) {
+            gap: 10px;
+            margin: 0;
+            margin-bottom: 24px;
+        }
     }
 }
 

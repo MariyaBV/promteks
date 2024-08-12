@@ -1,5 +1,5 @@
 .title-checkout {
-    margin: 40px 0 24px 0;
+    margin: 10px 0 15px 0;
 
     a {
         text-decoration: none;
@@ -19,6 +19,16 @@
     margin-bottom: 8px;
 }
 
+.woocommerce .col2-set .col-custom-1,
+.woocommerce-page .col2-set .col-custom-1 {
+    width: 56%;
+}
+
+.woocommerce .col2-set .col-custom-2,
+.woocommerce-page .col2-set .col-custom-2 {
+    width: 43%;
+}
+
 .woocommerce .checkout {
     table.shop_table {
         border: none;
@@ -36,6 +46,10 @@
         thead {
             background-color: var(--light-grey);
             border: none;
+
+            tr {
+                border-bottom: none;
+            }
         }
 
         tr {
@@ -45,6 +59,7 @@
             justify-content: space-between;
             width: 100%;
             align-items: center;
+            border-bottom: 1px solid var(--grey);
         }
 
         th {
@@ -53,11 +68,16 @@
         }
 
         tfoot {
-            border-top: 1px solid var(--grey);
+            background-color: var(--light-grey);
+
+            tr {
+                border-bottom: none;
+            }
         }
 
         td {
             border: none;
+            padding: 12px;
 
             img {
                 width: 100%;
@@ -98,7 +118,7 @@
 
         .button {
             background-color: var(--dark-green);
-            border-radius: var(--button-border-radius);
+            border-radius: var(--border-radius);
             color: var(--white);
             font-size: 20px;
             font-weight: 500;
@@ -150,11 +170,14 @@
 
             .woocommerce-input-wrapper {
                 width: 100%;
-                margin-bottom: 8px;
+                margin-bottom: 15px;
 
                 input {
                     border: 1px solid var(--dark-grey);
-                    padding: 14px 0 14px 16px;
+                    padding: 12.5px 0 13px 16px;
+                    font-size: var(--txt-font-size);
+                    font-weight: var(--txt-font-weight);
+                    line-height: var(--txt-line-height);
 
                     &::placeholder {
                         color: var(--dark-grey);
@@ -167,7 +190,8 @@
                 textarea {
                     min-height: 80px;
                     border: 1px solid var(--dark-grey);
-                    padding: 14px 0 14px 16px;
+                    border-radius: var(--button-border-radius);
+                    padding: 9px 0 9px 9px;
                     font-family: "Inter", sans-serif;
                     font-size: var(--txt-s-font-size);
                     font-weight: var(--txt-s-font-weight);
@@ -207,6 +231,19 @@
 .block-attention {
     margin: 16px 0;
 
+    &.cart-attention {
+        text-align: end;
+
+        .text-attention,
+        .link-attention {
+            margin-bottom: 0;
+        }
+
+        .subtitle-attention {
+            margin-bottom: 4px;
+        }
+    }
+
     .subtitle-attention {
         color: var(--pale-green);
         font-size: var(--price-font-size);
@@ -217,7 +254,7 @@
 
     .text-attention,
     .link-attention {
-        margin-bottom: 8px;
+        margin-bottom: 4px;
     }
 
     .link-attention {
@@ -248,23 +285,24 @@
         margin: 0 auto;
         padding: 32px;
         background-color: var(--white);
-        border-radius: 8px;
+        border-radius: var(--border-radius);
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         position: absolute;
-        padding: 48px 24px;
-        border-radius: var(--button-border-radius);
+        padding: 40px 24px;
         background-color: var(--white);
     }
 
     &__subtitle {
         color: var(--dark-green);
         text-align: center;
+        margin: 0;
+        margin-top: 10px;
     }
 
     &__text {
-        margin: 24px auto;
+        margin: 20px auto 24px;
         text-align: center;
     }
 

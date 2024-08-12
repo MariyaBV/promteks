@@ -19,6 +19,7 @@
   --gradient: linear-gradient(79.45deg, #C34747 0.7%, #FF0000 96.22%);
 
   --button-border-radius: 4px;
+  --border-radius: 8px;
 
   // Fonts
   --h1-font-size: 3rem;
@@ -27,21 +28,21 @@
 
   --h2-font-size: 2rem;
   --h2-font-weight: normal;
-  --h2-line-height: 2.4rem;
+  --h2-line-height: 2rem;
 
   --h3-font-size: 1.5rem;
   --h3-font-weight: normal;
   --h3-line-height: 1.8rem;
 
-  --h4-font-size: 1.25rem;
+  --h4-font-size: 20px; // 1.25rem;
   --h4-font-weight: 500;
   --h4-line-height: 1.5rem;
 
-  --txt-font-size: 1rem;
+  --txt-font-size: 16px; //1rem;
   --txt-font-weight: normal;
   --txt-line-height: 1.2rem;
 
-  --txt-s-font-size: 0.875rem;
+  --txt-s-font-size: 14px; //0.875rem;
   --txt-s-font-weight: normal;
   --txt-s-line-height: 1.05rem;
 

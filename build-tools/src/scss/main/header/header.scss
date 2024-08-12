@@ -31,7 +31,7 @@ header#main-header {
             padding: 0;
             margin: 0;
             align-items: center;
-            gap: 20px;
+            gap: 30px;
             white-space: nowrap;
 
             .selected-item-menu {
@@ -81,7 +81,7 @@ header#main-header {
 
         .search-field {
             background-color: var(--grey);
-            padding: 4px 12px;
+            padding: 5px 12px;
             width: 100%;
             border-radius: 10px;
         }
@@ -89,10 +89,10 @@ header#main-header {
         &__button {
             position: absolute;
             border: none;
-            right: 0;
+            right: 3px;
             top: 3px;
             background-color: unset;
-            font-size: larger;
+            font-size: x-large;
 
             &:hover {
                 cursor: pointer;
@@ -135,7 +135,7 @@ header#main-header {
     .header-block-delivery {
         display: flex;
         align-items: center;
-        max-width: 700px;
+        max-width: 520px;
         width: 100%;
         justify-content: space-between;
         flex: 60%;
@@ -143,6 +143,7 @@ header#main-header {
 
         @media screen and (max-width: 768px) {
             flex: 40%;
+            max-width: 700px;
         }
 
         &__city {
@@ -153,7 +154,7 @@ header#main-header {
             position: relative;
 
             .icon-place-2 {
-                margin-right: 9px;
+                margin-right: 3px;
                 font-size: xx-large;
                 vertical-align: bottom;
             }
@@ -166,7 +167,7 @@ header#main-header {
         &__delivery {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 9px;
 
             img {
                 max-width: 100px;
@@ -185,19 +186,19 @@ header#main-header {
         padding: 24px 0;
 
         &__phone {
-            font-size: 1.5em;
+            font-size: 24px;
             margin-bottom: 4px;
             color: var(--btn-on-click-green);
             font-weight: 600;
         }
 
         &__operating-mode {
-            font-size: 0.875em;
+            font-size: 14px;
         }
     }
 
     .header-bottom {
-        padding: 20px 0;
+        padding: 19px 0;
         background-color: var(--dark-green);
         color: var(--white);
         position: relative;
@@ -225,13 +226,13 @@ header#main-header {
     }
 
     .header-block-logo {
-        flex: 20%;
+        flex: 34%;
         display: flex;
         justify-content: flex-start;
 
         img {
-            max-width: 160px;
-            margin-right: 8px;
+            max-width: 150px;
+            margin-right: 5px;
         }
     }
 }
@@ -254,7 +255,7 @@ header#main-header {
 
     &__block {
         display: flex;
-        gap: 1px;
+        gap: 10px;
         padding-top: 46px;
         padding-bottom: 46px;
         position: relative;
@@ -262,8 +263,8 @@ header#main-header {
 
     .close-catalog-menu {
         position: absolute;
-        top: 46px;
-        right: 15px;
+        top: 50px;
+        right: 70px;
         font-size: xx-large;
         color: var(--main-color);
         cursor: pointer;
@@ -274,7 +275,8 @@ header#main-header {
     }
 
     .block-categories {
-        flex: 70%;
+        flex: 55%;
+        margin-left: 30px;
 
         ul.products {
             display: flex;
@@ -289,6 +291,7 @@ header#main-header {
 
             img {
                 max-width: 60px;
+                border-radius: var(--border-radius);
             }
 
             a {
@@ -311,7 +314,7 @@ header#main-header {
         }
 
         @media screen and (max-width: 1200px) {
-            flex: 55%;
+            margin: 0;
         }
 
         @media screen and (max-width: 768px) {
@@ -321,6 +324,7 @@ header#main-header {
 
     .block-offers {
         flex: 25%;
+        margin-left: 15px;
 
         &__item {
             position: relative;
@@ -365,6 +369,7 @@ header#main-header {
 
         @media screen and (max-width: 1100px) {
             margin-right: 40px;
+            margin-left: 0;
         }
 
         @media screen and (max-width: 768px) {

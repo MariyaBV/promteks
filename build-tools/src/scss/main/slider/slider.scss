@@ -1,6 +1,6 @@
 #primary section.block-slider {
     position: relative;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
     margin-top: 0;
 
     &__next,
@@ -36,11 +36,11 @@
     }
 
     .swiper-pagination-bullet {
-        width: 30px;
-        height: 3px;
+        width: 40px;
+        height: 4px;
         background-color: var(--black);
         border-radius: 0;
-        margin: 0 5px;
+        margin: 0 12px;
 
     }
 
@@ -62,14 +62,14 @@
         .slide-button {
             font-family: "Inter";
             background-color: var(--dark-green);
-            border-radius: var(--button-border-radius);
+            border-radius: var(--border-radius);
             float: none;
             margin: 0;
             color: var(--white);
             text-align: center;
-            max-width: 200px;
+            max-width: 203px;
             width: 100%;
-            padding: 15px;
+            padding: 8px;
             display: block;
             text-decoration: none;
 
@@ -81,10 +81,11 @@
         .slider-content {
             position: absolute;
             left: 60px;
-            bottom: 40px;
+            bottom: 65px;
             max-width: 370px;
             text-align: left;
             display: block;
+            width: 100%;
         }
 
         .slide-text {

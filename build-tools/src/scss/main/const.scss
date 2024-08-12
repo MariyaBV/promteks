@@ -65,7 +65,7 @@ h4 {
 
 .logo-text-year {
   font-family: "ArkonaC";
-  font-size: 1.513rem;
+  font-size: 23px;
   font-style: italic;
   font-weight: 500;
   line-height: 0.772rem;
@@ -138,8 +138,8 @@ a {
 
 #main.site-main,
 main.site-page {
-  margin-bottom: 64px;
-  margin-top: 16px;
+  padding-bottom: 24px;
+  padding-top: 16px;
 }
 
 .wrap {
@@ -266,7 +266,7 @@ input[type="week"] {
 }
 
 .wp-block-heading {
-  margin-bottom: 16px;
+  margin-bottom: 23px;
 }
 
 a.clear-filters {
@@ -280,12 +280,21 @@ a.clear-filters {
 }
 
 .separator {
-  margin: 32px 0 24px 0;
+  margin: 32px 0;
 }
 
 figure.wp-block-image {
-  margin-bottom: 24px;
+  margin-bottom: 10px;
 }
+
+.margin-top-40 {
+  margin-top: 40px;
+}
+
+.margin-30-0 {
+  margin: 38px 0;
+}
+
 
 .woocommerce nav.woocommerce-pagination {
   padding: 10px 0;
@@ -302,7 +311,7 @@ figure.wp-block-image {
     &.current {
       background: var(--pale-green);
       color: var(--white);
-      border-radius: 4px;
+      border-radius: var(--button-border-radius);
     }
   }
 }
@@ -318,11 +327,16 @@ iframe {
 
   .wp-block-columns {
     margin-bottom: 0;
+    gap: 10px;
   }
 }
 
 .margin-24-0 {
   margin: 24px 0;
+}
+
+.margin-bottom-24 {
+  margin-bottom: 24px;
 }
 
 .style-404 {
@@ -333,7 +347,7 @@ iframe {
 
     input.search-submit {
       border: 1px solid #b6b6b6;
-      border-radius: 8px;
+      border-radius: var(--border-radius);
       cursor: pointer;
       position: relative;
       background-color: var(--dark-green);
@@ -370,4 +384,22 @@ iframe {
 
 .products .product .pwb-brands-in-loop {
   display: none !important;
+}
+
+.woocommerce ul.products li.product .woocommerce-loop-category__title {
+  padding: 5px 0;
+}
+
+.block-text-seo {
+  font-size: var(--txt-s-font-size);
+  font-weight: var(--txt-s-font-weight);
+  line-height: var(--txt-s-line-height);
+}
+
+.page-delivery {
+  justify-content: space-between;
+
+  .delivery-block {
+    max-width: 480px;
+  }
 }

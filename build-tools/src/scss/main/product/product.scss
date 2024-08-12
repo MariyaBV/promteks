@@ -175,6 +175,12 @@
     border: 1px solid #CBCBCB;
 }
 
+.single-product-hr {
+    width: 100%;
+    border: 1px solid var(--grey);
+    margin-top: 40px;
+}
+
 #page .promteks-cart button.custom-button-similar-product {
     width: 100%;
     text-align: center;
@@ -279,7 +285,7 @@
     font-weight: var(--subtitle-s-font-weight);
     line-height: var(--subtitle-s-line-height);
     color: var(--gray);
-    margin: 20px 0 16px;
+    margin-bottom: 20px;
 
     a {
         color: var(--dark-green);
@@ -384,13 +390,12 @@
 
         #tab-description {
             display: block !important;
-            padding: 39px 0;
-            border-top: 2px solid #cbcbcb;
         }
     }
 
     .stock-status {
-        margin: 16px 0;
+        margin-top: 16px;
+        margin-bottom: 33px;
 
         .available-on-backorder {
             color: green;
@@ -426,7 +431,7 @@
     border: 1px solid var(--Lacoste, var(--dark-green));
     padding: 8px 16px;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: var(--button-border-radius);
     background-color: unset;
     font-size: var(--txt-s-font-size);
     font-weight: var(--txt-s-font-weight);

@@ -1,6 +1,7 @@
 .woocommerce-order {
     .title-order {
-        margin-top: 40px;
+        margin-top: 17px;
+        margin-bottom: 22px;
     }
 
     .subtitle-checkout {
@@ -14,8 +15,8 @@
     }
 
     .subtitle-details {
-        flex: 20%;
-        padding: 8px 0 8px 16px;
+        flex: 18%;
+        padding: 17px 0 13px 16px;
 
         @media screen and (max-width: 1150px) {
             flex: 40%;
@@ -42,14 +43,14 @@
 
         .button {
             display: block;
-            padding: 8px;
+            padding: 11px 0;
             margin-right: 8px;
             max-width: 156px;
             width: 100%;
             color: var(--main-color);
             border: 1px solid var(--Lacoste, var(--dark-green));
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: var(--button-border-radius);
             background-color: unset;
             font-size: var(--txt-s-font-size);
             font-weight: var(--txt-s-font-weight);
@@ -98,8 +99,8 @@
 
         tbody {
             .product-thumbnail {
-                max-width: 100px;
-                max-height: 100px;
+                max-width: 65px;
+                max-height: 65px;
                 padding: 16px;
 
                 @media screen and (max-width: 600px) {
@@ -129,7 +130,7 @@
                 font-size: var(--price-L-font-size);
                 font-weight: var(--price-L-font-weight);
                 line-height: var(--price-L-line-height);
-                padding: 24px 0;
+                padding: 50px 0 22px;
 
                 @media screen and (max-width: 430px) {
                     &:nth-child(1) {
