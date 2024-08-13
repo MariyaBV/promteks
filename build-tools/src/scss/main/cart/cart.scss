@@ -25,6 +25,12 @@ a.clear-filters-cart {
     &:hover {
         cursor: pointer;
     }
+
+    @media screen and (max-width: 610px) {
+        font-size: var(--txt-font-size);
+        font-weight: var(--txt-font-weight);
+        line-height: var(--txt-line-height);
+    }
 }
 
 .woocommerce .cart-collaterals .custom-cart-totals {
@@ -94,6 +100,12 @@ a.clear-filters-cart {
         &:hover {
             cursor: pointer;
         }
+
+        @media screen and (max-width: 610px) {
+            font-size: var(--txt-font-size);
+            font-weight: var(--txt-font-weight);
+            line-height: var(--txt-line-height);
+        }
     }
 }
 
@@ -150,14 +162,14 @@ a.clear-filters-cart {
             .product-name {
                 max-width: 400px;
 
-                @media screen and (max-width: 769px) {
+                @media screen and (max-width: 768px) {
                     max-width: none;
                 }
             }
             .product-quantity {
                 min-width: 160px;
 
-                @media screen and (max-width: 769px) {
+                @media screen and (max-width: 768px) {
                     padding: 16px 0 32px;
                 }
             }
@@ -273,8 +285,12 @@ form.custom-cart-form>table.shop_table>tbody.cart-body>tr.block-cart-button-subt
         }
     }
 
-    @media screen and (max-width: 10247px) {
+    @media screen and (max-width: 1024px) {
         gap: 15px;
+    }
+
+    @media screen and (max-width: 610px) {
+        flex-wrap: wrap;
     }
 }
 

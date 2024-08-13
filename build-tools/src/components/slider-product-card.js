@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var swiper = new Swiper('.product-gallery-swiper', {
         direction: "vertical",
         spaceBetween: 10,
@@ -10,18 +10,18 @@ $(document).ready(function() {
             prevEl: '.product-gallery__swiper-button-prev',
         },
         on: {
-            init: function() {
+            init: function () {
                 updateSlideVisibility(this);
                 checkNavigationVisibility(this);
             },
-            resize: function() {
+            resize: function () {
                 updateSlideVisibility(this);
                 checkNavigationVisibility(this);
             },
-            slideChange: function() {
+            slideChange: function () {
                 updateSlideVisibility(this);
             },
-            setTranslate: function() {
+            setTranslate: function () {
                 updateSlideVisibility(this);
             }
         },
@@ -75,7 +75,7 @@ $(document).ready(function() {
     }
 
     // Добавляем обработчики событий на кнопки "next" и "prev"
-    $(swiper.navigation.nextEl).on('click', function() {
+    $(swiper.navigation.nextEl).on('click', function () {
         lastAction = 'next';
         updateSlideVisibility(swiper);
 
@@ -86,14 +86,14 @@ $(document).ready(function() {
         }
     });
 
-    $(swiper.navigation.prevEl).on('click', function() {
+    $(swiper.navigation.prevEl).on('click', function () {
         lastAction = 'prev';
         updateSlideVisibility(swiper);
     });
 });
 
 //если нет картинок в слайдере
-$(document).ready(function() {
+$(document).ready(function () {
     var $swiperContainer = $('.swiper-container.product-gallery-swiper');
     var $images = $swiperContainer.find('.swiper-wrapper img');
 
@@ -102,3 +102,17 @@ $(document).ready(function() {
     }
 });
 
+$(document).ready(function () {
+    const swiper_block_sliders_mobile = new Swiper('.product-gallery-swiper-mobile', {
+        direction: 'horizontal',
+        slidesPerView: 3,
+        slidesPerGroup: 3,
+        spaceBetween: 10,
+        autoHeight: true,
+        loop: true,
+        navigation: {
+            nextEl: '.product-gallery__swiper-button-next-mobile',
+            prevEl: '.product-gallery__swiper-button-prev-mobile',
+        },
+    });
+});

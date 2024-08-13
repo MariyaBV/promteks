@@ -28,6 +28,21 @@ $(document).ready(function($) {
         }
     }
 
+    function openCatalog(event) {
+        event.preventDefault();
+        var catalogLink = $(this);
+        console.log(catalogLink);
+        var blockCatalog = $('#block-catalog');
+        $('#main-header').addClass('header-not-fixed');
+        
+        //if (!catalogLink.hasClass('selected-item-menu')) {
+            console.log('open');
+            catalogLink.addClass('selected-item-menu');
+            blockCatalog.addClass('visible');
+            history.pushState(null, null, '#catalog');
+        //}
+    }
+
     function closeCatalogMenu(event) {
         event.preventDefault();
         var catalogLink = $('a[href="#catalog"]');
@@ -38,25 +53,35 @@ $(document).ready(function($) {
         history.pushState(null, null, window.location.pathname + window.location.search);
     }
 
+    function closeCatalogMenuBack(event) {
+        event.preventDefault();
+        var blockCatalog = $('#block-catalog');
+        
+        blockCatalog.removeClass('visible');
+        history.pushState(null, null, window.location.pathname + window.location.search);
+        $('#main-header').removeClass('header-not-fixed');
+    }
+
     checkCatalogInUrl();
 
-    $('a[href="#catalog"]').on('click', toggleCatalogClass);
+    $('a[href="#catalog"]').on('click', openCatalog);
     $('#close-catalog-menu').on('click', closeCatalogMenu);
+    $('#close-catalog-menu-back').on('click', closeCatalogMenuBack);
 });
 
 
 $(document).ready(function() {
     $('#burger-menu').click(function() {
         $(this).toggleClass('active');
-        $('#main-header').toggleClass('header-fixed');
+        //$('#main-header').toggleClass('header-fixed');
         $('#site-navigation').toggleClass('visible');
     });
 
-    $('a[href="#catalog"]').on('click', function() {
-        $('#site-navigation').removeClass('visible');
-        $('#main-header').removeClass('header-fixed');
-        $('#burger-menu').removeClass('active');
-    });
+    // $('a[href="#catalog"]').on('click', function() {
+    //     $('#site-navigation').removeClass('visible');
+    //     $('#main-header').removeClass('header-fixed');
+    //     $('#burger-menu').removeClass('active');
+    // });
 });
 
 

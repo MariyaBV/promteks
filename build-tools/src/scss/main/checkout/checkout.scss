@@ -22,11 +22,19 @@
 .woocommerce .col2-set .col-custom-1,
 .woocommerce-page .col2-set .col-custom-1 {
     width: 56%;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
 }
 
 .woocommerce .col2-set .col-custom-2,
 .woocommerce-page .col2-set .col-custom-2 {
     width: 43%;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
 }
 
 .woocommerce .checkout {
@@ -41,6 +49,12 @@
             width: 100%;
             padding: 0;
             margin-left: 8px;
+
+            @media screen and (max-width: 768px) {
+                max-height: 60px;
+                max-width: 60px;
+                padding: 6px;
+            }
         }
 
         thead {
@@ -88,11 +102,23 @@
             @media screen and (max-width: 1007px) {
                 padding: 6px;
             }
+
+            @media screen and (max-width: 768px) {
+                font-size: var(--txt-s-font-size);
+                font-weight: var(--txt-s-font-weight);
+                line-height: var(--txt-s-line-height);
+            }
         }
 
         .product-name {
             max-width: 240px;
             width: 100%;
+
+            @media screen and (max-width: 768px) {
+                font-size: var(--subtitle-font-size);
+                font-weight: var(--subtitle-font-weight);
+                line-height: var(--subtitle-line-height);
+            }
         }
 
         .order-total {

@@ -3,6 +3,29 @@
 
     @media screen and (max-width: 768px) {
         margin-bottom: 0;
+        width: 30%;
+        clear: none;
+        justify-content: center;
+    }
+
+    a {
+        img {
+            @media screen and (max-width: 768px) {
+                max-width: 60px;
+                margin: 0 auto;
+                border-radius: var(--border-radius);
+            }
+        }
+
+        h4 {
+            @media screen and (max-width: 768px) {
+                font-size: var(--subtitle-font-size);
+                font-weight: var(--subtitle-font-weight);
+                line-height: var(--subtitle-line-height);
+                text-align: center;
+                padding: 8px 0;
+            }
+        }
     }
 
     .swiper {
@@ -67,11 +90,6 @@
         }
     }
 
-
-    @media screen and (max-width: 769px) {
-        width: 40%;
-    }
-
 }
 
 #primary.site-page {
@@ -89,6 +107,10 @@
 
     .woocommerce ul.products li.product a img {
         margin: 0;
+
+        @media screen and (max-width: 768px) {
+            margin: 0 auto;
+        }
     }
 
     .woocommerce ul.products {
@@ -106,7 +128,7 @@
         padding: 0;
         margin: 40px 0;
 
-        @media screen and (max-width: 769px) {
+        @media screen and (max-width: 768px) {
             gap: 10px;
             margin: 0;
             margin-bottom: 24px;
@@ -117,5 +139,34 @@
 #primary .col-md-9 div.product {
     div.images {
         margin-bottom: 0;
+    }
+}
+
+#page #primary .categories {
+    margin-bottom: 64px;
+
+    @media screen and (max-width: 768px) {
+        margin-bottom: 24px;
+    }
+
+    @media screen and (max-width: 550px) {
+        .custom-block-brands {
+            a {
+                color: var(--dark-green);
+            }
+    
+            a.woocommerce-loop-product__link {
+                color: var(--dark-gray);
+            }
+        }
+
+        .block-quantity-button {
+
+            .quantity-arrow-minus,
+            .quantity-arrow-plus,
+            .quantity {
+                display: none;
+            }
+        }
     }
 }

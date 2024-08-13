@@ -322,7 +322,7 @@ iframe {
 
 .photoes-block {
   gap: 10px;
-  
+
   .wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column {
     flex-basis: 45% !important;
   }
@@ -396,6 +396,13 @@ iframe {
   font-size: var(--txt-s-font-size);
   font-weight: var(--txt-s-font-weight);
   line-height: var(--txt-s-line-height);
+
+  @media screen and (max-width: 768px) {
+    font-size: var(--subtitle-font-size);
+    font-weight: var(--subtitle-font-weight);
+    line-height: var(--subtitle-line-height);
+    margin-bottom: 16px;
+  }
 }
 
 .page-delivery {
@@ -403,5 +410,13 @@ iframe {
 
   .delivery-block {
     max-width: 480px;
+  }
+}
+
+.seo-text {
+  margin-bottom: 64px;
+
+  @media screen and (max-width: 768px) {
+    margin-bottom: 24px;
   }
 }

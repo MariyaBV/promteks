@@ -22,6 +22,10 @@
     font-weight: var(--subtitle-font-weight);
     line-height: var(--subtitle-line-height);
 
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
+
     .breadcrums-link-text {
         font-family: "Inter", sans-serif;
     }

@@ -40,13 +40,20 @@
         }
     
         .close-catalog-sidebar {
-            display: block;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: xx-large;
+            display: flex;
+            flex-wrap: nowrap;
+            font-size: x-large;
             color: var(--main-color);
             cursor: pointer;
+            text-decoration: none;
+            margin: 12px;
+            align-items: center;
+
+            span {
+                &::before {
+                    color: var(--main-color);
+                }
+            }
         }
     }
 
@@ -122,8 +129,9 @@
             right: 12px;
             top: 27px;
             font-size: large;
+            z-index: -1;
 
-            @media screen and (max-width: 1100px) {
+            @media screen and (max-width: 1100px) and (min-width: 769px) {
                 right: 0;
             }
         }
@@ -171,6 +179,10 @@ main#main #secondary section {
     align-items: flex-start;
     gap: 10px;
     flex-wrap: wrap;
+
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 
     &__select {
         position: relative;
@@ -313,6 +325,10 @@ form.woocommerce-ordering {
             color: var(--white);
         }
     }
+
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 }
 
 #primary .row {
@@ -335,10 +351,6 @@ form.woocommerce-ordering {
                 gap: 15px;
             }
 
-            @media screen and (max-width: 530px) {
-                gap: unset;
-            }
-
             li {
                 float: none;
                 margin: 0;
@@ -350,12 +362,6 @@ form.woocommerce-ordering {
 
                 @media screen and (max-width: 1130px) {
                     width: calc((100% / 2) - 15px);
-                }
-
-                @media screen and (max-width: 490px) {
-                    width: 100%;
-                    flex: 100%;
-                    margin: 0 auto;
                 }
             }
         }
@@ -373,21 +379,37 @@ form.woocommerce-ordering {
         }
     }
 }
+
+.product-categories-link {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+}
     
-.show-catalog-sidebar {
+.show-catalog-sidebar,
+.product-categories-link {
     display: none;
-    background-color: var(--dark-green);
-    border-radius: var(--button-border-radius);
-    color: var(--white);
+    background: unset;
+    color: var(--main-color);
     font-size: var(--txt-font-size);
     font-weight: var(--txt-font-weight);
     line-height: var(--txt-line-height);
     text-align: center;
-    padding: 9px;
+    margin: 18px 0;
     border: none;
-    max-width: 180px;
-    width: 100%;
-    margin-bottom: 15px;
+
+    a {
+        text-decoration: none;
+    }
+
+    span {
+        margin-right: 10px;
+        vertical-align: text-top;
+
+        &::before {
+            color: var(--main-color);
+        }
+    }
 
     @media screen and (max-width: 768px) {
         display: block;

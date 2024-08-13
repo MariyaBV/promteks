@@ -3,6 +3,10 @@
     margin-bottom: 60px;
     margin-top: 0;
 
+    @media screen and (max-width: 768px) {
+        margin-bottom: 24px;
+    }
+
     &__next,
     &__prev {
         font-size: xx-large;
