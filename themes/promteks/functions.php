@@ -624,10 +624,10 @@ function add_product_category_sidebar() {
             ?>
             <div id="catalog-sidebar" class="category-list-categories mobile">
                 <h3>Каталог</h3>
-                <a class="close-catalog-sidebar" href="" id="close-catalog-sidebar"><span class="icon-Close-1 close-catalog-sidebar"></span></a>
-                <ul class="category-list">
+                 <ul class="category-list">
                     <?php echo $categories; ?>
                 </ul>
+                <a class="close-catalog-sidebar" href="" id="close-catalog-sidebar"><span class="icon-Vector-13 close-catalog-sidebar"></span><h4>Назад</h4></a>
             </div>
         </aside>
         <?php

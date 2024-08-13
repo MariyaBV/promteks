@@ -83,19 +83,39 @@ $options = get_fields('options');
 						custom_woocommerce_header_cart();
 					} ?>
 				</div>
-				
+			</div>
+			<div class="header-block-cart-mobile">
+				<?php if ( function_exists( 'custom_woocommerce_header_cart' ) ) {
+					custom_woocommerce_header_cart();
+				} ?>
+			</div>
+		</div>
+		<div class="header-block-menu-mobile">
+			<div class="header-block-contacts">
+				<p class="header-block-contacts__phone"><?= $options['phone']; ?></p>
+				<p class="header-block-contacts__operating-mode">
+					<?= $options['operating_mode']['Mon-Fri']; ?> | <?= $options['operating_mode']['Sat']; ?>
+				</p>
 			</div>
 			<button class="menu-burger" id="burger-menu"><span class="middle"></span></button>
 			<nav id="site-navigation" class="header-block-nav">
 				<?php wp_nav_menu('menu=top-menu');?>
+				<div class="header-block-search">
+					<form role="search" method="get" class="woocommerce-product-search header-search" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+						<input type="search" id="woocommerce-product-search-field" class="search-field" placeholder="<?php /*echo esc_attr__( 'Search products&hellip;', 'woocommerce' ); */?>" value="<?php echo get_search_query(); ?>" name="s" />
+						<button class="header-search__button" type="submit" value="<?php echo esc_attr_x( 'Search', 'submit button', 'woocommerce' ); ?>"><span class="icon-Search-2"></span></button>
+						<input type="hidden" name="post_type" value="product" />
+					</form>
+					<?php if ( function_exists( 'custom_woocommerce_header_wishlist' ) ) {
+						custom_woocommerce_header_wishlist();
+					} ?>
+				</div>
 			</nav>
 		</div>
 
-		
-
-
 		<div id="block-catalog" class="block-catalog">
 			<div class="wrap-header block-catalog__block">
+				<a id="close-catalog-menu-back" class="block-catalog__mobile-button-back"><span class="icon-Vector-13"></span><h4>Назад</h4></a>
 				<div class="block-categories">
 					<?php echo do_shortcode('[product_categories parent="0"]'); ?>
 				</div>

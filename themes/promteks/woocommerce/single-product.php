@@ -32,7 +32,6 @@ get_header( 'shop' ); ?>
 	?>
 
 <div class="container">
-	<button id="show-catalog-sidebar" class="show-catalog-sidebar">Посмотреть каталог</button>
     <div class="row">
         <div class="col-md-3 col-sm-0">
             <?php

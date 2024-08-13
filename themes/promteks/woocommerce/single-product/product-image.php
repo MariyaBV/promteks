@@ -36,10 +36,15 @@ $wrapper_classes   = apply_filters(
         'images',
     )
 );
+
+$categories = wc_get_product_category_list( $product->get_id());
+
 ?>
 
+<div class="product-categories-link"><span class="icon-Vector-13"></span><?php echo $categories; ?></div>
+
 <div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>" style="opacity: 1; transition: opacity .25s ease-in-out;">
-    <div class="woocommerce-product-gallery__wrapper swiper">
+    <div class="woocommerce-product-gallery__wrapper swiper desktop">
         <div class="swiper-container  product-gallery-swiper">
             <div class="swiper-wrapper swiper-wrapper-vertical woocommerce-product-gallery__wrapper">
                 <?php
@@ -66,5 +71,35 @@ $wrapper_classes   = apply_filters(
             echo sprintf('<img src="%s" alt="%s" class="wp-post-image" style="width: 520px; height: 520px;" />', esc_url(wc_placeholder_img_src('woocommerce_single')), esc_html__('Awaiting product image', 'woocommerce'));
         }
 		?>
+    </div>
+    <div class="__slider slider-mobile">
+        <?php
+        if ($post_thumbnail_id) {
+            $full_size_image = wp_get_attachment_image_src($post_thumbnail_id, 'full');
+            echo '<a class="img-big-mobile" href="' . esc_url($full_size_image[0]) . '" data-fancybox="gallery">' . wp_get_attachment_image($post_thumbnail_id, 'large') . genius_display_discount_badge_return() . '</a>';
+        } else {
+            genius_display_discount_badge();
+            echo sprintf('<img src="%s" alt="%s" class="wp-post-image" style="width: 520px; height: 520px;" />', esc_url(wc_placeholder_img_src('woocommerce_single')), esc_html__('Awaiting product image', 'woocommerce'));
+        }
+        ?>
+        <div class="swiper mobile">
+            <div class="swiper-container-mobile  product-gallery-swiper-mobile">
+                <div class="swiper-wrapper swiper-wrapper-mobile">
+                    <?php
+                    if ($attachment_ids) {
+                        foreach ($attachment_ids as $attachment_id) {
+                            $full_size_image = wp_get_attachment_image_src($attachment_id, 'full');
+                            $thumbnail_image = wp_get_attachment_image($attachment_id, 'thumbnail');
+                            echo '<div class="swiper-slide">';
+                            echo '<a href="' . esc_url($full_size_image[0]) . '" data-fancybox="gallery">' . $thumbnail_image . '</a>';
+                            echo '</div>';
+                        }
+                    }
+                    ?>
+                </div>
+                <div class="swiper-button-prev product-gallery__swiper-button-prev-mobile icon-Vector-13"></div>
+                <div class="swiper-button-next product-gallery__swiper-button-next-mobile icon-Vector-14"></div>
+            </div>
+        </div>
     </div>
 </div>

@@ -37,9 +37,16 @@ do_action( 'woocommerce_before_main_content' );
  */
 do_action( 'woocommerce_shop_loop_header' );
 
+
+$term_id = get_queried_object_id();
+
+$seo_text = get_field('seo', 'term_' . $term_id);
+
 ?>
-<div class="container">
-	<button id="show-catalog-sidebar" class="show-catalog-sidebar">Посмотреть каталог</button>
+<div class="container categories">
+	<button id="show-catalog-sidebar" class="show-catalog-sidebar">
+		<span class="icon-Vector-13"></span>Весь каталог
+	</button>
     <div class="row">
         <div class="col-md-3 col-sm-0">
             <?php
@@ -99,7 +106,15 @@ do_action( 'woocommerce_shop_loop_header' );
 		</div>
 	</div>
 </div>
+
+
 <?php
+
+if( $seo_text ) {
+    echo '<div class="seo-text txt-s">';
+    echo $seo_text;
+    echo '</div>';
+}
 
 /**
  * Hook: woocommerce_after_main_content.
