@@ -210,6 +210,14 @@
                         font-size: var(--txt-s-font-size);
                         font-weight: var(--txt-s-font-weight);
                         line-height: var(--txt-s-line-height);
+
+                        @media screen and (max-width: 400px) {
+                            font-size: var(--txt-s-font-size);
+                        }
+                    }
+
+                    @media screen and (max-width: 400px) {
+                        font-size: var(--txt-s-font-size);
                     }
                 }
 
@@ -318,6 +326,10 @@
         position: absolute;
         padding: 40px 24px;
         background-color: var(--white);
+
+        @media screen and (max-width: 400px) {
+            max-width: 290px;
+        }
     }
 
     &__subtitle {

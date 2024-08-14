@@ -33,6 +33,11 @@
                         font-size: 39px;
                         line-height: 19px;
                     }
+
+                    @media screen and (max-width: 350px) {
+                        font-size: 27px;
+                        line-height: 16px;
+                    }
                 }
 
                 .footer-logo {
@@ -42,6 +47,10 @@
 
                     @media screen and (max-width: 600px) {
                         max-width: 236px;
+                    }
+
+                    @media screen and (max-width: 350px) {
+                        max-width: 210px;
                     }
                 }
 
@@ -82,6 +91,8 @@
 
                     @media screen and (max-width: 655px) {
                         flex: 100%;
+                        padding-bottom: 32px;
+                        margin-bottom: 0;
                     }
                 }
             }
@@ -98,6 +109,10 @@
             margin-bottom: 16px;
             color: var(--white);
             text-decoration: none;
+
+            @media screen and (max-width: 600px) {
+                margin-bottom: 40px;
+            }
 
             .icon-place-2,
             .icon-phone-2 {
@@ -116,17 +131,23 @@
                     font-size: var(--subtitle-xs-font-size);
                     font-weight: var(--subtitle-xs-font-weight);
                     line-height: var(--subtitle-xs-line-height);
+
+                    @media screen and (max-width: 600px) {
+                        font-size: var(--txt-s-font-size);
+                        font-weight: var(--txt-s-font-weight);
+                        line-height: var(--txt-s-line-height);
+                    }
                 }
 
                 @media screen and (max-width: 600px) {
                     font-family: "Inter", sans-serif;
                     font-size: var(--txt-font-size);
                     font-weight: var(--txt-font-weight);
-                    line-height: var(--txt-line-height);
+                    line-height: 20.8px;
                 }
             }
 
-            
+
         }
 
         .icon-container svg {
@@ -148,6 +169,10 @@
             padding: 40px 30px;
             gap: 0;
             flex-wrap: wrap;
+        }
+
+        @media screen and (max-width: 350px) {
+            padding: 35px 20px;
         }
     }
 }

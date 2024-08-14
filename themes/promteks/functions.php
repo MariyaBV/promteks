@@ -1119,7 +1119,6 @@ function print_filters_shop() {
     // Создаем ссылку для очистки фильтров
     $clear_filters_url = add_query_arg($non_attribute_params, get_permalink(get_option('woocommerce_shop_page_id')));
 
-    echo '<h2>Фильтры</h2>';
     echo '<div class="attribute-filters"><form method="get" action="#">';
 
     // Скрытые поля для всех текущих параметров, не являющихся атрибутами

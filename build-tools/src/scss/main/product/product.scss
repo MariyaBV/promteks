@@ -251,9 +251,12 @@
 
 .woocommerce ul.products li.product a img {
     max-height: 240px;
-    width: auto;
+    //width: auto;
     margin: 0 auto;
     position: relative;
+    border: 1px solid var(--grey);
+    aspect-ratio: 1 / 1;
+    object-fit: scale-down;
 
     @media screen and (max-width: 1024px) {
         max-width: 100%;
@@ -290,6 +293,13 @@
 
 #page .recently-viewed-products,
 #page .up-sells.upsells {
+
+    h2 {
+        @media screen and (max-width: 768px) {
+            font-size: var(--h4-font-size);
+            font-weight: var(--h4-font-weight);
+        }
+    }
 
     ul.products {
         display: flex;
@@ -438,6 +448,7 @@
 #page a.woocommerce-loop-product__link {
     text-decoration: none;
     color: var(--dark-grey);
+    width: 100%;
 
     @media screen and (max-width: 530px) {
         width: 100%;
@@ -494,6 +505,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: flex-start;
+
 
     .woocommerce-tabs {
         padding-top: 39px;

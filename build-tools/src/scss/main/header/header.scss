@@ -134,13 +134,16 @@ header#main-header {
         .cart-count,
         .wishlist-count {
             position: absolute;
-            top: -10px;
-            right: -10px;
+            top: -12px;
+            right: 1px;
             background-color: var(--red);
             color: var(--white);
             border-radius: 50%;
-            padding: 3px 5.9px;
+            padding: 3px 4.5px;
             font-size: 10px;
+            font-size: var(--subtitle-xs-font-size);
+            line-height: var(--subtitle-xs-line-height);
+            font-weight: var(--subtitle-xs-font-weight);
         }
     }
 
@@ -206,6 +209,14 @@ header#main-header {
 
         &__operating-mode {
             font-size: 14px;
+
+            @media screen and (max-width: 768px) {
+                font-family: "Inter", sans-serif;
+                font-size: var(--subtitle-font-size);
+                line-height: var(--subtitle-line-height);
+                font-weight: var(--subtitle-font-weight);
+                color: #1e1e1e;
+            }
         }
     }
 
@@ -217,7 +228,7 @@ header#main-header {
 
         @media screen and (max-width: 768px) {
             display: flex;
-            padding: 12px 16px;
+            padding: 12px 20px 12px 10px;
         }
 
         .header-block-cart-mobile {
@@ -240,6 +251,7 @@ header#main-header {
 
                 @media screen and (max-width: 768px) {
                     flex: 100%;
+                    align-items: center;
                 }
             }
 
@@ -539,7 +551,7 @@ header#main-header .header-block-nav {
 }
 
 .menu-burger {
-    width: 32px;
+    width: 36px;
     height: 30px;
     background-color: unset;
     border: none;
@@ -559,7 +571,7 @@ header#main-header .header-block-nav {
     .middle {
         content: '';
         position: absolute;
-        width: 33px;
+        width: 37px;
         height: 3px;
         background-color: var(--dark-green);
         transition: transform 0.3s ease, opacity 0.3s ease;
@@ -568,7 +580,7 @@ header#main-header .header-block-nav {
     .middle {
         top: 20px;
         right: 0;
-        width: 20px;
+        width: 27px;
     }
 
     &:before {
@@ -598,6 +610,7 @@ header#main-header .header-block-nav {
 }
 
 header#main-header .header-block-menu-mobile {
+
     display: none;
     position: relative;
     width: 100%;
@@ -607,14 +620,20 @@ header#main-header .header-block-menu-mobile {
 
     @media screen and (max-width: 768px) {
         display: block;
-    }
+    
 
-    .header-block-contacts {
-        padding: 0;
+        .header-block-contacts {
+            padding: 0;
 
-        &__phone {
-            color: var(--dark-green);
+            &__phone {
+                color: var(--dark-green);
+                font-weight: 800;
+                font-size: 20px;
+                line-height: 24px;
+                font-family: "Inter", sans-serif;
+            }
         }
+
     }
 }
 

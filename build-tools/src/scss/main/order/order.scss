@@ -24,6 +24,7 @@
 
         @media screen and (max-width: 590px) {
             flex: 50%;
+            padding: 17px 0 17px 3px;
         }
     }
 
@@ -95,6 +96,12 @@
                 border-bottom: none;
                 background-color: var(--light-grey);
             }
+
+            .product-thumbnail {
+                @media screen and (max-width: 400px) {
+                    display: none;
+                }
+            }
         }
 
         tbody {
@@ -105,6 +112,10 @@
 
                 @media screen and (max-width: 600px) {
                     padding: 5px;
+                }
+
+                @media screen and (max-width: 400px) {
+                    display: none;
                 }
             }
 
@@ -139,5 +150,11 @@
                 }
             }
         }
+    }
+}
+
+.woocommerce table.shop_table td {
+    @media screen and (max-width: 430px) {
+        padding: 5px;
     }
 }
