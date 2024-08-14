@@ -71,12 +71,13 @@ $block_attention = '';
 					<li class="init">
 						<span class="icon-iconoir_box-iso2"></span>
 						<?php
-						if ( 1 < count( $available_methods ) ) {
-							printf( '<input checked style="display:none;" type="radio" name="shipping_method[%1$s]" data-index="%1$s" id="shipping_method_%1$s_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
-						} else {
-							printf( '<input type="hidden" name="shipping_method[%1$s]" data-index="%1$s" id="shipping_method_%1$s_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
-						}
-						printf( '<label class="shipping-method-label" for="shipping_method_%1$s_%2$s" id="shipping_method_%1$s_%2$s">%3$s %4$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), $label_text, $label_price ); // WPCS: XSS ok.
+						// if ( 1 < count( $available_methods ) ) {
+						// 	printf( '<input checked style="display:none;" type="radio" name="shipping_method[%1$s]" data-index="%1$s" id="shipping_method_%1$s_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+						// } else {
+						// 	printf( '<input type="hidden" name="shipping_method[%1$s]" data-index="%1$s" id="shipping_method_%1$s_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
+						// }
+						/*printf( '<label class="shipping-method-label" for="shipping_method_%1$s_%2$s" id="shipping_method_%1$s_%2$s">%3$s %4$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), $label_text, $label_price ); */
+						printf( '<label class="shipping-method-label" for="shipping_method_%1$s_%2$s">%3$s %4$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), $label_text, $label_price ); // WPCS: XSS ok.
 						do_action( 'woocommerce_after_shipping_rate', $method, $index);
 						?>
 					</li>
@@ -85,11 +86,12 @@ $block_attention = '';
 						<span class="<?= $iconClass?>"></span>
 						<?php
 						if ( 1 < count( $available_methods ) ) {
-							printf( '<input style="display:none;" type="radio" name="shipping_method[%1$s]" data-index="%1$s" id="shipping_method_%1$s_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+							printf( '<input type="radio" name="shipping_method[%1$s]" data-index="%1$s" id="shipping_method_%1$s_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
 						} else {
 							printf( '<input type="hidden" name="shipping_method[%1$s]" data-index="%1$s" id="shipping_method_%1$s_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
 						}
-						printf( '<label class="shipping-method-label" for="shipping_method_%1$s_%2$s" id="shipping_method_%1$s_%2$s">%3$s %4$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), $label_text, $label_price ); // WPCS: XSS ok.
+						/*printf( '<label class="shipping-method-label" for="shipping_method_%1$s_%2$s" id="shipping_method_%1$s_%2$s">%3$s %4$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), $label_text, $label_price ); */
+						printf( '<label class="shipping-method-label" for="shipping_method_%1$s_%2$s">%3$s %4$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), $label_text, $label_price ); // WPCS: XSS ok.
 						do_action( 'woocommerce_after_shipping_rate', $method, $index );
 						?>
 					</li>

@@ -1455,11 +1455,28 @@ function custom_checkout_alert_script() {
             jQuery(document).ready(function($) {
                 $(document).on('click', '#place_order', function(event) {
                     event.preventDefault();
-                    
-                    // Показываем блок с сообщением
+
+                    var allFieldsFilled = true;
+
+                    // Проверка всех полей с классом validate-required - заполнены ли они
+                    $('.validate-required input, .validate-required select, .validate-required textarea').each(function() {
+                        var field = $(this);
+                        if (field.val().trim() === '') {
+                            allFieldsFilled = false;
+                            field.addClass('field-error'); 
+                            alert('Пожалуйста, заполните все обязательные поля.');
+                            field.focus();
+                            return false;
+                        }
+                    });
+
+                    if (!allFieldsFilled) {
+                        return false;
+                    }
+
+                    // Если все поля заполнены, показываем блок с сообщением
                     $('.thankyou-alert').fadeIn();
 
-                    // Обработка клика на кнопку "OK"
                     $('.thankyou-alert__button').on('click', function() {
                         $('.thankyou-alert').fadeOut();
                         $('form.checkout').submit();
@@ -1471,6 +1488,7 @@ function custom_checkout_alert_script() {
     }
 }
 add_action('wp_footer', 'custom_checkout_alert_script');
+
 
 //стиль к item menu на странице которой находимся
 function get_menu_items_with_classes($menu_name) {

@@ -9,7 +9,10 @@ $(document).ready(function ($) {
     $("body").on("click", "ul.custom-shipping-method li:not(.init)", function () {
         allOptions.removeClass('selected');
         $(this).addClass('selected');
-        var selectedHtml = $(this).html();
+
+        // убираем <input> чтобы не было одинаковых input c одинаковыми id
+        var selectedHtml = $(this).clone().find('input').remove().end().html();
+
         $("ul.custom-shipping-method").children('.init').html(selectedHtml);
         allOptions.removeClass('visible');
 
@@ -86,14 +89,17 @@ $(document).ready(function ($) {
     function restoreSelectedShippingMethod() {
         var savedMethod = localStorage.getItem('selected_shipping_method');
         if (!savedMethod) {
-            savedMethod = JSON.stringify({ "method": "local_pickup:8", "label": "Самовывоз  0₽", "cost": "0₽" });
+            savedMethod = JSON.stringify({ "method": "local_pickup:8", "label": "Самовывоз 0₽", "cost": "0₽" });
         }
         if (savedMethod) {
             savedMethod = JSON.parse(savedMethod);
             var $input = $('#shipping_method input.shipping_method[value="' + savedMethod.method + '"]');
             if ($input.length) {
                 $input.prop('checked', true);
-                var selectedHtml = $input.closest('li').html();
+
+                // убираем <input> чтобы не было одинаковых input c одинаковыми id
+                var selectedHtml = $input.closest('li').clone().find('input').remove().end().html();
+
                 $("ul.custom-shipping-method").children('.init').html(selectedHtml);
                 $input.closest('li').addClass('selected');
             }
