@@ -10,7 +10,6 @@
  */
 $options = get_fields('options');
 
-//$menuBottom = wp_nav_menu('menu=bottom-menu');
 ?>
 
 <!doctype html>
@@ -32,14 +31,19 @@ $options = get_fields('options');
 		<div class="header-top">
 			<div class="wrap-header header-top__block">
 				<div class="header-block-delivery">
-					<p class="header-block-delivery__city"><span class="icon-place-2"></span><?= $options['city']; ?></p>
+					<a href="<?= $options['city']['url']; ?>" class="header-block-delivery__city">
+						<span class="icon-place-2"></span><?= $options['city']['title']; ?>
+					</a>
 					<div class="header-block-delivery__delivery">
 						<span class="icon-carbon_delivery-2"></span>
 						<h4><?= $options['title-top-header']['title']; ?></h4>
+						<a class="header-block-delivery__link" href="<?= $options['title-top-header']['link']['url']; ?>"></a>
 					</div>
 				</div>
 				<div class="header-block-contacts">
-					<p class="header-block-contacts__phone"><?= $options['phone']; ?></p>
+					<a href="tel:<?= $options['phone']; ?>" class="header-block-contacts__phone">
+						<?= $options['phone']; ?>
+					</a>
 					<p class="header-block-contacts__operating-mode">
 						<?= $options['operating_mode']['Mon-Fri']; ?> | <?= $options['operating_mode']['Sat']; ?>
 					</p>
@@ -92,7 +96,9 @@ $options = get_fields('options');
 		</div>
 		<div class="header-block-menu-mobile">
 			<div class="header-block-contacts">
-				<p class="header-block-contacts__phone"><?= $options['phone']; ?></p>
+				<a href="tel:<?= $options['phone']; ?>" class="header-block-contacts__phone">
+					<?= $options['phone']; ?>
+				</a>
 				<p class="header-block-contacts__operating-mode">
 					<?= $options['operating_mode']['Mon-Fri']; ?> | <?= $options['operating_mode']['Sat']; ?>
 				</p>

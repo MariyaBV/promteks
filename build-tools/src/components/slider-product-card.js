@@ -68,8 +68,8 @@ $(document).ready(function () {
                 $(slide).addClass('hidden');
             }
 
-            console.log("translate: ", swiper.translate, "slideTop: ", slideTop, "swiperOffsetTop: ", swiperOffsetTop);
-            console.log("slideBottom: ", slideBottom, "swiperOffsetTop + swiperHeight: ", swiperOffsetTop + swiperHeight);
+            //console.log("translate: ", swiper.translate, "slideTop: ", slideTop, "swiperOffsetTop: ", swiperOffsetTop);
+            //console.log("slideBottom: ", slideBottom, "swiperOffsetTop + swiperHeight: ", swiperOffsetTop + swiperHeight);
 
         });
     }

@@ -31,12 +31,12 @@ $(document).ready(function($) {
     function openCatalog(event) {
         event.preventDefault();
         var catalogLink = $(this);
-        console.log(catalogLink);
+        //console.log(catalogLink);
         var blockCatalog = $('#block-catalog');
         $('#main-header').addClass('header-not-fixed');
         
         //if (!catalogLink.hasClass('selected-item-menu')) {
-            console.log('open');
+            //console.log('open');
             catalogLink.addClass('selected-item-menu');
             blockCatalog.addClass('visible');
             history.pushState(null, null, '#catalog');
@@ -101,4 +101,5 @@ $(document).ready(function($) {
 
     $('#show-catalog-sidebar').on('click', openCatalogSidebar);
     $('#close-catalog-sidebar').on('click', closeCatalogSidebar);
+    $('#close-catalog-sidebar-x').on('click', closeCatalogSidebar);
 });

@@ -4,7 +4,8 @@
     overflow: hidden;
     position: relative;
 
-    .close-catalog-sidebar {
+    .close-catalog-sidebar,
+    .close-catalog-sidebar-x {
         display: none;
     }
 
@@ -37,6 +38,17 @@
         &.visible-mobile {
             opacity: 1;
             visibility: unset;
+        }
+
+        .close-catalog-sidebar-x {
+            display: block;
+            text-decoration: none;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: x-large;
+            color: var(--main-color);
+            cursor: pointer;
         }
     
         .close-catalog-sidebar {
@@ -121,6 +133,7 @@
 
         li.expanded>ul.children {
             display: block;
+            padding-top: 12px;
         }
 
         li.icon-Vector-9::before,
