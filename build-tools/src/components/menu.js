@@ -38,7 +38,10 @@ $(document).ready(function($) {
         //if (!catalogLink.hasClass('selected-item-menu')) {
             //console.log('open');
             catalogLink.addClass('selected-item-menu');
-            blockCatalog.addClass('visible');
+            blockCatalog.addClass('display_block');
+            setTimeout(() => {
+                blockCatalog.addClass('visible');
+            }, 200);
             history.pushState(null, null, '#catalog');
         //}
     }
@@ -50,6 +53,9 @@ $(document).ready(function($) {
         
         catalogLink.removeClass('selected-item-menu');
         blockCatalog.removeClass('visible');
+            setTimeout(() => {
+                blockCatalog.removeClass('display_block');
+            }, 500);
         history.pushState(null, null, window.location.pathname + window.location.search);
     }
 
@@ -58,6 +64,9 @@ $(document).ready(function($) {
         var blockCatalog = $('#block-catalog');
         
         blockCatalog.removeClass('visible');
+            setTimeout(() => {
+                blockCatalog.removeClass('display_block');
+            }, 500);
         history.pushState(null, null, window.location.pathname + window.location.search);
         $('#main-header').removeClass('header-not-fixed');
     }

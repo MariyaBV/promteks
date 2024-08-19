@@ -59,7 +59,7 @@ if ($selected_shipping_method === 'local_pickup:8') {
 
 			<h2 class="title-order">Заказ</h2>
 
-			<p class="txt subtitle-checkout">Данные заказа</p>
+			<p class="txt subtitle-checkout order">Данные заказа</p>
 
 			<div class="block-address txt">
 				<!-- О заказе -->

@@ -8,7 +8,9 @@
             <div class="swiper-wrapper slider__wrapper">
                 <?php foreach ($r['sliders'] as $item): ?>
                     <div class="swiper-slide slider__slide">
-                        <img class="img" src="<?= $item['image']; ?>" alt="slide image"/>
+                        <a href="<?= $item['image']; ?>" data-fancybox="gallery">
+                            <img class="img" src="<?= $item['image']; ?>" alt="slide image"/>
+                        </a>
                         <div class="slider-content">
                             <?php if (!empty($item['button']['link']) && !empty($item['button']['link-text'])): ?>
                                 <a class="slide-button" href="<?= $item['button']['link']; ?>">

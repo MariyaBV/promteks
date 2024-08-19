@@ -114,7 +114,7 @@ $(document).ready(function ($) {
     // Добавляем событие на обновление корзины после изменения количества товаров
     $(document).on('updated_cart_totals', function () {
         updateCartCount();
-        console.log("Cart totals updated.");
+        //console.log("Cart totals updated.");
     });
 });
 

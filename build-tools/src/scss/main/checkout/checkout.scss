@@ -1,6 +1,13 @@
 .title-checkout {
     margin: 10px 0 15px 0;
 
+    @media screen and (max-width: 768px) {
+        font-size: var(--h4-font-size);
+        font-weight: var(--h4-font-weight);
+        line-height: var(--h4-line-height);
+        margin: 3px 0 34px;
+    }
+
     a {
         text-decoration: none;
         margin-right: 8px;
@@ -8,6 +15,14 @@
 
         span {
             color: var(--dark-grey);
+
+            &.icon-arrow:before {
+                content: "\e912";
+            }
+
+            @media screen and (max-width: 768px) {
+                color: var(--main-color);
+            }
         }
     }
 
@@ -17,6 +32,10 @@
     background-color: var(--light-grey);
     padding: 8px 0 8px 16px;
     margin-bottom: 8px;
+
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 }
 
 .woocommerce .col2-set .col-custom-1,
@@ -42,6 +61,10 @@
         border: none;
         margin: 0;
         border-collapse: collapse;
+
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
 
         .product-thumbnail {
             max-width: 24px;
@@ -142,7 +165,7 @@
 
         background-color: unset;
 
-        .button {
+        #place_order.button {
             background-color: var(--dark-green);
             border-radius: var(--border-radius);
             color: var(--white);
@@ -154,6 +177,16 @@
             max-width: 285px;
             width: 100%;
             display: block;
+
+            @media screen and (max-width: 768px) {
+                max-width: none;
+                margin-top: 10px;
+                margin-bottom: 0;
+            }
+        }
+
+        div.form-row {
+            padding: 0;
         }
     }
 
@@ -175,6 +208,26 @@
             @media screen and (max-width: 1160px) {
                 margin-left: 0;
             }
+
+            @media screen and (max-width: 768px) {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .form-row  {
+                @media screen and (max-width: 768px) {
+                    width: 32%;
+
+                    &.form-row-wide {
+                        width: 100%;
+                    }
+    
+                    &.form-row-last {
+                        width: 66%;
+                    }
+                }
+            }
         }
 
         .form-row-one,
@@ -190,6 +243,17 @@
             padding: 0;
             gap: 8px;
 
+            @media screen and (max-width: 768px) {
+                flex-direction: column;
+                gap: 0;
+
+                &::before,
+                &::after {
+                    display: none;
+                    content: unset;
+                }
+            }
+
             .optional {
                 display: none;
             }
@@ -197,6 +261,14 @@
             .woocommerce-input-wrapper {
                 width: 100%;
                 margin-bottom: 15px;
+
+                @media screen and (max-width: 768px) {
+                    margin-bottom: 20px;
+
+                    &:last-child {
+                        margin-bottom: 13px;
+                    }
+                }
 
                 input {
                     border: 1px solid var(--dark-grey);
@@ -210,14 +282,11 @@
                         font-size: var(--txt-s-font-size);
                         font-weight: var(--txt-s-font-weight);
                         line-height: var(--txt-s-line-height);
-
-                        @media screen and (max-width: 400px) {
-                            font-size: var(--txt-s-font-size);
-                        }
                     }
 
-                    @media screen and (max-width: 400px) {
-                        font-size: var(--txt-s-font-size);
+                    @media screen and (max-width: 768px) {
+                        padding: 15px 0 15px 16px;
+                        border-radius: unset;
                     }
                 }
 
@@ -238,6 +307,10 @@
                         line-height: var(--txt-s-line-height);
 
                     }
+
+                    @media screen and (max-width: 768px) {
+                        border-radius: unset;
+                    }
                 }
             }
 
@@ -250,12 +323,14 @@
                     display: none;
                 }
 
-                @media screen and (max-width: 475px) {
-                    min-width: 145px;
-                }
-
-                @media screen and (max-width: 430px) {
-                    min-width: 118px;
+                @media screen and (max-width: 768px) {
+                    padding: 2px 16px 5px;
+                    font-size: var(--txt-s-font-size);
+                    font-weight: var(--txt-s-font-weight);
+                    line-height: var(--txt-s-line-height);
+                    clip-path: unset;
+                    height: auto;
+                    position: relative !important;
                 }
             }
         }
@@ -301,7 +376,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    z-index: 111;
+    z-index: 1;
     background: #00653B4D;
     top: 0;
     left: 0;
@@ -329,6 +404,7 @@
 
         @media screen and (max-width: 400px) {
             max-width: 290px;
+            padding: 24px 24px 40px 24px;
         }
     }
 

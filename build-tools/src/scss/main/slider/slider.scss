@@ -25,18 +25,17 @@
     .swiper-button-next {
         right: -27px;
 
-        // &::before {
-        //     transform-origin: 40% 55%;
-        //     transform: rotate(-135deg);
-        // }
+        @media screen and (max-width: 768px) {
+            right: -35px;
+        }
     }
 
     .swiper-button-prev {
         left: 29px;
 
-        // &::before {
-        //     transform-origin: 50% 75%;
-        // }
+        @media screen and (max-width: 768px) {
+            left: 20px;
+        }
     }
 
     .swiper-pagination-bullet {
@@ -104,7 +103,7 @@
             @media screen and (max-width: 768px) {
                 top: 50%;
                 transform: translateY(-50%);
-                left: 0;
+                left: 40px;
                 bottom: auto;
             }
         }
