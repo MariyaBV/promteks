@@ -1,0 +1,164 @@
+.attribute-filters {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+#primary .custom-ordering {
+    margin-bottom: 8px;
+}
+
+.attribute-filters,
+#primary .custom-ordering {
+    &__select {
+        display: flex;
+        flex-direction: row;
+        position: relative;
+
+        .reset-button {
+            color: var(--white);
+            background-color: var(--black);
+            font-size: 25px;
+            display: none;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            padding: 0 8px;
+            z-index: 1;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+        }
+
+        .vertical-line {
+            position: absolute;
+            right: 30px;
+            top: 0;
+            bottom: 0;
+            margin: auto 0;
+            content: "";
+            width: 1px;
+            height: 75%;
+            background-color: var(--white);
+            z-index: 2;
+            display: none;
+        }
+
+    }
+
+    .custom-ordering-select {
+        min-width: 175px;
+    }
+
+    .custom-select,
+    .custom-ordering-select {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        font-size: var(--subtitle-font-size);
+        font-weight: var(--subtitle-font-weight);
+        line-height: var(--subtitle-line-height);
+
+        &.opened .custom-options,
+        &.opened .custom-ordering-options {
+            display: block;
+        }
+
+        &.custom-selected {
+            background-color: var(--main-color);
+            color: var(--white);
+        }
+
+        .custom-options,
+        .custom-ordering-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            padding: 0;
+            display: none;
+            z-index: 99;
+
+            .custom-option,
+            .custom-ordering-option {
+                list-style-type: none;
+                padding: 8px 9px 8px 12px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: var(--dark-grey);
+                }
+
+                &.selected {
+                    background-color: var(--light-grey);
+                    color: var(--main-color);
+                }
+            }
+        }
+
+        .icon-Down-3 {
+            &::before {
+                color: var(--main-color);
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 10px;
+                font-size: 14px;
+            }
+        }
+
+        .custom-ordering-trigger.selected + .icon-Down-3::before {
+            color: var(--white);
+        }
+
+        .custom-ordering-trigger {
+            &.selected {
+                background-color: var(--main-color);
+                color: var(--white);
+                border-color: transparent;
+            }
+        }
+
+        .custom-select-trigger,
+        .custom-ordering-trigger {
+            border: 1px solid #b6b6b6;
+            border-radius: var(--border-radius);
+            padding: 8px 30px 8px 12px;
+            cursor: pointer;
+            position: relative;
+            background-color: var(--white);
+            font-size: var(--subtitle-font-size);
+            font-weight: var(--subtitle-font-weight);
+            line-height: var(--subtitle-line-height);
+
+            &.selected-item-menu {
+                color: var(--white);
+                background-color: var(--black);
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border-color: transparent;
+            }
+        }
+    }
+
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        .submit-button {
+            border: 1px solid var(--dark-green);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            position: relative;
+            background-color: var(--dark-green);
+            color: var(--white);
+            padding: 8px 12px;
+            font-size: var(--subtitle-font-size);
+            font-weight: var(--subtitle-font-weight);
+            line-height: var(--subtitle-line-height);
+        }
+    }
+}

@@ -463,22 +463,30 @@ add_action('wp_ajax_nopriv_woocommerce_ajax_add_to_cart', 'custom_woocommerce_aj
 //вывод производителя на странице товара
 function custom_template_single_brand() {
     global $product;
-	$brand = $product->get_attribute('brand');
-	if ($brand) {
-		$term = get_term_by('name', $brand, 'pa_brand');
-		$brand_archive_link = get_term_link($term);
-		$taxonomy_label = 'Производитель';
-		?>
+
+    // Получаем ID выбранного производителя для текущего товара
+    $brand_ids = wp_get_post_terms( $product->get_id(), 'pwb-brand', array( 'fields' => 'ids' ) );
+
+	// Получаем название блока
+    $taxonomy_label = 'Производитель';
+
+    // Проверяем, что производитель (бренд) выбран для товара
+    if ( ! empty( $brand_ids ) ) {
+        $brand_id = reset( $brand_ids ); // Берем первый выбранный бренд (если товар может иметь несколько брендов, нужно адаптировать логику)
+        $brand = get_term( $brand_id, 'pwb-brand' ); // Получаем данные о бренде
+
+        if ( ! is_wp_error( $brand ) && $brand ) {
+            // Выводим информацию о бренде
+            ?>
             <div class="custom-block-brands">
                 <span class="pwb-text-before-brands-links"><?php echo esc_html($taxonomy_label); ?>:</span>
-                <a href="<?php echo esc_url( $brand_archive_link ); ?>" title="<?php echo esc_attr( $brand ); ?>">
-                    <?php echo esc_html( $brand ); ?>
+                <a href="<?php echo esc_url( get_term_link( $brand ) ); ?>" title="<?php echo esc_attr( $brand->name ); ?>">
+                    <?php echo esc_html( $brand->name ); ?>
                 </a>
             </div>
             <?php
-	}
-
-   
+        }
+    }
 }
 add_action( 'woocommerce_single_product_summary', 'custom_template_single_brand', 1 );
 
@@ -635,16 +643,13 @@ function custom_orderby_option( $sortby ) {
 add_filter( 'woocommerce_default_catalog_orderby_options', 'custom_orderby_option' );
 add_filter( 'woocommerce_catalog_orderby', 'custom_orderby_option' );
 
-//переименовываем исходную сортировку в Сортировать
-function rename_orderby_options( $sortby ) {
-    if ( isset( $sortby['menu_order'] ) ) {
-        $sortby['menu_order'] = 'Сортировать';
-    }
-    
-    return $sortby;
+//удаляем исходную сортировку из видов сортировки
+function remove_orderby_options( $sortby ) {
+	unset( $sortby[ 'menu_order' ] ); // исходная сортировка
+	return $sortby;
 }
-add_filter( 'woocommerce_catalog_orderby', 'rename_orderby_options' );
-
+add_filter( 'woocommerce_default_catalog_orderby_options', 'remove_orderby_options' );
+add_filter( 'woocommerce_catalog_orderby', 'remove_orderby_options' );
 
 function custom_woocommerce_get_catalog_ordering_args( $args ) {
     if ( isset( $_GET['orderby'] ) && 'discount' === $_GET['orderby'] ) {
@@ -763,7 +768,7 @@ function genius_display_discount_badge_return() {
 // Удаляем стандартную форму сортировки перед списком товаров
 remove_action('woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30);
 
-//кастомные фильтры по аттрибутам
+
 function custom_woocommerce_get_catalog_ordering_attr_args( $query ) {
     // Проверяем, что это основной запрос и не в админке
     if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_tax('product_cat') ) ) {
@@ -797,15 +802,8 @@ function custom_woocommerce_get_catalog_ordering_attr_args( $query ) {
 }
 add_action( 'pre_get_posts', 'custom_woocommerce_get_catalog_ordering_attr_args' );
 
-function print_filters() {
-    // Получаем текущий URL
-    $current_url = $_SERVER['REQUEST_URI'];
-    
-    // Проверяем, что это не страница магазина и не страница брендов
-    if (strpos($current_url, '/brand/') !== false) {
-        return;
-    }
 
+function print_filters() {
     if (is_shop()) {
         return;
     }
@@ -850,43 +848,23 @@ function print_filters() {
     foreach ($attributes as $attribute) {
         $attribute_name = $attribute->attribute_name;
         $attribute_label = $attribute->attribute_label;
-        $selected_value = isset($current_params['attribute_' . esc_attr($attribute_name)]) ? $current_params['attribute_' . esc_attr($attribute_name)] : '';
 
         $terms = get_terms(array(
             'taxonomy' => 'pa_' . $attribute_name,
             'hide_empty' => true,
-            'object_ids' => wc_get_products(array(
-                'category' => array($category->slug),
-                'return'   => 'ids',
-                'limit'    => -1,
-                'status'   => 'publish'
-            )),
         ));
 
         if (!empty($terms) && !is_wp_error($terms)) {
-            echo '<div class="attribute-filters__select" data-attribute="' . esc_attr($attribute_name) . '">';
-            echo '<div class="custom-select">';
-            // Отображаем выбранное значение, если оно существует, иначе название фильтра
-            $selected_label = $selected_value ? get_term_by('slug', $selected_value, 'pa_' . esc_attr($attribute_name))->name : esc_html($attribute_label);
-            echo '<div class="custom-select-trigger" data-attribute-label="' . esc_html($attribute_label) . '">' . esc_html($selected_label) . '</div>';
-            echo '<span class="icon-Down-3"></span>';
-            echo '<ul class="custom-options">';
-
+            echo '<span class="attribute-filters__select"><select name="attribute_' . esc_attr($attribute_name) . '" id="attribute_' . esc_attr($attribute_name) . '">';
+            echo '<option value="">' . esc_html($attribute_label) . '</option>';
             foreach ($terms as $term) {
-                $selected = $selected_value === $term->slug ? ' selected' : '';
-                echo '<li class="custom-option' . ($selected ? ' selected' : '') . '" data-value="' . esc_attr($term->slug) . '">' . esc_html($term->name) . '</li>';
+                $selected = isset($current_params['attribute_' . esc_attr($attribute_name)]) && $current_params['attribute_' . esc_attr($attribute_name)] === $term->slug ? ' selected' : '';
+                echo '<option value="' . esc_attr($term->slug) . '"' . $selected . '>' . esc_html($term->name) . '</option>';
             }
-
-            echo '</ul>';
-            echo '</div>';
-            echo '<span class="vertical-line"></span>';
-            echo '<span class="reset-button">×</span>';
-            echo '<input type="hidden" name="attribute_' . esc_attr($attribute_name) . '" value="' . esc_attr($selected_value) . '">';
-            echo '</div>';
+            echo '</select><span class="vertical-line"></span><span class="reset-button">×</span></span>';
         }
     }
-
-    echo '<input class="submit-button" type="submit" value="Применить фильтры">';
+    echo '<input type="submit" value="Применить фильтры">';
     echo '</form>';
     
     if ($has_non_empty_attribute) {
@@ -895,8 +873,7 @@ function print_filters() {
 
     echo '</div>';
 }
-//add_action('woocommerce_before_shop_loop', 'print_filters', 20);
-
+add_action('woocommerce_before_shop_loop', 'print_filters', 20);
 
 function get_category_product_attributes($category_id) {
     global $wpdb;
@@ -1115,47 +1092,47 @@ function print_filters_shop() {
         return;
     }
 
-    // Получаем текущую категорию
-    $category = get_queried_object();
-    if (!$category) {
-        return;
-    }
-
-    // Получаем список атрибутов
     $attributes = get_all_product_attributes();
     if (!$attributes) {
         return;
     }
 
     $current_params = $_GET;
+
     $attribute_params = array_filter($current_params, function($key) {
         return strpos($key, 'attribute_') === 0;
     }, ARRAY_FILTER_USE_KEY);
+
 
     // Фильтруем параметры, чтобы удалить атрибуты
     $non_attribute_params = array_filter($current_params, function($key) {
         return strpos($key, 'attribute_') !== 0;
     }, ARRAY_FILTER_USE_KEY);
 
-    $has_non_empty_attribute = !empty(array_filter($attribute_params));
+    $has_non_empty_attribute = false;
+    foreach ($attribute_params as $value) {
+        if (!empty($value)) {
+            $has_non_empty_attribute = true;
+            break;
+        }
+    }
 
     // Создаем ссылку для очистки фильтров
-    // Используем home_url или get_permalink для правильного URL страницы магазина
-    $shop_page_url = home_url('/shop/');
-    $clear_filters_url = add_query_arg(array(), $shop_page_url);
+    $clear_filters_url = add_query_arg($non_attribute_params, get_permalink(get_option('woocommerce_shop_page_id')));
 
     echo '<div class="attribute-filters"><form method="get" action="#">';
 
+    // Скрытые поля для всех текущих параметров, не являющихся атрибутами
     foreach ($current_params as $key => $value) {
         if (strpos($key, 'attribute_') !== 0) {
             echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
         }
     }
 
+    // Вывод фильтров по атрибутам
     foreach ($attributes as $attribute) {
         $attribute_name = $attribute->attribute_name;
         $attribute_label = $attribute->attribute_label;
-        $selected_value = isset($current_params['attribute_' . esc_attr($attribute_name)]) ? $current_params['attribute_' . esc_attr($attribute_name)] : '';
 
         $terms = get_terms(array(
             'taxonomy' => 'pa_' . $attribute_name,
@@ -1163,29 +1140,16 @@ function print_filters_shop() {
         ));
 
         if (!empty($terms) && !is_wp_error($terms)) {
-            echo '<div class="attribute-filters__select" data-attribute="' . esc_attr($attribute_name) . '">';
-            echo '<div class="custom-select">';
-            // Отображаем выбранное значение, если оно существует, иначе название фильтра
-            $selected_label = $selected_value ? get_term_by('slug', $selected_value, 'pa_' . esc_attr($attribute_name))->name : esc_html($attribute_label);
-            echo '<div class="custom-select-trigger" data-attribute-label="' . esc_html($attribute_label) . '">' . esc_html($selected_label) . '</div>';
-            echo '<span class="icon-Down-3"></span>';
-            echo '<ul class="custom-options">';
-
+            echo '<span class="attribute-filters__select"><select name="attribute_' . esc_attr($attribute_name) . '" id="attribute_' . esc_attr($attribute_name) . '">';
+            echo '<option value="">' . esc_html($attribute_label) . '</option>';
             foreach ($terms as $term) {
-                $is_selected = $selected_value === $term->slug;
-                echo '<li class="custom-option' . ($is_selected ? ' selected' : '') . '" data-value="' . esc_attr($term->slug) . '">' . esc_html($term->name) . '</li>';
+                $selected = isset($current_params['attribute_' . esc_attr($attribute_name)]) && $current_params['attribute_' . esc_attr($attribute_name)] === $term->slug ? ' selected' : '';
+                echo '<option value="' . esc_attr($term->slug) . '"' . $selected . '>' . esc_html($term->name) . '</option>';
             }
-
-            echo '</ul>';
-            echo '</div>';
-            echo '<span class="vertical-line"></span>';
-            echo '<span class="reset-button">×</span>';
-            echo '<input type="hidden" name="attribute_' . esc_attr($attribute_name) . '" value="' . esc_attr($selected_value) . '">';
-            echo '</div>';
+            echo '</select><span class="vertical-line"></span><span class="reset-button">×</span></span>';
         }
     }
-
-    echo '<input class="submit-button" type="submit" value="Применить фильтры">';
+    echo '<input type="submit" value="Применить фильтры">';
     echo '</form>';
     
     if ($has_non_empty_attribute) {
@@ -1196,10 +1160,19 @@ function print_filters_shop() {
 }
 add_action('woocommerce_before_shop_loop', 'print_filters_shop', 20);
 
-
+// Устанавливаем стоимость доставки = 0 для всех методов дотсавки чтобы не приабвлялось к сумме заказа
+// function make_all_shipping_methods_free( $rates, $package ) {
+//     foreach ( $rates as $rate_id => $rate ) {
+//         $rates[$rate_id]->cost = 0;     }
+//     return $rates;
+// }
+// add_filter( 'woocommerce_package_rates', 'make_all_shipping_methods_free', 10, 2 );
 
 //фильтр для кастомизации полей в форме доставки
 function customize_billing_fields($fields) {
+    // Удаление ненужных полей
+    /*unset($fields['shipping']['shipping_company']);
+    unset($fields['shipping']['shipping_address_2']);*/
 
     // Добавление новых полей
     $fields['billing']['billing_state'] = array(
@@ -1529,10 +1502,11 @@ function get_menu_items_with_classes($menu_name) {
     $current_path = trim(parse_url($current_url, PHP_URL_PATH), '/');
 
     foreach ($menu_items as $menu_item) {
- if ($menu_item->url === '#catalog') {
+        $menu_path = trim(parse_url($menu_item->url, PHP_URL_PATH), '/');
+
+        if ($menu_item->url === '#catalog') {
             continue;
         }
-        $menu_path = trim(parse_url($menu_item->url, PHP_URL_PATH), '/');
 
         if ($menu_path === $current_path) {
             $menu_item->classes[] = 'selected-item-menu';

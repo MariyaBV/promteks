@@ -1,0 +1,92 @@
+#primary .single_add_to_cart_button.clickBuyButton {
+    background-color: var(--btn-on-click-green);
+    border-radius: var(--button-border-radius);
+    color: var(--white);
+    font-size: var(--txt-s-font-size);
+    font-weight: var(--txt-s-font-weight);
+    line-height: var(--txt-s-line-height);
+    text-align: center;
+    padding: 9px 0;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+#formOrderOneClick #buyoneclick_form_order {
+    .quantity {
+        input {
+            max-width: 120px;
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    input {
+        border: 1px solid var(--dark-grey);
+        font-size: var(--txt-font-size);
+        font-weight: var(--txt-font-weight);
+        line-height: var(--txt-line-height);
+        margin-top: 8px;
+        margin-bottom: 8px;
+        padding: 8px;
+
+        &:focus-visible {
+            border-color: var(--dark-green);
+        }
+
+        &::placeholder {
+            color: var(--dark-grey);
+            font-size: var(--txt-s-font-size);
+            font-weight: var(--txt-s-font-weight);
+            line-height: var(--txt-s-line-height);
+        }
+    }
+
+    .button {
+        background-color: var(--dark-green);
+        border-radius: var(--border-radius);
+        color: var(--white);
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 30px;
+        text-align: center;
+        padding: 15px 0;
+        max-width: 285px;
+        width: 100%;
+        display: block;
+    }
+
+    .table-wrap {
+        table th {
+            background-color: var(--light-grey);
+            color: var(--main-color);
+            font-size: var(--txt-font-size);
+            font-weight: var(--txt-font-weight);
+            line-height: var(--txt-line-height);
+        }
+
+        .description {
+            img {
+                margin: 0 auto;
+                display: inline-block;
+            }
+        }
+    }
+}
+
+body #formOrderOneClick .popummessage .close_message {
+    font-size: 35px;
+    color: var(--main-color);
+    top: -5px;
+    right: 0;
+    background: none;
+    border: none;
+    box-shadow: unset;
+    width: 30px;
+    padding: 0;
+
+    &:hover {
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+}

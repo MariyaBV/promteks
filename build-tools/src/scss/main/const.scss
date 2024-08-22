@@ -336,7 +336,7 @@ iframe {
   width: 100%;
 }
 
-.photoes-block {
+body .photoes-block {
   gap: 10px;
 
   .wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column {
@@ -349,7 +349,7 @@ iframe {
   }
 
   @media screen and (max-width: 768px) {
-    display: none;
+    display: none!important;
   }
 }
 
