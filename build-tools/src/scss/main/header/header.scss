@@ -217,7 +217,7 @@ header#main-header {
         font-family: "Roboto";
         font-weight: normal;
         line-height: 1.375rem;
-        padding: 24px 0;
+        padding: 14px 0;
 
         &__phone {
             font-size: 24px;
@@ -225,6 +225,7 @@ header#main-header {
             color: var(--btn-on-click-green);
             font-weight: 600;
             text-decoration: none;
+            text-wrap: nowrap;
         }
 
         &__operating-mode {
@@ -655,6 +656,7 @@ header#main-header .header-block-menu-mobile {
                 font-size: 20px;
                 line-height: 24px;
                 font-family: "Inter", sans-serif;
+                text-wrap: nowrap;
             }
         }
 

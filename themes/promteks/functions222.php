@@ -503,124 +503,128 @@ if ( ! function_exists( 'woocommerce_template_loop_product_title' ) ) {
 }
 
 
-function display_category_tree($categories, $parent_id = 0, $depth = 0) {
-    // Фильтруем категории по родителю
-    $filtered_categories = array_filter($categories, function($category) use ($parent_id) {
-        return $category->parent == $parent_id;
-    });
+// Кастомный класс Walker для вывода миниатюр в списке категорий
+class Walker_Category_Thumbnails extends Walker_Category {
+    private $expanded_parents = array();
 
-    if (!empty($filtered_categories)) {
-		$cls = $depth === 0 ? "category-list" : "children";
-        echo '<ul class="'.$cls.'">';
-        foreach ($filtered_categories as $category) {
-            $cat_name = esc_html($category->name);
-            $thumbnail_id = get_term_meta($category->term_id, 'thumbnail_id', true);
-            $image_url = wp_get_attachment_url($thumbnail_id);
-            $link = get_term_link($category);
+    function start_lvl( &$output, $depth = 0, $args = array() ) {
+        $indent = str_repeat("\t", $depth);
+        $output .= "\n$indent<ul class='children'>\n";
+    }
 
-            // Получаем значение ACF поля для сортировки
-            $acf_value = get_field('your_acf_field_name', 'product_cat_' . $category->term_id); // Замените на ваше ACF поле
+    function end_lvl( &$output, $depth = 0, $args = array() ) {
+        $indent = str_repeat("\t", $depth);
+        $output .= "$indent</ul>\n";
+    }
 
-            // Определяем активные и раскрытые элементы
-            $active = '';
-            $expanded = '';
-            $icon_Vector_9 = '';
+    function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
+        $cat_name = esc_attr( $category->name );
+        $cat_name = apply_filters( 'list_cats', $cat_name, $category );
+
+        $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );
+        $image_url = wp_get_attachment_url( $thumbnail_id );
+        $link = get_term_link( $category );
+
+        $active = '';
+        $expanded = '';
+        $icon_Vector_9 = '';
+        $icon_Down_3 = '';
+        $my_category = get_queried_object();
+
+        if (is_product_category() && ($my_category->term_id == $category->term_id)) {
+            $active = 'selected';
+        }
+
+        if (is_product_category() && term_is_ancestor_of($category->term_id, $my_category->term_id, 'product_cat')) {
+            $expanded = 'expanded';
+            $icon_Vector_9 = 'icon-Vector-9';
             $icon_Down_3 = '';
-            $my_category = get_queried_object();
+        }
 
-            if (is_product_category() && ($my_category->term_id == $category->term_id)) {
+        if (is_product()) {
+            $product_id = get_the_ID();
+            $product_categories = wp_get_post_terms($product_id, 'product_cat', array('fields' => 'ids'));
+
+            if (in_array($category->term_id, $product_categories)) {
                 $active = 'selected';
-            }
 
-            if (is_product_category() && term_is_ancestor_of($category->term_id, $my_category->term_id, 'product_cat')) {
-                $expanded = 'expanded';
-                $icon_Vector_9 = 'icon-Vector-9';
-            }
-
-            if (is_product()) {
-                $product_id = get_the_ID();
-                $product_categories = wp_get_post_terms($product_id, 'product_cat', array('fields' => 'ids'));
-
-                if (in_array($category->term_id, $product_categories)) {
-                    $active = 'selected';
-
-                    // Если категория имеет родителя, отмечаем родителя для раскрытия
-                    if ($category->parent) {
-                        $expanded = 'expanded';
-                        $icon_Down_3 = '';
-                    }
+                // Если категория имеет родителя, отмечаем родителя для раскрытия
+                if ($category->parent) {
+                    $this->expanded_parents[] = $category->parent;
+                    $icon_Down_3 = '';              
                 }
             }
-
-            // Выводим категорию
-            echo "<li id='cat-item-{$category->term_id}' class='cat-item cat-item-{$category->term_id} $active $expanded $icon_Vector_9'>";
-            echo "<a class='cat-link $icon_Down_3' href='" . esc_url($link) . "'>";
-            if ($depth == 0 && $image_url) {
-                // Показываем миниатюру только для категорий верхнего уровня
-                echo "<img class='cat-image' src='" . esc_url($image_url) . "' alt='" . esc_attr($cat_name) . "' />";
-            }
-            echo "<span class='cat-name'>" . $cat_name . "</span>";
-            echo "</a>";
-
-            // Рекурсивно вызываем функцию для вывода дочерних категорий
-            display_category_tree($categories, $category->term_id, $depth + 1);
-
-            echo "</li>";
         }
-        echo '</ul>';
+
+        $output .= "\t<li id='cat-item-{$category->term_id}' class='cat-item cat-item-{$category->term_id} $active $expanded $icon_Vector_9'>";
+        $output .= "<a class='cat-link'" . $icon_Down_3 . "href='" . esc_url( $link ) . "'>";
+        if ( $depth == 0 && $image_url ) {
+            // Показываем миниатюру только для верхнего уровня
+            $output .= "<img class='cat-image' src='" . esc_url( $image_url ) . "' alt='" . esc_attr( $cat_name ) . "' />";
+        }
+        $output .= "<span class='cat-name'>" . "$cat_name" . "</span>";
+        $output .= "</a>";
+        if ( ! empty( $args['show_count'] ) ) {
+            $output .= ' (' . number_format_i18n( $category->count ) . ')';
+        }
+    }
+
+    function end_el( &$output, $category, $depth = 0, $args = array() ) {
+        // Добавляем класс expanded родительским категориям, если необходимо
+        if (in_array($category->term_id, $this->expanded_parents)) {
+            $output = str_replace("cat-item-{$category->term_id} ", "cat-item-{$category->term_id} expanded ", $output);
+        }
+        $output .= "</li>\n";
     }
 }
 
+
 function add_product_category_sidebar() {
-    ?>
-    <aside class="product-category-sidebar">
-        <?php
-        // Определяем аргументы для получения категорий
-        $args = array(
-            'taxonomy'   => 'product_cat',
-            'hide_empty' => true,
-            'orderby'    => 'name',
-            'order'      => 'ASC',
-            'hierarchical' => true,
-        );
-
-        // Получаем категории продуктов
-        $categories = get_terms($args);
-
-        if (!empty($categories) && !is_wp_error($categories)) {
-            // Получаем значения ACF для сортировки
-            $categories_with_acf = [];
-            foreach ($categories as $category) {
-				
-                $acf_value = get_field('acf_sort', 'product_cat_' . $category->term_id); // Замените на ваше ACF поле
-                $categories_with_acf[] = [
-                    'category' => $category,
-                    'acf_value' => $acf_value?$acf_value:10,
-                ];
-            }
-
-            // Сортируем категории по значению ACF (по возрастанию)
-            usort($categories_with_acf, function($a, $b) {
-                return $a['acf_value'] <=> $b['acf_value'];
-            });
-
+    //if (!is_product()) {
+        ?>
+        <aside class="product-category-sidebar">
+            <?php
+            $args = array(
+                'show_option_all'    => '',
+                'show_option_none'   => __('No categories'),
+                'orderby'            => 'name',
+                'order'              => 'ASC',
+                'style'              => 'list',
+                'show_count'         => 0,
+                'hide_empty'         => 1,
+                'use_desc_for_title' => 0,
+                'child_of'           => 0,
+                'feed'               => '',
+                'feed_type'          => '',
+                'feed_image'         => '',
+                'exclude'            => '',
+                'exclude_tree'       => '',
+                'include'            => '',
+                'hierarchical'       => true,
+                'title_li'           => '',
+                'number'             => NULL,
+                'echo'               => 0,
+                'depth'              => 0,
+                'current_category'   => 0,
+                'pad_counts'         => 0,
+                'taxonomy'           => 'product_cat',
+                'walker'             => new Walker_Category_Thumbnails(),
+                'hide_title_if_empty' => false,
+                'separator'          => '<br />',
+            );
+            $categories = wp_list_categories($args);
             ?>
             <div id="catalog-sidebar" class="category-list-categories mobile">
                 <h3>Каталог</h3>
                 <a class="close-catalog-sidebar-x" href="" id="close-catalog-sidebar-x"><span class="icon-Close-1 close-catalog-sidebar"></span></a>
-                <?php
-                // Выводим дерево категорий
-                display_category_tree(array_column($categories_with_acf, 'category'));
-                ?>
+                 <ul class="category-list">
+                    <?php echo $categories; ?>
+                </ul>
                 <a class="close-catalog-sidebar" href="" id="close-catalog-sidebar"><span class="icon-Vector-13 close-catalog-sidebar"></span><h4>Назад</h4></a>
             </div>
-            <?php
-        } else {
-            echo '<p>' . __('No categories') . '</p>';
-        }
-        ?>
-    </aside>
-    <?php
+        </aside>
+        <?php
+    //}
 }
 //add_action('woocommerce_sidebar', 'add_product_category_sidebar');
 
@@ -944,7 +948,6 @@ function custom_availability_text( $availability, $product ) {
 }
 add_filter( 'woocommerce_get_availability_text', 'custom_availability_text', 10, 2 );
 
-
 //начало хлебные крошки
 //удаляем хлебные крошки woocomerce
 remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
@@ -1038,7 +1041,7 @@ function custom_delivery_options_fields() {
         echo '<div class="delivery-text delivery-text__pickup"><p><span class="icon-iconoir_box-iso2"></span>Самовывоз со склада:</p> <span>' . $pickup . ' р.</span></div>';
     }
     if ($delivery_cost !== '') {
-        echo '<div class="delivery-text"><p><span class="icon-carbon_delivery-2"></span>Доставка от 1&nbsp;часа:</p> <span> ' . $delivery_cost . ' р.</span></div>';
+        echo '<div class="delivery-text"><p><span class="icon-carbon_delivery-2"></span>Доставка в течение 1&nbsp;часа:</p> <span> ' . $delivery_cost . ' р.</span></div>';
     }
     echo '</div>';
 }
@@ -1569,26 +1572,3 @@ add_action('woocommerce_after_main_content', 'woocommerce_pagination', 20);
 
 // Удаляем цену из списка продуктов
 remove_action('woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10);
-
-
-function custom_sort_product_categories_by_acf( $terms ) {
-    // Ключ вашего ACF поля
-    $acf_field_key = 'acf_sort';
-
-    // Проверяем, есть ли категории
-    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-        // Получаем значения ACF для всех категорий и добавляем их в массив
-        foreach ( $terms as $key => $term ) {
-            $acf_value = get_field( $acf_field_key, 'term_' . $term->term_id );
-            $terms[$key]->acf_order = $acf_value ? $acf_value : 10;
-        }
-
-        // Сортируем массив категорий по значению ACF поля
-        usort( $terms, function( $a, $b ) {
-            return $a->acf_order - $b->acf_order;
-        });
-    }
-
-    return $terms;
-}
-add_filter( 'woocommerce_product_categories', 'custom_sort_product_categories_by_acf', 10, 1 );

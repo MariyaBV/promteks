@@ -15,7 +15,8 @@
     }
 }
 
-#breadcrumbs {
+#breadcrumbs,
+#primary .woocommerce-breadcrumb {
     margin: 0;
     padding: 16px 0;
     font-size: var(--subtitle-font-size);
@@ -61,4 +62,8 @@
     .breadcrumb_last {
         color: var(--dark-green);
     }
+}
+
+#primary .woocommerce-breadcrumb {
+    padding: 0 0 32px 0;
 }

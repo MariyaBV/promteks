@@ -144,7 +144,7 @@ $options = get_fields('options');
 
 
 
-	<?php if (!is_front_page() && !is_cart() && !is_checkout() && !is_account_page()) : ?>
+	<?php if (!is_front_page() && !is_cart() && !is_checkout() && !is_account_page() && !is_singular('product')) : ?>
 		<div class="wrap">
 			<?php if (function_exists('yoast_breadcrumb')) {
 				yoast_breadcrumb('<p id="breadcrumbs">', '</p>');
