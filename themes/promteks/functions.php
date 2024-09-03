@@ -286,18 +286,6 @@ function custom_woocommerce_header_cart() {
     <?php
 }
 
-//ф-я вывода понравившихся товаров header и карточки
-/*function custom_woocommerce_header_wishlist() {
-	if ( function_exists( 'YITH_WCWL' ) ) : ?>
-		<div class="header-wishlist">
-			<a href="<?php echo YITH_WCWL()->get_wishlist_url(); ?>">
-				<i class="fa fa-heart-o-white"></i>
-				<span class="wishlist-count"><?php echo YITH_WCWL()->count_products(); ?></span>
-			</a>
-		</div>
-	<?php endif;
-}*/
-
 function custom_add_woocomerce_support() {
 	add_theme_support( 'woocommerce' );
 }
@@ -400,17 +388,6 @@ function custom_woocommerce_template_loop_category_title( $category ) {
     </h4>
     <?php
 }
-
-//меняем символ валюты
-// function change_existing_currency_symbol( $currency_symbol, $currency ) {
-//     switch( $currency ) {
-//         case 'RUB':
-//             $currency_symbol = '₽';
-//             break;
-//     }
-//     return $currency_symbol;
-// }
-// add_filter('woocommerce_currency_symbol', 'change_existing_currency_symbol', 10, 2);
 
 // Убираем блок "Похожие товары"
 remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
@@ -1255,7 +1232,7 @@ function customize_billing_fields($fields) {
         'required'    => true,
         'class'       => array('form-row-wide'),
         'priority'    => 100,
-        'placeholder' => __('Иван *', 'woocommerce'),
+        'placeholder' => __('Иван', 'woocommerce'),
     );
     $fields['billing']['billing_last_name'] = array(
         'type'        => 'text',
@@ -1263,7 +1240,7 @@ function customize_billing_fields($fields) {
         'required'    => true,
         'class'       => array('form-row-wide'),
         'priority'    => 110,
-        'placeholder' => __('Иванов *', 'woocommerce'),
+        'placeholder' => __('Иванов', 'woocommerce'),
     );
     $fields['billing']['billing_phone'] = array(
         'type'        => 'text',
@@ -1271,7 +1248,7 @@ function customize_billing_fields($fields) {
         'required'    => true,
         'class'       => array('form-row-wide'),
         'priority'    => 120,
-        'placeholder' => __('+7(xxx)xxx-xx-xx *', 'woocommerce'),
+        'placeholder' => __('+7(xxx)xxx-xx-xx', 'woocommerce'),
     );
 
     $fields['billing']['billing_email'] = array(
@@ -1280,7 +1257,7 @@ function customize_billing_fields($fields) {
         'required'    => true,
         'class'       => array('form-row-wide'),
         'priority'    => 130,
-        'placeholder' => __('mail@mail.ru *', 'woocommerce'),
+        'placeholder' => __('mail@mail.ru', 'woocommerce'),
     );
 
     $fields['billing']['billing_city'] = array(
@@ -1393,39 +1370,20 @@ function save_order_shipping_method($order_id) {
 add_action('woocommerce_checkout_update_order_meta', 'save_order_shipping_method');
 
 // изменяем поле адреса на не обязательное в случае если самовывоз
-function customize_checkout_fields_based_on_shipping($fields) {
-    $chosen_methods = WC()->session->get('chosen_shipping_methods');
-    $selected_shipping_method = isset($chosen_methods[0]) ? $chosen_methods[0] : '';
-
-    if ($selected_shipping_method === 'local_pickup:8') {
-        // Установка полей как необязательных
-        $fields['billing']['billing_country']['required'] = false;
-        $fields['billing']['billing_postcode']['required'] = false;
-        $fields['billing']['billing_state']['required'] = false;
-        $fields['billing']['billing_city']['required'] = false;
-        $fields['billing']['billing_address_1']['required'] = false;
-        $fields['billing']['billing_address_2']['required'] = false;
-        $fields['billing']['billing_address_3']['required'] = false;
-        $fields['billing']['billing_address_4']['required'] = false;
-        $fields['billing']['billing_apartment']['required'] = false;
-        $fields['billing']['billing_code']['required'] = false;
-
-        // Установка значений по умолчанию
+function modify_checkout_fields($fields) {
+    if (WC()->session->get('selected_shipping_method') === 'local_pickup:8') {
+        foreach ( $fields['billing'] as $key => $field ) {
+            if ($key !== 'billing_first_name' && $key !== 'billing_phone') {
+                $fields['billing'][$key]['required'] = false;
+            }
+        }
         $fields['billing']['billing_country']['default'] = 'RU';
         $fields['billing']['billing_postcode']['default'] = '241000';
         $fields['billing']['billing_state']['default'] = 'Брянская область';
-        $fields['billing']['billing_city']['default'] = 'Брянск';
-        $fields['billing']['billing_address_1']['default'] = 'Карачевкое шоссе';
-        $fields['billing']['billing_address_2']['default'] = '4 км.';
-        $fields['billing']['billing_address_3']['default'] = '-';
-        $fields['billing']['billing_address_4']['default'] = '-';
-        $fields['billing']['billing_apartment']['default'] = '-';
-        $fields['billing']['billing_code']['default'] = '-';
     }
-
     return $fields;
 }
-add_filter('woocommerce_checkout_fields', 'customize_checkout_fields_based_on_shipping');
+add_action('woocommerce_checkout_fields', 'modify_checkout_fields');
 
 // выводим информацию о выбранном методе доставки
 function display_shipping_info() {

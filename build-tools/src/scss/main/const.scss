@@ -147,6 +147,11 @@ main.site-page {
   padding-top: 16px;
 }
 
+#main, #primary {
+  position: relative;
+  flex: 1 1 100%;
+}
+
 .wrap {
   max-width: var(--width-page);
   margin: 0 auto;

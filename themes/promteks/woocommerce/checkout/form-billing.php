@@ -50,8 +50,7 @@ $shipping_cost = WC()->session->get('selected_shipping_cost');
 				</style>
 				<?php
 			}
-			
-
+				
 			$ordered_fields = [
 				'billing_first_name',
 				'billing_last_name',

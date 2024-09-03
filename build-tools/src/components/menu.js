@@ -82,15 +82,8 @@ $(document).ready(function($) {
 $(document).ready(function() {
     $('#burger-menu').click(function() {
         $(this).toggleClass('active');
-        //$('#main-header').toggleClass('header-fixed');
         $('#site-navigation').toggleClass('visible');
     });
-
-    // $('a[href="#catalog"]').on('click', function() {
-    //     $('#site-navigation').removeClass('visible');
-    //     $('#main-header').removeClass('header-fixed');
-    //     $('#burger-menu').removeClass('active');
-    // });
 });
 
 
