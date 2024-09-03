@@ -211,7 +211,7 @@ form.woocommerce-ordering {
     .col-md-9 {
         flex: 75%;
 
-        ul.products {
+        ul.products.custom-block-products {
             display: flex;
             flex-wrap: wrap;
             gap: 25px;
@@ -228,6 +228,7 @@ form.woocommerce-ordering {
                 width: calc((100% / 3) - 25px);
                 margin-left: 0;
                 padding: 10px;
+                flex-direction: column;
 
                 @media screen and (max-width: 1130px) {
                     width: calc((100% / 2) - 15px);
@@ -282,5 +283,11 @@ form.woocommerce-ordering {
 
     @media screen and (max-width: 768px) {
         display: block;
+    }
+}
+
+.product-categories-link {
+    span { 
+        vertical-align: top;
     }
 }

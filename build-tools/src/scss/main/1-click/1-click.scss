@@ -11,6 +11,12 @@
     width: 100%;
 }
 
+#formOrderOneClick .file-load-block .btn-tertiary {
+    i {
+        display: none;
+    }
+}
+
 #formOrderOneClick #buyoneclick_form_order {
     .quantity {
         input {
@@ -68,6 +74,16 @@
             img {
                 margin: 0 auto;
                 display: inline-block;
+            }
+        }
+
+        tbody {
+            .description {
+                .woocommerce-Price-amount.amount {
+                    bdi {
+                        text-wrap: nowrap;
+                    }
+                }
             }
         }
     }

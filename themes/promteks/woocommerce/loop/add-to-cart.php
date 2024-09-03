@@ -23,11 +23,22 @@ global $product;
 
 
 ?>
+<?php if ($args['aria-describedby_text']): ?>
 <span id="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr( $product->get_id() ); ?>" class="screen-reader-text">
 	<?php echo esc_html( $args['aria-describedby_text'] ); ?>
 </span>
-<a></a>
-<div class="product-item duplicated">
+<?php endif; ?>
+
+<div class="product-item 11111">
+	<!-- Добавляем кнопку "Купить в один клик" -->
+	<div class="one-click-wrapper">
+		<?php 
+			if (shortcode_exists('viewBuyButton')) {
+				echo do_shortcode('[viewBuyButton id="' . $product->get_id() . '"]');
+			} 
+		?>
+	</div>
+
 	<div class="block-quantity-button">
 		<button class="quantity-arrow-minus"> - </button>
 		<div class="quantity">

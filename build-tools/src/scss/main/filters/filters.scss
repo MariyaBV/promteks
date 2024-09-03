@@ -2,6 +2,7 @@
     display: flex;
     align-items: flex-start;
     gap: 10px;
+    margin-bottom: 24px;
 }
 
 #primary .custom-ordering {
@@ -132,6 +133,7 @@
             font-size: var(--subtitle-font-size);
             font-weight: var(--subtitle-font-weight);
             line-height: var(--subtitle-line-height);
+            min-width: 190.6px;
 
             &.selected-item-menu {
                 color: var(--white);
@@ -159,6 +161,8 @@
             font-size: var(--subtitle-font-size);
             font-weight: var(--subtitle-font-weight);
             line-height: var(--subtitle-line-height);
+            min-width: 190.6px;
+            text-align: center;
         }
     }
 }

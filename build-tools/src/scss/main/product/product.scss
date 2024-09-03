@@ -6,6 +6,13 @@
     line-height: var(--txt-s-line-height);
     width: 100%;
 
+    .one-click-wrapper {
+        .single_add_to_cart_button {
+            background-color: var(--btn-on-click-green);
+            margin-bottom: 16px;
+        }
+    }
+
     .block-quantity-button {
         display: flex;
         background-color: var(--light-grey);
@@ -309,10 +316,11 @@
             flex: calc((100% / 4) - 2.5rem);
             margin: 0;
             display: flex;
-            flex-wrap: wrap;
-            align-content: flex-start;
             max-width: 260px;
             padding: 10px;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
 
             img {
                 margin-bottom: 16px;
@@ -335,11 +343,11 @@
 
                 .custom-block-brands {
                     a {
-                        color: var(--dark-green)!important;
+                        color: var(--dark-green) !important;
                     }
 
                     a.woocommerce-loop-product__link {
-                        color: var(--dark-gray)!important;
+                        color: var(--dark-gray) !important;
                     }
                 }
             }
@@ -373,25 +381,17 @@
     align-items: center;
     margin: 16px 0 24px;
     width: 100%;
+    font-size: var(--price-font-size);
+    font-weight: var(--price-font-weight);
+    line-height: var(--price-line-height);
+    letter-spacing: var(--price-letter-spacing);
+    font-family: "Inter", sans-serif;
+    color: var(--main-color);
 
     p,
     a,
     div {
         margin: 0;
-    }
-
-    p {
-        font-size: var(--price-font-size);
-        font-weight: var(--price-font-weight);
-        line-height: var(--price-line-height);
-        letter-spacing: var(--price-letter-spacing);
-        font-family: "Inter", sans-serif;
-        color: var(--main-color);
-        flex: 90%;
-    }
-
-    div {
-        flex: 10%;
     }
 }
 
@@ -457,6 +457,12 @@
 
 #page .txt.woocommerce-loop-product__title {
     color: var(--main-color);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0.5em 0;
+    padding: 0;
 }
 
 .custom-delivery-block {

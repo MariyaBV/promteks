@@ -42,14 +42,9 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	 */
 	do_action( 'woocommerce_before_shop_loop_item_title' );
 	?>
-	<div class="product-price-wishlist">
-		<p class="<?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>"><?php echo $product->get_price_html(); ?></p>
-		<?php
 
-		// вывод кнопки добавления в понравившееся
-		//echo do_shortcode('[yith_wcwl_add_to_wishlist]');
-		?>
-	</div>
+	<p class="product-price-wishlist <?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>"><?php echo $product->get_price_html(); ?></p>
+
 
 	<?php
 
@@ -63,36 +58,7 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	if ( function_exists( 'custom_template_single_brand' ) ) {
 		custom_template_single_brand();
 	}
-	
-
-	/*if ( is_product() ):?>
-		<div class="product-item">
-			<div class="block-quantity-button">
-				<a class="add-to-cart button add_to_cart_button ajax_add_to_cart" data-product-id="<?php echo esc_attr( $product->get_id() ); ?>"><span class="add-to-cart-text">Купить</span></a>
-				<button class="quantity-arrow-minus"> - </button>
-				<div class="quantity">
-					<input type="number" class="qty" name="quantity" value="1" min="1" />
-				</div>
-				<button class="quantity-arrow-plus"> + </button>
-			</div>
-		</div>
-	<?php endif;
-
-	//$product_attributes = $product->get_attributes();
-
-	/* Display product attribute
-	if ( ! $product_attributes ) {
-		return;
-	}
 	?>
-		<?php /*<table class="woocommerce-product-attributes shop_attributes">
-			<?php foreach ( $product_attributes as $product_attribute_key => $product_attribute ) : ?>
-				<tr class="woocommerce-product-attributes-item woocommerce-product-attributes-item--<?php echo esc_attr( $product_attribute_key ); ?>">
-					<th class="woocommerce-product-attributes-item__label"><?php echo wp_kses_post( $product_attribute['label'] ); ?></th>
-					<td class="woocommerce-product-attributes-item__value"><?php echo wp_kses_post( $product_attribute['value'] ); ?></td>
-				</tr>
-			<?php endforeach; ?>
-		</table>*/?>
 	<?php
 	/**
 	 * Hook: woocommerce_after_shop_loop_item_title.
