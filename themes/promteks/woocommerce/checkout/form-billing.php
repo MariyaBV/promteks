@@ -17,6 +17,7 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+$options = get_fields('options');
 $selected_shipping_method = WC()->session->get('selected_shipping_method');
 $shipping_label = WC()->session->get('selected_shipping_label');
 $shipping_cost = WC()->session->get('selected_shipping_cost');
@@ -112,6 +113,10 @@ $shipping_cost = WC()->session->get('selected_shipping_cost');
 			?>
 	</div>
 
+	<div class="block-attention red">
+		<p class="subtitle-attention red">Внимание!</p>
+		<p class="text-attention subtitle"><?= $options['poyasnenie_obyazatelnye_polya']; ?></p>
+	</div>
 	<?php do_action( 'woocommerce_after_checkout_billing_form', $checkout ); ?>
 </div>
 

@@ -215,14 +215,14 @@
                 flex-wrap: wrap;
             }
 
-            .form-row  {
+            .form-row {
                 @media screen and (max-width: 768px) {
                     width: 32%;
 
                     &.form-row-wide {
                         width: 100%;
                     }
-    
+
                     &.form-row-last {
                         width: 66%;
                     }
@@ -353,12 +353,27 @@
         }
     }
 
+    &.red {
+        .text-attention {
+            span {
+                color: var(--red);
+                font-weight: 700;
+                font-size: 18px;
+                text-decoration: none;
+            }
+        }
+    }
+
     .subtitle-attention {
         color: var(--pale-green);
         font-size: var(--price-font-size);
         font-weight: var(--price-font-weight);
         line-height: var(--price-line-height);
         margin-bottom: 8px;
+
+        &.red {
+            color: var(--red);
+        }
     }
 
     .text-attention,

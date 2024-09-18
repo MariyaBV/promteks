@@ -27,7 +27,7 @@ if ($selected_shipping_method === 'local_pickup:8') {
 	$shipping_cost = '0₽';
 } elseif ($selected_shipping_method === 'flat_rate:7') {
 	$shipping_label = 'Доставка по области';
-	$shipping_cost = '1км / 40₽';
+	$shipping_cost = '1км / 55₽';
 } elseif ($selected_shipping_method === 'flat_rate:3') {
 	$shipping_label = 'Доставка по Брянску';
 	$shipping_cost = 'от 500₽';

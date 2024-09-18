@@ -1274,7 +1274,7 @@ function customize_billing_fields($fields) {
         'required'    => true,
         'class'       => array('form-row-wide'),
         'priority'    => 150,
-        'placeholder' => __('Улица', 'woocommerce'),
+        'placeholder' => __('Улица *', 'woocommerce'),
     );
 
     $fields['billing']['billing_address_2'] = array(
@@ -1282,7 +1282,7 @@ function customize_billing_fields($fields) {
         'required'    => true,
         'class'       => array('form-row-one'),
         'priority'    => 160,
-        'placeholder' => __('Дом', 'woocommerce'),
+        'placeholder' => __('Дом *', 'woocommerce'),
     );
 
     $fields['billing']['billing_address_3'] = array(
@@ -1550,10 +1550,3 @@ function custom_sort_product_categories_by_acf( $terms ) {
     return $terms;
 }
 add_filter( 'woocommerce_product_categories', 'custom_sort_product_categories_by_acf', 10, 1 );
-
-// Убираем блок перекрёстных продаж (cross-sells) с страницы корзины
-function remove_cross_sells_from_cart() {
-    remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
-}
-add_action( 'wp', 'remove_cross_sells_from_cart' );
-
